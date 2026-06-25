@@ -54,6 +54,9 @@ const precomputedMoodSummaries = require('../mood_summaries.json');
 const hindiDiscourses = require('../discourses_hi.json');
 let presetAnswers = {};
 try { presetAnswers = require('../preset_answers.json'); } catch { presetAnswers = {}; }
+
+let topicAnswers = {};
+try { topicAnswers = require('../topic_answers.json'); } catch { topicAnswers = {}; }
 const normQ = (q) => String(q || '').trim().replace(/\s+/g, ' ').toLowerCase();
 
 // Build a reference → discourse map for O(1) lookup
@@ -535,6 +538,11 @@ app.get('/api/search', (req, res) => {
       snippet: lang === 'hi' ? field.text.slice(0, 300) : teachingExcerpt(field.text, 300),
     };
   }));
+});
+
+// Topic answers (pre-generated, zero runtime tokens)
+app.get('/api/topic-answers', (req, res) => {
+  res.json(topicAnswers);
 });
 
 // Mood → search keywords mapping

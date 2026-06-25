@@ -864,6 +864,42 @@
         transform: translateX(-50%) translateY(100%); }
       #mood-sheet.open { transform: translateX(-50%) translateY(0); }
     }
+    /* ── Topic sheet (Teachings About popup) ──────────── */
+    #topic-backdrop {
+      position: fixed; inset: 0; background: rgba(15,10,5,0.48);
+      z-index: 200; opacity: 0; pointer-events: none;
+      transition: opacity 0.28s ease;
+    }
+    #topic-backdrop.open { opacity: 1; pointer-events: auto; }
+    #topic-sheet {
+      position: fixed; left: 0; right: 0; bottom: 0;
+      z-index: 201; background: var(--paper);
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 -6px 40px rgba(0,0,0,0.18);
+      max-height: 88vh; display: flex; flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.36s cubic-bezier(0.32,0.72,0,1);
+    }
+    #topic-sheet.open { transform: translateY(0); }
+    @media (min-width: 600px) {
+      #topic-sheet { left: 50%; right: auto; width: 100%; max-width: 580px;
+        transform: translateX(-50%) translateY(100%); }
+      #topic-sheet.open { transform: translateX(-50%) translateY(0); }
+    }
+    .topic-sheet-body {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--ink);
+    }
+    .topic-sheet-body p { margin: 0 0 1em; }
+    .topic-sheet-body p:last-child { margin-bottom: 0; }
+    .topic-citations {
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+    }
     /* Font size controls always visible */
     .mood-cards-label {
       font-family: var(--mono);
@@ -1706,6 +1742,20 @@
   <div class="sheet-scroll" id="sheet-scroll"></div>
 </div>
 
+<!-- Topic bottom sheet (Teachings About) -->
+<div id="topic-backdrop" onclick="closeTopicSheet()"></div>
+<div id="topic-sheet" role="dialog" aria-modal="true" aria-labelledby="topic-sheet-label">
+  <div class="sheet-handle"></div>
+  <div class="sheet-topbar">
+    <span id="topic-sheet-label" class="sheet-label"></span>
+    <button class="sheet-x" onclick="closeTopicSheet()" aria-label="Close">✕</button>
+  </div>
+  <div class="sheet-scroll" id="topic-sheet-scroll">
+    <div class="topic-sheet-body" id="topic-sheet-body"></div>
+    <div class="topic-citations" id="topic-citations"></div>
+  </div>
+</div>
+
 <!-- Discourse modal -->
 <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
   <div class="modal" id="modal">
@@ -2514,6 +2564,58 @@
     renderMoods();
   }
 
+  // ── Topic sheet (Teachings About — pre-generated, zero tokens) ──
+  let _topicAnswers = null;
+  async function _loadTopicAnswers() {
+    if (_topicAnswers) return _topicAnswers;
+    try {
+      const r = await fetch('/api/topic-answers');
+      _topicAnswers = await r.json();
+    } catch { _topicAnswers = {}; }
+    return _topicAnswers;
+  }
+
+  async function openTopicSheet(key, label) {
+    haptic();
+    const data = await _loadTopicAnswers();
+    const entry = data[key];
+    if (!entry) return;
+
+    // Populate sheet
+    document.getElementById('topic-sheet-label').textContent = label;
+    const body = document.getElementById('topic-sheet-body');
+    body.innerHTML = '';
+    entry.answer.split(/\n{2,}/).map(s => s.trim()).filter(Boolean).forEach(para => {
+      const p = document.createElement('p');
+      p.textContent = para;
+      body.appendChild(p);
+    });
+
+    const cites = document.getElementById('topic-citations');
+    cites.innerHTML = '';
+    if (entry.citations && entry.citations.length) {
+      entry.citations.forEach(c => {
+        const tag = document.createElement('button');
+        tag.className = 'citation-tag';
+        tag.textContent = c.friendlyRef;
+        tag.title = c.title;
+        tag.onclick = () => { closeTopicSheet(); showDiscourse(c.reference); };
+        cites.appendChild(tag);
+      });
+    }
+
+    document.getElementById('topic-sheet-scroll').scrollTop = 0;
+    document.getElementById('topic-backdrop').classList.add('open');
+    document.getElementById('topic-sheet').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeTopicSheet() {
+    document.getElementById('topic-backdrop').classList.remove('open');
+    document.getElementById('topic-sheet').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
   async function selectMood(mood) {
     haptic();
     dismissOnboarding();
@@ -2798,25 +2900,33 @@
     });
 
     // Teachings About chips
-    const teachingsTopics = [
-      'Devotion (Bhakti)', 'The Mind', 'Maya', 'Satsang', 'Liberation (Mukti)',
-      'The Soul (Atma)', 'Renunciation', "God's Form", 'Service (Seva)',
-      'Meditation (Dhyan)', 'Virtues', 'Surrender', 'The Guru', 'Death & Afterlife',
-      'Dharma', 'Knowledge (Jnan)'
+    const TOPIC_KEYS = [
+      { key: 'devotion',      label: 'Devotion (Bhakti)' },
+      { key: 'the-mind',     label: 'The Mind' },
+      { key: 'maya',         label: 'Maya' },
+      { key: 'satsang',      label: 'Satsang' },
+      { key: 'liberation',   label: 'Liberation (Mukti)' },
+      { key: 'the-soul',     label: 'The Soul (Atma)' },
+      { key: 'renunciation', label: 'Renunciation' },
+      { key: 'gods-form',    label: "God's Form" },
+      { key: 'service',      label: 'Service (Seva)' },
+      { key: 'meditation',   label: 'Meditation (Dhyan)' },
+      { key: 'virtues',      label: 'Virtues' },
+      { key: 'surrender',    label: 'Surrender' },
+      { key: 'the-guru',     label: 'The Guru' },
+      { key: 'death',        label: 'Death & Afterlife' },
+      { key: 'dharma',       label: 'Dharma' },
+      { key: 'knowledge',    label: 'Knowledge (Jnan)' },
     ];
     const tchips = document.getElementById('teachings-chips');
     if (tchips) {
       tchips.innerHTML = '';
-      teachingsTopics.forEach(topic => {
+      TOPIC_KEYS.forEach(({ key, label }) => {
         const chip = document.createElement('button');
         chip.className = 'teachings-chip';
-        chip.textContent = topic;
-        chip.onclick = () => {
-          const q = document.getElementById('question');
-          if (q) { q.value = 'What does the Vachanamrut say about ' + topic + '?'; }
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          setTimeout(askQuestion, 300);
-        };
+        chip.textContent = label;
+        chip.dataset.topicKey = key;
+        chip.onclick = () => openTopicSheet(key, label);
         tchips.appendChild(chip);
       });
     }
@@ -3333,7 +3443,7 @@
   function hideError() { document.getElementById('error-msg').style.display = 'none'; }
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeModalBtn(); closeSavedBtn(); closeMqBrowser(); closeMoodSheet(); }
+    if (e.key === 'Escape') { closeModalBtn(); closeSavedBtn(); closeMqBrowser(); closeMoodSheet(); closeTopicSheet(); }
   });
 
   // ── Share card ─────────────────────────────────────────────────
