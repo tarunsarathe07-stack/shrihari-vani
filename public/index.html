@@ -1,0 +1,3780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShriHari Vani — Vachanamrut Explorer</title>
+  <meta name="description" content="Explore Bhagwan Swaminarayan's Vachanamrut teachings. Ask questions, browse 272 discourses, and discover wisdom for every mood — in English, Gujarati, and Hindi." />
+  <meta name="theme-color" content="#d8461d" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="ShriHari Vani — Vachanamrut Explorer" />
+  <meta property="og:description" content="Explore Bhagwan Swaminarayan's Vachanamrut teachings. Ask questions, browse 272 discourses, and discover wisdom for every mood." />
+  <meta property="og:image" content="/scenes/homepage-backdrop.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+Gujarati:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ── Variables ────────────────────────────────────── */
+    :root {
+      --paper:    #f4eee2;   /* page background — warm cream */
+      --paper-2:  #fdfbf6;   /* cards — near-white paper */
+      --paper-3:  #f6f0e4;
+      --ink:      #211d17;   /* near-black ink for headlines */
+      --ink-soft: #4f4839;
+      --muted:    #968d7c;
+      --terra:    #d8461d;   /* bright terracotta-coral accent */
+      --terra-dk: #b6381a;
+      --saffron:  #e07b1d;
+      --gold:     #a47a30;
+      --line:     #e6dbc6;
+      --wash-1:   #f4b48d;
+      --wash-2:   #f7d0b3;
+      --display:  'Fraunces', 'Georgia', serif;
+      --serif:    'Newsreader', 'Georgia', 'Palatino Linotype', serif;
+      --mono:     'JetBrains Mono', ui-monospace, 'SF Mono', 'Menlo', monospace;
+      --sans:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    /* ── Reset ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+      background-image:
+        radial-gradient(ellipse at 15% -5%, rgba(244,180,141,0.30), transparent 45%),
+        radial-gradient(ellipse at 95% 8%, rgba(216,70,29,0.10), transparent 42%),
+        radial-gradient(ellipse at 50% 120%, rgba(244,180,141,0.18), transparent 55%);
+    }
+    /* Full-page watercolor backdrop */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: url('scenes/homepage-backdrop.jpg');
+      background-size: cover;
+      background-position: center 25%;
+      opacity: 0.11;
+    }
+    /* Paper grain overlay — fine fibrous noise */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.4;
+      mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.62' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+      background-size: 220px 220px;
+    }
+    body > * { position: relative; z-index: 2; }
+
+    /* hidden SVG filter for torn paper edges */
+    .svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+    /* ── Header ──────────────────────────────────────── */
+    header {
+      border-bottom: 1px solid var(--line);
+      padding: 1.1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      backdrop-filter: blur(6px);
+      z-index: 30;
+    }
+    .logo {
+      font-family: var(--display);
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--terra);
+      letter-spacing: 0.005em;
+    }
+    .logo span { color: var(--muted); font-size: 0.72em; font-weight: 400; font-family: var(--mono); }
+    .header-right { display: flex; align-items: center; gap: 0.6rem; }
+
+    .icon-btn {
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      color: var(--ink-soft);
+      cursor: pointer;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.78rem;
+      font-family: var(--sans);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: border-color 0.15s, color 0.15s, background 0.15s, box-shadow 0.15s;
+      box-shadow: 0 1px 2px rgba(80,50,20,0.04);
+    }
+    .icon-btn:hover { border-color: var(--gold); color: var(--terra); box-shadow: 0 2px 8px rgba(80,50,20,0.08); }
+    .saved-count {
+      background: var(--terra);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 0.68rem;
+      padding: 0.02rem 0.38rem;
+      font-weight: 700;
+    }
+
+    /* Language toggle */
+    .lang-toggle {
+      display: flex;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .lang-toggle button {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 0.35rem 0.8rem;
+      cursor: pointer;
+      font-size: 0.82rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .lang-toggle button.active { background: var(--terra); color: #fff; font-weight: 600; }
+    .lang-toggle button:not(:last-child) { border-right: 1px solid var(--line); }
+
+    /* Font size control */
+    /* ── Teachings About section ─────────────────────────── */
+    .teachings-section {
+      margin: 2.5rem -1.25rem 0;
+      padding: 2.5rem 1.5rem 2.75rem;
+      background: linear-gradient(160deg, #1a1008 0%, #120c04 60%, #0e0d18 100%);
+      text-align: center;
+    }
+    .teachings-heading {
+      font-family: var(--serif);
+      font-size: 1.35rem;
+      font-weight: 500;
+      color: #f0e6d0;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.01em;
+    }
+    .teachings-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .teachings-chip {
+      display: inline-block;
+      border: 1.5px solid rgba(240,222,180,0.25);
+      border-radius: 999px;
+      padding: 0.45rem 1.05rem;
+      font-family: var(--sans);
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: #f0e6d0;
+      background: transparent;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s, color 0.18s;
+    }
+    .teachings-chip:hover {
+      border-color: var(--saffron);
+      background: rgba(232,146,46,0.12);
+      color: #ffe5b0;
+    }
+
+    /* ── Reader settings panel (AA button) ───────────────── */
+    .reader-panel {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem 1.1rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      width: 220px;
+      z-index: 20;
+    }
+    .reader-panel.open { display: block; }
+    .reader-panel-label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.65rem;
+      text-align: center;
+    }
+    .reader-size-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+    }
+    .reader-size-btn {
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--line);
+      padding: 0.55rem 0.4rem;
+      cursor: pointer;
+      font-family: var(--serif);
+      color: var(--muted);
+      transition: background 0.15s, color 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .reader-size-btn:last-child { border-right: none; }
+    .reader-size-btn.active { background: #1a1008; color: #f0e6d0; }
+    .reader-size-btn:hover:not(.active) { background: var(--paper-2); color: var(--terra); }
+    .reader-font-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .reader-font-btn {
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--line);
+      padding: 0.55rem 0.4rem;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 0.8rem;
+      transition: background 0.15s, color 0.15s;
+    }
+    .reader-font-btn:last-child { border-right: none; }
+    .reader-font-btn.active { background: #1a1008; color: #f0e6d0; }
+    .reader-font-btn:hover:not(.active) { background: var(--paper-2); color: var(--terra); }
+    .hero-btn-aa-wrap { position: relative; }
+    .hero-btn-aa { font-family: var(--sans); font-weight: 700; letter-spacing: 0.02em; }
+
+    /* ── Main container ──────────────────────────────── */
+    main { max-width: 780px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+    /* ── Hero ────────────────────────────────────────── */
+    .hero { text-align: center; margin-bottom: 1.25rem; }
+    .hero h1 {
+      font-family: var(--display);
+      font-size: clamp(1.9rem, 5vw, 2.9rem);
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.45rem;
+      letter-spacing: -0.015em;
+    }
+    .hero p { color: var(--ink-soft); font-size: 0.95rem; }
+
+    /* ── Eyebrow label (typewriter) ──────────────────── */
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 0.7rem;
+    }
+
+    /* ── Paper card base — clean elevated card ─────── */
+    .paper-card {
+      background: var(--paper-2);
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      box-shadow: 0 1px 2px rgba(80,50,20,0.04), 0 4px 16px rgba(80,50,20,0.06);
+    }
+
+    /* ── Daily verse ─────────────────────────────────── */
+    .daily {
+      padding: 1.25rem 1.25rem 1rem;
+      margin-bottom: 1.25rem;
+      cursor: pointer;
+      transition: transform 0.12s, box-shadow 0.15s;
+    }
+    .daily:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(80,50,20,0.06), 0 8px 24px rgba(80,50,20,0.08); }
+    .daily-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+    .daily-date { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.05em; }
+    .daily-title {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin: 0.3rem 0 0.5rem;
+      line-height: 1.3;
+    }
+    .daily-excerpt {
+      font-family: var(--serif);
+      color: var(--ink-soft);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .daily-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 0.9rem; }
+    .ref-pill {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      color: var(--terra);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 0.2rem 0.55rem;
+      background: var(--paper);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .daily-cta { font-family: var(--mono); font-size: 0.72rem; color: var(--gold); white-space: nowrap; }
+
+    /* ── Mood selector ───────────────────────────────── */
+    .mood-section { margin-bottom: 1.25rem; }
+    .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.55rem;
+    }
+    @media (max-width: 500px) { .mood-grid { grid-template-columns: repeat(4, 1fr); gap: 0.45rem; } }
+    @media (max-width: 360px) { .mood-grid { grid-template-columns: repeat(3, 1fr); } }
+    @keyframes moodPop {
+      from { opacity: 0; transform: translateY(10px) scale(0.92); }
+      to   { opacity: 1; transform: translateY(0)  scale(1); }
+    }
+    .mood-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--ink-soft);
+      cursor: pointer;
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.7rem 0.3rem 0.55rem;
+      transition: border-color 0.18s, background 0.18s, transform 0.15s, box-shadow 0.18s;
+      box-shadow: 0 1px 2px rgba(80,50,20,0.04), 0 4px 12px rgba(80,50,20,0.03);
+      opacity: 0;
+      animation: moodPop 0.35s ease forwards;
+    }
+    .mood-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 4px rgba(80,50,20,0.06), 0 8px 24px rgba(80,50,20,0.08);
+      border-color: var(--mood-color);
+    }
+    .mood-btn:active { transform: scale(0.97); }
+    .mood-btn.active {
+      background: color-mix(in srgb, var(--mood-color) 10%, var(--paper));
+      border-color: var(--mood-color);
+      color: color-mix(in srgb, var(--mood-color) 80%, var(--ink));
+      font-weight: 600;
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--mood-color) 14%, transparent), 0 2px 8px rgba(80,50,20,0.08);
+    }
+    .mood-dot {
+      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--mood-color) 20%, transparent);
+    }
+
+    /* ── Maharaj Asks ────────────────────────────────── */
+    .mq-card {
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--saffron);
+      border-radius: 12px;
+      padding: 1.1rem 1.2rem;
+      margin-bottom: 2rem;
+      transition: box-shadow 0.18s, transform 0.15s;
+      box-shadow: 0 1px 2px rgba(80,50,20,0.04), 0 4px 16px rgba(80,50,20,0.05);
+    }
+    .mq-card:hover { box-shadow: 0 2px 4px rgba(80,50,20,0.06), 0 12px 32px rgba(80,50,20,0.10); transform: translateY(-1px); }
+    .mq-eyebrow { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.09em; color: var(--saffron); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .mq-question { font-family: var(--serif); font-size: 1.02rem; color: var(--ink); line-height: 1.55; font-style: italic; }
+    .mq-ref { font-family: var(--mono); font-size: 0.7rem; color: var(--gold); margin-top: 0.55rem; }
+    .mq-reveal-btn {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      margin-top: 0.75rem; padding: 0.4rem 0.9rem;
+      background: var(--saffron); color: #fff; border: none; border-radius: 18px;
+      font-size: 0.75rem; font-weight: 600; cursor: pointer;
+      transition: background 0.15s, transform 0.12s;
+    }
+    .mq-reveal-btn:hover { background: var(--terra); transform: translateY(-1px); }
+    .mq-answer {
+      margin-top: 0.85rem; padding: 0.8rem 0.9rem;
+      background: color-mix(in srgb, var(--saffron) 6%, var(--paper));
+      border-radius: 8px; border-left: 2px solid var(--gold);
+      font-family: var(--serif); font-size: 0.88rem; line-height: 1.6; color: var(--ink);
+      overflow: hidden; max-height: 0; opacity: 0;
+      transition: max-height 0.45s ease, opacity 0.35s ease, margin-top 0.35s ease;
+    }
+    .mq-answer.open { max-height: 600px; opacity: 1; }
+    .mq-answer-label { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--terra); text-transform: uppercase; margin-bottom: 0.4rem; }
+    .mq-read-more { display: inline-block; margin-top: 0.5rem; font-family: var(--mono); font-size: 0.7rem; color: var(--gold); cursor: pointer; }
+    .mq-see-all {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 0.75rem; padding: 0.7rem 1rem;
+      background: var(--paper-2); border: 1px solid var(--line);
+      border-radius: 12px;
+      font-family: var(--mono); font-size: 0.75rem; color: var(--gold);
+      cursor: pointer; font-weight: 600;
+      transition: border-color 0.15s, color 0.15s, box-shadow 0.15s;
+    }
+    .mq-see-all { box-shadow: 0 1px 2px rgba(80,50,20,0.03), 0 4px 12px rgba(80,50,20,0.03); }
+    .mq-see-all::after { content: '›'; font-size: 1.1rem; font-weight: 300; color: var(--muted); }
+    .mq-see-all:hover { color: var(--terra); border-color: var(--gold); box-shadow: 0 2px 4px rgba(80,50,20,0.05), 0 8px 20px rgba(80,50,20,0.07); }
+
+    /* ── Maharaj Questions Browser ───────────────────── */
+    .mqb-overlay {
+      position: fixed; inset: 0; z-index: 900;
+      background: rgba(30,20,10,0.55); backdrop-filter: blur(4px);
+      display: none; justify-content: center; align-items: flex-start;
+      padding: 2rem 1rem; overflow-y: auto;
+    }
+    .mqb-overlay.open { display: flex; }
+    .mqb-panel {
+      background: var(--paper); border-radius: 14px;
+      width: 100%; max-width: 640px;
+      padding: 1.5rem; box-shadow: 0 12px 40px rgba(30,20,10,0.25);
+      position: relative; margin: 1rem auto;
+    }
+    .mqb-close { position: absolute; top: 0.8rem; right: 1rem; background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--gold); }
+    .mqb-title { font-family: var(--serif); font-size: 1.2rem; color: var(--ink); margin-bottom: 0.2rem; }
+    .mqb-subtitle { font-family: var(--mono); font-size: 0.7rem; color: var(--gold); margin-bottom: 1.2rem; }
+    .mqb-list { display: flex; flex-direction: column; gap: 0.8rem; }
+    .mqb-item {
+      background: var(--paper-2); border: 1px solid var(--line);
+      border-left: 3px solid var(--saffron); border-radius: 12px;
+      padding: 0.9rem 1rem; cursor: pointer;
+      transition: box-shadow 0.15s, transform 0.12s;
+      position: relative;
+      box-shadow: 0 1px 2px rgba(80,50,20,0.04), 0 4px 12px rgba(80,50,20,0.03);
+    }
+    .mqb-item:hover { box-shadow: 0 2px 4px rgba(80,50,20,0.06), 0 8px 24px rgba(80,50,20,0.08); transform: translateY(-1px); }
+    .mqb-item::after {
+      content: '›'; position: absolute; right: 1rem; top: 0.9rem;
+      color: var(--muted); font-size: 1.2rem; font-weight: 300;
+      transition: transform 0.2s;
+    }
+    .mqb-item:has(.mqb-item-answer.open)::after { transform: rotate(90deg); }
+    .mqb-item-q { font-family: var(--serif); font-size: 0.92rem; color: var(--ink); font-style: italic; line-height: 1.5; }
+    .mqb-item-ref { font-family: var(--mono); font-size: 0.65rem; color: var(--gold); margin-top: 0.4rem; }
+    .mqb-item-answer {
+      margin-top: 0.6rem; padding: 0.7rem 0.8rem;
+      background: color-mix(in srgb, var(--saffron) 6%, var(--paper));
+      border-radius: 8px; border-left: 2px solid var(--gold);
+      font-family: var(--serif); font-size: 0.84rem; line-height: 1.55; color: var(--ink);
+      overflow: hidden; max-height: 0; opacity: 0;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+    }
+    .mqb-item-answer.open { max-height: 500px; opacity: 1; }
+    .mqb-item-answer-label { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em; color: var(--terra); text-transform: uppercase; margin-bottom: 0.3rem; }
+    .mqb-pager {
+      display: flex; justify-content: center; align-items: center; gap: 0.8rem;
+      margin-top: 1.2rem; font-family: var(--mono); font-size: 0.75rem; color: var(--gold);
+    }
+    .mqb-pager button {
+      background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px;
+      padding: 0.35rem 0.75rem; font-family: var(--mono); font-size: 0.72rem;
+      cursor: pointer; color: var(--ink); transition: background 0.15s;
+    }
+    .mqb-pager button:hover { background: var(--line); }
+    .mqb-pager button:disabled { opacity: 0.35; cursor: default; }
+
+    /* ── Search box — Atomberg-inspired prominent input ── */
+    .search-section { margin-bottom: 1rem; }
+    .search-wrap {
+      display: flex; gap: 0.5rem; margin-bottom: 0.6rem;
+    }
+    .search-input-wrap {
+      flex: 1; position: relative;
+    }
+    .search-icon {
+      position: absolute; left: 0.95rem; top: 50%;
+      transform: translateY(-50%);
+      width: 1.05rem; height: 1.05rem;
+      color: var(--muted);
+      pointer-events: none; z-index: 1;
+    }
+    #question {
+      width: 100%;
+      background: var(--paper-2);
+      border: 1.5px solid var(--line);
+      border-radius: 28px;
+      color: var(--ink);
+      font-size: 0.95rem;
+      padding: 0.85rem 1.1rem 0.85rem 2.8rem;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      font-family: var(--sans);
+      box-sizing: border-box;
+    }
+    #question { box-shadow: 0 1px 2px rgba(80,50,20,0.03), 0 4px 12px rgba(80,50,20,0.04); }
+    #question:focus { border-color: var(--saffron); box-shadow: 0 0 0 3px rgba(217,122,38,0.12), 0 4px 16px rgba(80,50,20,0.06); }
+    #question::placeholder { color: var(--muted); }
+    .btn-ask {
+      background: var(--terra);
+      border: none;
+      border-radius: 28px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 0.92rem;
+      font-weight: 700;
+      padding: 0.85rem 1.6rem;
+      transition: background 0.15s, opacity 0.15s, transform 0.1s;
+      white-space: nowrap;
+      box-shadow: 0 1px 3px rgba(168,66,31,0.2), 0 6px 20px rgba(168,66,31,0.18);
+    }
+    .btn-ask:hover { background: var(--terra-dk); transform: translateY(-1px); }
+    .btn-ask:disabled { opacity: 0.5; cursor: default; transform: none; }
+
+    /* Recent questions (Atomberg-style recent searches) */
+    .recent-questions { margin-bottom: 0.75rem; }
+    .recent-label {
+      font-family: var(--sans); font-size: 0.78rem; font-weight: 600;
+      color: var(--ink-soft); margin-bottom: 0.4rem;
+    }
+    .recent-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .recent-chip {
+      background: var(--paper-2); border: 1px solid var(--line);
+      border-radius: 20px; padding: 0.25rem 0.7rem;
+      font-size: 0.75rem; color: var(--ink-soft); cursor: pointer;
+      font-family: var(--sans);
+      transition: border-color 0.15s, color 0.15s;
+      max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .recent-chip:hover { border-color: var(--saffron); color: var(--terra); }
+
+    /* ── Example chips ───────────────────────────────── */
+    .chips { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 2.25rem; }
+    .chip {
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      color: var(--ink-soft);
+      cursor: pointer;
+      font-size: 0.78rem;
+      padding: 0.38rem 0.85rem;
+      transition: border-color 0.18s, color 0.18s, background 0.18s, transform 0.12s, box-shadow 0.18s;
+      text-align: left;
+      box-shadow: 0 1px 2px rgba(80,50,20,0.03), 0 3px 8px rgba(80,50,20,0.03);
+    }
+    .chip:hover { border-color: var(--saffron); color: var(--terra); transform: translateY(-1px); box-shadow: 0 2px 4px rgba(80,50,20,0.05), 0 6px 16px rgba(80,50,20,0.06); }
+    .chip:active { transform: scale(0.97); }
+
+    /* ── Answer card ─────────────────────────────────── */
+    #answer-section { display: none; margin-bottom: 2.5rem; }
+    #answer-section.visible { display: block; }
+    .answer-card { padding: 1.5rem 1.6rem; }
+    .answer-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 0.85rem; }
+    .answer-label {
+      font-family: var(--mono);
+      color: var(--terra);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+    .answer-tools { display: flex; gap: 0.4rem; }
+    .tool-btn {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: var(--ink-soft);
+      cursor: pointer;
+      font-size: 0.92rem;
+      padding: 0.3rem 0.5rem;
+      line-height: 1;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .tool-btn:hover { border-color: var(--gold); color: var(--terra); }
+    .tool-btn.active { background: var(--terra); color: #fff; border-color: var(--terra); }
+    #answer-text {
+      font-family: var(--serif);
+      font-size: 1.04rem;
+      line-height: 1.9;
+      color: var(--ink);
+      white-space: pre-wrap;
+    }
+    .citations {
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .citation-label { font-family: var(--mono); color: var(--muted); font-size: 0.68rem; width: 100%; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.1em; }
+    .citation-tag {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      color: var(--terra);
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      padding: 0.35rem 0.7rem;
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .citation-tag:hover { background: var(--paper-3); }
+
+    /* ── Teaching cards (mood results) ──────────────────── */
+    /* ── Mood teaching cards — full-bleed visual style ── */
+    .teaching-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .teaching-card {
+      position: relative;
+      border-radius: 26px;
+      overflow: hidden;
+      height: 340px;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 14px 36px -12px rgba(40,20,0,0.34), 0 2px 6px rgba(40,20,0,0.12);
+      text-align: left;
+    }
+    .teaching-card:hover {
+      transform: translateY(-5px) scale(1.012);
+      box-shadow: 0 24px 50px -12px rgba(40,20,0,0.42);
+    }
+    /* Abstract wave art background */
+    .tc-art {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center bottom;
+    }
+    /* Dark gradient overlay — heavier at bottom for text legibility */
+    .tc-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(15,10,5,0.82) 0%,
+        rgba(15,10,5,0.45) 45%,
+        rgba(15,10,5,0.08) 75%,
+        transparent 100%
+      );
+    }
+    /* Text content anchored to bottom */
+    .tc-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.2rem 1.3rem 1.3rem;
+      color: #fff;
+    }
+    .tc-ref {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 0.3rem;
+    }
+    .tc-title {
+      font-family: var(--display);
+      font-size: 1.05rem;
+      font-weight: 500;
+      line-height: 1.3;
+      margin-bottom: 0.45rem;
+      color: #fff;
+    }
+    .tc-excerpt {
+      font-size: 0.78rem;
+      line-height: 1.55;
+      opacity: 0.75;
+      margin-bottom: 0.7rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .tc-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      background: rgba(255,255,255,0.14);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.32);
+      border-radius: 30px;
+      padding: 0.7rem 1.1rem;
+      color: #fff;
+      transition: background 0.15s;
+    }
+    .teaching-card:hover .tc-action { background: rgba(255,255,255,0.24); }
+    .tc-action .arrow { font-size: 1.05rem; line-height: 1; }
+
+    /* Mood summary (AI) above the cards */
+    .mood-summary {
+      font-family: var(--serif);
+      font-size: 1.04rem;
+      line-height: 1.9;
+      color: var(--ink);
+      white-space: pre-wrap;
+      margin-bottom: 1.4rem;
+      padding-bottom: 1.3rem;
+      border-bottom: 1px dashed var(--line);
+    }
+    .rich-text { white-space: normal; }
+    .rich-text p { margin: 0 0 0.85rem; }
+    .rich-text p:last-child { margin-bottom: 0; }
+    .rich-text p:first-child strong { font-size: 1.1rem; color: var(--terra); }
+    .rich-text ul { margin: 0.4rem 0 1rem; padding-left: 1.15rem; list-style: none; }
+    .rich-text li { position: relative; margin-bottom: 0.7rem; padding-left: 0.4rem; }
+    .rich-text li::before { content: '❧'; position: absolute; left: -0.95rem; color: var(--terra); opacity: 0.65; }
+    .rich-text strong { color: var(--ink); font-weight: 600; }
+    .mood-summary-soft { color: var(--muted); font-style: italic; }
+
+    /* ── Hindi / Gujarati script fonts ──────────────────── */
+    body.lang-hi .daily-title, body.lang-hi .modal-title, body.lang-hi .modal-plain-title,
+    body.lang-hi .modal-body, body.lang-hi .daily-excerpt, body.lang-hi .modal-summary-text,
+    body.lang-hi #answer-text, body.lang-hi .mood-summary, body.lang-hi .tc-title,
+    body.lang-hi .tc-excerpt, body.lang-hi .hero p {
+      font-family: 'Noto Sans Devanagari', sans-serif;
+      line-height: 1.95;
+    }
+    body.lang-gu .daily-title, body.lang-gu .modal-title, body.lang-gu .modal-plain-title,
+    body.lang-gu .modal-body, body.lang-gu .daily-excerpt, body.lang-gu .modal-summary-text,
+    body.lang-gu #answer-text, body.lang-gu .mood-summary, body.lang-gu .tc-title,
+    body.lang-gu .tc-excerpt {
+      font-family: 'Noto Sans Gujarati', sans-serif;
+      line-height: 1.95;
+    }
+    /* No letter-spacing on Indic scripts — it breaks readability */
+    body.lang-hi .eyebrow, body.lang-hi .browse-heading, body.lang-hi .mood-cards-label,
+    body.lang-hi .daily-date, body.lang-hi .ref-pill,
+    body.lang-gu .eyebrow, body.lang-gu .browse-heading, body.lang-gu .mood-cards-label,
+    body.lang-gu .daily-date, body.lang-gu .ref-pill { letter-spacing: 0; }
+
+    /* ── Streak badge ────────────────────────────────────── */
+    .streak-badge {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-family: var(--mono); font-size: 0.68rem; font-weight: 700;
+      color: #e07b1d; letter-spacing: 0.04em;
+      background: color-mix(in srgb, #e07b1d 12%, var(--paper));
+      border: 1px solid color-mix(in srgb, #e07b1d 30%, var(--line));
+      border-radius: 20px; padding: 0.18rem 0.6rem;
+    }
+
+    /* ── Share button (daily card + modal) ───────────────── */
+    .share-btn {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      background: var(--paper-2); border: 1px solid var(--line);
+      border-radius: 20px; color: var(--ink-soft);
+      font-size: 0.75rem; font-family: var(--mono);
+      padding: 0.22rem 0.75rem; cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+    .share-btn:hover { border-color: var(--gold); color: var(--terra); background: var(--paper-3); }
+    .share-btn:disabled { opacity: 0.5; cursor: default; }
+
+    /* ── Share card toast ────────────────────────────────── */
+    #share-toast {
+      position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+      background: var(--ink); color: #fff; font-family: var(--mono); font-size: 0.8rem;
+      padding: 0.6rem 1.2rem; border-radius: 8px; z-index: 999;
+      opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    }
+    #share-toast.show { opacity: 1; }
+
+    /* ── Mood bottom sheet ───────────────────────────────── */
+    #mood-backdrop {
+      position: fixed; inset: 0; background: rgba(15,10,5,0.48);
+      z-index: 200; opacity: 0; pointer-events: none;
+      transition: opacity 0.28s ease;
+    }
+    #mood-backdrop.open { opacity: 1; pointer-events: auto; }
+    #mood-sheet {
+      position: fixed; left: 0; right: 0; bottom: 0;
+      z-index: 201; background: var(--paper);
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 -6px 40px rgba(0,0,0,0.18);
+      max-height: 88vh; display: flex; flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.36s cubic-bezier(0.32,0.72,0,1);
+    }
+    #mood-sheet.open { transform: translateY(0); }
+    .sheet-handle {
+      flex-shrink: 0; width: 40px; height: 4px; border-radius: 2px;
+      background: var(--muted); opacity: 0.35;
+      margin: 0.8rem auto 0.35rem;
+    }
+    .sheet-topbar {
+      flex-shrink: 0; display: flex; align-items: center;
+      justify-content: space-between; padding: 0.4rem 1.4rem 0.75rem;
+      border-bottom: 1px solid var(--line);
+    }
+    .sheet-label {
+      font-family: var(--mono); font-size: 0.70rem; font-weight: 700;
+      letter-spacing: 0.09em; text-transform: uppercase;
+    }
+    .sheet-x {
+      width: 28px; height: 28px; flex-shrink: 0;
+      background: var(--paper-2); border: 1px solid var(--line);
+      border-radius: 50%; cursor: pointer; color: var(--muted);
+      font-size: 0.80rem; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, color 0.15s;
+    }
+    .sheet-x:hover { background: var(--line); color: var(--ink); }
+    .sheet-scroll {
+      flex: 1; overflow-y: auto; padding: 1.25rem 1.4rem 3rem;
+      -webkit-overflow-scrolling: touch;
+    }
+    @media (min-width: 600px) {
+      #mood-sheet { left: 50%; right: auto; width: 100%; max-width: 560px;
+        transform: translateX(-50%) translateY(100%); }
+      #mood-sheet.open { transform: translateX(-50%) translateY(0); }
+    }
+    /* Font size controls always visible */
+    .mood-cards-label {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.85rem;
+    }
+
+    /* Spinner */
+    .spinner { border: 2px solid var(--line); border-top-color: var(--terra); border-radius: 50%; width: 1.4rem; height: 1.4rem; animation: spin 0.7s linear infinite; margin: 1.5rem auto; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Modal ───────────────────────────────────────── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(30,18,8,0.6); backdrop-filter: blur(4px); z-index: 100; align-items: center; justify-content: center; padding: 1rem; }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 40px 80px -24px rgba(30,18,4,0.7);
+    }
+    .modal-close {
+      position: absolute; top: 0.85rem; right: 0.85rem; z-index: 6;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(20,14,8,0.4); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.25); color: #fff;
+      font-size: 0.95rem; cursor: pointer; line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+    }
+    .modal-close:hover { background: rgba(20,14,8,0.65); }
+
+    /* Scene hero banner */
+    .modal-hero { position: relative; flex-shrink: 0; height: 300px; overflow: hidden; display: none; }
+    .modal-hero.visible { display: block; }
+    .modal-hero-art { position: absolute; inset: 0; background-size: cover; background-position: center 18%; transition: background-image 0.6s ease; }
+    .modal-hero-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(12,8,4,0.9) 0%, rgba(12,8,4,0.4) 42%, rgba(12,8,4,0.05) 78%, transparent 100%);
+    }
+    .modal-hero-bar { position: absolute; top: 0.85rem; right: 3.8rem; z-index: 4; display: flex; align-items: center; gap: 0.35rem; }
+    .hero-actions { display: flex; gap: 0.35rem; }
+    .hero-btn {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(255,255,255,0.16); backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.28); color: #fff; cursor: pointer;
+      font-size: 0.8rem; display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .hero-btn:hover { background: rgba(255,255,255,0.32); }
+    .hero-btn.on, .hero-btn.active { background: var(--terra); border-color: var(--terra); }
+    .modal-hero-text { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.1rem 1.4rem 1.2rem; z-index: 4; }
+    .modal-hero .modal-ref { color: rgba(255,255,255,0.82); }
+    .modal-hero .modal-title { color: #fff; }
+
+    .modal-ref { font-family: var(--mono); color: var(--terra); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 0.35rem; }
+    .modal-title { font-family: var(--display); font-weight: 500; font-size: 1.55rem; line-height: 1.2; color: var(--ink); }
+
+    .modal-scroll { overflow-y: auto; padding: 1.7rem 1.6rem 2rem; }
+    .modal-summary {
+      background: color-mix(in srgb, var(--saffron) 11%, var(--paper));
+      border: 1px solid color-mix(in srgb, var(--saffron) 28%, var(--line));
+      border-radius: 12px;
+      padding: 1rem 1.15rem;
+      margin: 0 auto 1.5rem;
+      max-width: 60ch;
+    }
+    .modal-summary-label {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 0.5rem;
+    }
+    .modal-summary-text {
+      font-family: var(--serif);
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--ink-soft);
+    }
+    .modal-plain-title { font-family: var(--display); font-weight: 500; font-size: 1.45rem; color: var(--ink); margin-bottom: 1.1rem; }
+    .modal-body {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      line-height: 1.95;
+      color: var(--ink);
+      max-width: 62ch;
+      margin: 0 auto;
+    }
+    .modal-body p {
+      margin: 0 0 1.1em;
+    }
+    .modal-body p:last-child { margin-bottom: 0; }
+
+    /* Sticky mini-header in discourse modal */
+    .modal-sticky-ref {
+      position: sticky; top: 0; z-index: 3;
+      background: var(--paper); border-bottom: 1px solid var(--line);
+      padding: 0.5rem 1.2rem; font-family: var(--mono);
+      font-size: 0.62rem; letter-spacing: 0.1em; color: var(--terra);
+      text-transform: uppercase; max-height: 0; overflow: hidden;
+      opacity: 0; transition: opacity 0.25s, max-height 0.25s;
+      white-space: nowrap; text-overflow: ellipsis;
+    }
+    .modal-sticky-ref.visible { opacity: 1; max-height: 2.5rem; }
+    /* Back-to-top button in discourse modal */
+    .modal-back-top {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 1002;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--terra); color: #fff; border: none;
+      font-size: 1.1rem; cursor: pointer; display: none;
+      align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .modal-back-top.visible { display: flex; }
+
+    /* Discourse structured sections */
+    .discourse-section-label {
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.14em;
+      text-transform: uppercase; margin-bottom: 0.5rem; font-weight: 600;
+    }
+    .discourse-setting-label { color: var(--muted); }
+    .discourse-speech-label { color: var(--terra); }
+    .discourse-setting {
+      font-style: italic; color: var(--ink-soft); margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem; border-bottom: 1px solid var(--line);
+    }
+    .discourse-speech {
+      border-left: 3px solid color-mix(in srgb, var(--saffron) 50%, var(--line));
+      padding-left: 1.1rem; margin-bottom: 1rem;
+    }
+    .discourse-plain { margin-bottom: 1rem; }
+
+    /* Saved list */
+    .saved-empty { color: var(--muted); font-family: var(--serif); text-align: center; padding: 2rem 0; }
+    .saved-item { padding: 0.85rem 0; border-bottom: 1px solid var(--line); display: flex; gap: 0.75rem; align-items: flex-start; }
+    .saved-item:last-child { border-bottom: none; }
+    .saved-main { flex: 1; cursor: pointer; }
+    .saved-kind { font-family: var(--mono); font-size: 0.64rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--terra); }
+    .saved-title { font-family: var(--serif); color: var(--ink); font-size: 0.95rem; margin-top: 0.15rem; }
+    .saved-sub { color: var(--muted); font-size: 0.78rem; margin-top: 0.1rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .saved-remove { background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: 1.1rem; padding: 0.1rem 0.3rem; }
+    .saved-remove:hover { color: var(--terra); }
+
+    /* ── Browse sections ─────────────────────────────── */
+    .browse-heading { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--terra); margin-bottom: 0.85rem; }
+    .section-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .section-btn {
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 0.85rem;
+      padding: 0.75rem 0.95rem;
+      text-align: left;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: border-color 0.15s, color 0.15s, transform 0.1s, box-shadow 0.15s;
+      box-shadow: 0 1px 2px rgba(80,50,20,0.04), 0 4px 12px rgba(80,50,20,0.03);
+    }
+    .section-btn:hover { border-color: var(--gold); color: var(--terra); transform: translateY(-2px); box-shadow: 0 2px 4px rgba(80,50,20,0.06), 0 8px 24px rgba(80,50,20,0.08); }
+    .section-btn::after { content: '›'; color: var(--muted); font-size: 1.1rem; font-weight: 300; margin-left: 0.3rem; }
+    .section-count { color: var(--muted); font-size: 0.72rem; margin-left: 0.3rem; font-family: var(--mono); }
+
+    .error-msg { color: var(--terra-dk); font-size: 0.88rem; margin-top: 0.5rem; }
+
+    /* ── Mobile responsive ───────────────────────────────── */
+    @media (max-width: 500px) {
+      /* Daily card footer: ref on its own line, share+cta together */
+      .daily-foot { flex-wrap: wrap; gap: 0.45rem; }
+      .daily-foot > div { flex: 1; justify-content: flex-end; }
+      /* Search: stack input above button */
+      .search-wrap { flex-direction: column; }
+      .btn-ask { width: 100%; text-align: center; }
+      /* Header: tighten lang toggle gap */
+      .lang-toggle { gap: 0; }
+      .lang-toggle button { padding: 0.28rem 0.5rem; font-size: 0.78rem; }
+      /* Modal hero slightly shorter */
+      .modal-hero { height: 240px; }
+      /* Teaching cards: single column on very small screens */
+      .teaching-cards { grid-template-columns: 1fr; }
+      /* #5: More breathing room for long discourse reading on mobile */
+      .modal-body { line-height: 2.0; font-size: 1rem; }
+      .modal-body .discourse-setting,
+      .modal-body .discourse-speech,
+      .modal-body .discourse-plain { margin-bottom: 1.25rem; }
+      .discourse-speech { padding-left: 0.85rem; }
+      /* #9: Tap target sizing — ensure icons are at least 44px */
+      .hero-btn { min-width: 44px; min-height: 44px; }
+      .modal-scroll { padding: 1.4rem 1.2rem 2rem; }
+    }
+
+    /* ── Ambient background layer ────────────────────── */
+    body { transition: background 1.4s ease, background-color 1.4s ease; }
+    #ambient-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      transition: opacity 1.8s ease, background 1.8s ease;
+      opacity: 0;
+    }
+    @keyframes twinkle { 0%,100%{opacity:0.2} 50%{opacity:0.9} }
+    @keyframes rain-streak { 0%{transform:translateY(-80px) translateX(0)} 100%{transform:translateY(110vh) translateX(-20px)} }
+    @keyframes golden-pulse { 0%,100%{opacity:0.55} 50%{opacity:0.75} }
+
+    /* Morning — warm amber light from above */
+    body.theme-morning {
+      background: radial-gradient(ellipse at 50% -10%, #f9d47060 0%, transparent 50%),
+                  radial-gradient(ellipse at 15% -5%, #f4b48d50 0%, transparent 40%),
+                  #f4ead8;
+    }
+    body.theme-morning #ambient-bg {
+      opacity: 1;
+      background: linear-gradient(170deg, #fdcc5055 0%, #f9b06040 18%, transparent 48%);
+      animation: golden-pulse 4s ease-in-out infinite;
+    }
+
+    /* Evening — coral, orange, deep rose sky */
+    body.theme-evening {
+      background: radial-gradient(ellipse at 50% -5%, #c4512b55 0%, transparent 50%),
+                  radial-gradient(ellipse at 80% -8%, #e07b1d45 0%, transparent 38%),
+                  #f2dfd0;
+    }
+    body.theme-evening #ambient-bg {
+      opacity: 1;
+      background: linear-gradient(170deg, #d8461d65 0%, #e07b1d45 22%, #7b2d5028 50%, transparent 68%);
+    }
+
+    /* Night — deep indigo; cards glow like candlelit manuscripts */
+    body.theme-night {
+      background: radial-gradient(ellipse at 72% 4%, #ffffff18 0%, transparent 14%),
+                  radial-gradient(ellipse at 22% 6%, #ffffff10 0%, transparent 10%),
+                  #131020;
+    }
+    body.theme-night #ambient-bg { opacity: 1; }
+    body.theme-night header {
+      background: rgba(19,16,32,0.92);
+      border-bottom-color: #2e2848;
+    }
+    body.theme-night .paper-card::before {
+      box-shadow: 0 0 50px -10px rgba(255,215,130,0.10), 0 18px 38px -12px rgba(0,0,0,0.85);
+    }
+    body.theme-night .teaching-card {
+      box-shadow: 0 8px 28px -6px rgba(0,0,0,0.6);
+    }
+    body.theme-night .mood-btn {
+      border-color: #2e2848;
+    }
+    body.theme-night .chip { border-color: #2e2848; color: #8a7fa0; }
+    body.theme-night .section-btn { background: #1c1830; border-color: #2e2848; color: #c8bfe0; }
+
+    /* Monsoon — grey-blue sky wash */
+    body.theme-monsoon {
+      background-image: radial-gradient(ellipse at 50% -8%, #3a4a6048 0%, transparent 58%),
+                        radial-gradient(ellipse at 20% -5%, #4a5a7038 0%, transparent 42%) !important;
+    }
+    body.theme-night.theme-monsoon {
+      background: radial-gradient(ellipse at 50% -8%, #1a2a4048, transparent 60%), #0d1220;
+    }
+    body.theme-monsoon #ambient-bg {
+      opacity: 0.65;
+      background: linear-gradient(180deg, #3a4a6042 0%, transparent 55%);
+    }
+    /* Rain streaks — shown on monsoon */
+    .rain-layer {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none;
+      overflow: hidden; display: none;
+    }
+    body.theme-monsoon .rain-layer { display: block; }
+    .rain-drop {
+      position: absolute;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(180,205,230,0.35));
+      border-radius: 1px;
+      animation: rain-streak linear infinite;
+    }
+
+
+    @media (max-width: 480px) {
+      .search-wrap { flex-direction: column; }
+      .btn-ask { width: 100%; }
+      header { padding: 0.9rem 1rem; }
+      .logo { font-size: 1.1rem; }
+      .logo span { display: none; }
+    }
+
+    /* ── #6: Loading skeletons ───────────────────────── */
+    @keyframes skeletonPulse {
+      0%, 100% { opacity: 0.35; }
+      50% { opacity: 0.7; }
+    }
+    .skeleton {
+      background: var(--line);
+      border-radius: 6px;
+      animation: skeletonPulse 1.8s ease-in-out infinite;
+    }
+    .skeleton-line { height: 0.85rem; margin-bottom: 0.55rem; }
+    .skeleton-line:last-child { width: 60%; }
+    .skeleton-title { height: 1.3rem; width: 75%; margin-bottom: 0.65rem; }
+    .skeleton-pill { height: 1.4rem; width: 5.5rem; border-radius: 4px; }
+    .skeleton-chip { display: inline-block; height: 1.8rem; width: 8rem; border-radius: 20px; margin: 0.2rem 0.2rem; }
+
+    /* Daily verse skeleton */
+    .daily-skeleton {
+      padding: 1.4rem 1.5rem 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .daily-skeleton .skeleton-eyebrow { height: 0.6rem; width: 8rem; margin-bottom: 1rem; }
+
+    /* Answer loading dots */
+    @keyframes answerDots {
+      0%, 80%, 100% { opacity: 0.25; transform: scale(0.8); }
+      40% { opacity: 1; transform: scale(1); }
+    }
+    .loading-dots {
+      display: flex; align-items: center; gap: 0.4rem;
+      padding: 1.5rem 0; justify-content: center;
+    }
+    .loading-dots span {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--saffron);
+      animation: answerDots 1.4s ease-in-out infinite;
+    }
+    .loading-dots span:nth-child(2) { animation-delay: 0.16s; }
+    .loading-dots span:nth-child(3) { animation-delay: 0.32s; }
+    .loading-dots-label {
+      text-align: center; font-family: var(--mono); font-size: 0.7rem;
+      color: var(--muted); margin-top: -0.5rem; padding-bottom: 0.5rem;
+    }
+
+    /* ── #6: Error & empty states ────────────────────── */
+    .inline-error {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      padding: 0.85rem 1rem;
+      background: color-mix(in srgb, #c23b22 6%, var(--paper-2));
+      border: 1px solid color-mix(in srgb, #c23b22 20%, var(--line));
+      border-left: 3px solid #c23b22;
+      border-radius: 8px;
+      margin-top: 0.75rem;
+      font-size: 0.88rem; color: var(--ink);
+      line-height: 1.5;
+    }
+    .inline-error-icon { font-size: 1rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .inline-error-text { flex: 1; }
+    .inline-error .retry-btn {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      background: var(--paper-2); border: 1px solid var(--line);
+      border-radius: 6px; padding: 0.25rem 0.6rem;
+      font-family: var(--mono); font-size: 0.72rem;
+      color: var(--terra); cursor: pointer; margin-top: 0.4rem;
+      transition: background 0.15s;
+    }
+    .inline-error .retry-btn:hover { background: var(--paper-3); }
+
+    .empty-state {
+      text-align: center; padding: 2rem 1rem;
+      color: var(--muted); font-family: var(--serif);
+      font-size: 0.95rem; line-height: 1.6;
+    }
+    .empty-state-icon { font-size: 2rem; margin-bottom: 0.5rem; display: block; }
+
+    /* ── #2: Accessibility — focus-visible ───────────── */
+    :focus { outline: none; }
+    :focus-visible {
+      outline: 2px solid var(--saffron);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+    button:focus-visible, .chip:focus-visible, .mood-btn:focus-visible,
+    .section-btn:focus-visible, .citation-tag:focus-visible {
+      outline: 2px solid var(--saffron);
+      outline-offset: 2px;
+    }
+    .lang-toggle button:focus-visible {
+      outline: 2px solid var(--saffron);
+      outline-offset: -2px;
+    }
+    /* Skip to content */
+    .skip-link {
+      position: absolute; top: -100%; left: 1rem;
+      background: var(--terra); color: #fff;
+      padding: 0.5rem 1rem; border-radius: 0 0 8px 8px;
+      font-family: var(--mono); font-size: 0.8rem;
+      z-index: 999; transition: top 0.2s;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* ── #2: Reduced motion ─────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* ── #5: Visual polish — tighter spacing & hierarchy */
+    .hero { margin-bottom: 1.75rem; }
+    .hero p { font-size: 0.92rem; max-width: 38ch; margin: 0 auto; }
+
+    /* Section dividers */
+    .section-divider {
+      width: 2.5rem; height: 2px; background: var(--line);
+      margin: 0.5rem 0 1.75rem; border-radius: 1px;
+    }
+
+    /* Consistent card hover for all interactive cards */
+    .mq-card, .section-btn, .chip, .mood-btn, .mqb-item {
+      will-change: transform;
+    }
+
+    /* ── #6: Button loading spinner ─────────────────── */
+    .btn-ask.loading {
+      pointer-events: none;
+      position: relative;
+      color: transparent;
+    }
+    .btn-ask.loading::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 1.1rem; height: 1.1rem;
+      margin: -0.55rem 0 0 -0.55rem;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    /* ── #5: Consistent section spacing ─────────────── */
+    .mood-section { margin-bottom: 1.75rem; }
+
+    /* ── #5: Hero refinement ─────────────────────────── */
+    .hero { padding-top: 0.75rem; }
+    .hero-stat {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-family: var(--mono); font-size: 0.68rem;
+      color: var(--muted); margin-top: 0.5rem;
+      letter-spacing: 0.04em;
+    }
+    .hero-divider {
+      width: 3rem; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--saffron), transparent);
+      margin: 1.5rem auto 0;
+      opacity: 0.6;
+    }
+
+    /* ── #5: Section entrance animations ─────────────── */
+    .section-enter {
+      opacity: 0; transform: translateY(14px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .section-enter.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── #5: Chips toggle ────────────────────────────── */
+    .chips.collapsed .chip:nth-child(n+7) { display: none; }
+    .chips-toggle {
+      display: inline-flex; align-items: center; gap: 0.25rem;
+      background: none; border: 1px solid var(--line);
+      border-radius: 16px; padding: 0.25rem 0.7rem;
+      font-family: var(--mono); font-size: 0.68rem;
+      color: var(--gold); cursor: pointer; margin-top: 0.3rem;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .chips-toggle:hover { color: var(--terra); border-color: var(--gold); }
+
+    /* ── #5: Browse section spacing ──────────────────── */
+    .browse-section { margin-top: 1.25rem; }
+
+    /* ── #7: Footer ──────────────────────────────────── */
+    .site-footer {
+      text-align: center; padding: 1.5rem 1.25rem 1rem;
+      font-family: var(--mono); font-size: 0.65rem;
+      color: var(--muted); letter-spacing: 0.05em;
+      border-top: 1px solid var(--line);
+      margin-top: 1.5rem;
+      max-width: 780px; margin-left: auto; margin-right: auto;
+    }
+    .site-footer a { color: var(--gold); text-decoration: none; }
+    .site-footer a:hover { color: var(--terra); }
+    .site-footer-brand {
+      font-family: var(--display); font-size: 0.9rem;
+      color: var(--ink-soft); margin-bottom: 0.3rem;
+      font-weight: 500;
+    }
+
+    /* ── Progress ring ────────────────────────────────── */
+    .progress-section {
+      display: flex; align-items: center; gap: 1rem;
+      background: var(--paper-2); border: 1px solid var(--line);
+      border-radius: 14px; padding: 1rem 1.2rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 1px 2px rgba(80,50,20,0.04), 0 4px 12px rgba(80,50,20,0.03);
+    }
+    .progress-ring { flex-shrink: 0; }
+    .progress-ring-bg { stroke: var(--line); }
+    .progress-ring-fill {
+      stroke: var(--saffron);
+      transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+      transform: rotate(-90deg); transform-origin: center;
+    }
+    .progress-ring-text { font-family: var(--mono); font-size: 11px; fill: var(--ink); font-weight: 600; }
+    .progress-info { flex: 1; min-width: 0; }
+    .progress-label { font-size: 0.82rem; font-weight: 600; color: var(--ink); }
+    .progress-sub { font-size: 0.7rem; color: var(--muted); font-family: var(--mono); margin-top: 2px; }
+    .progress-bar-wrap { height: 4px; background: var(--line); border-radius: 2px; margin-top: 6px; overflow: hidden; }
+    .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--saffron), var(--terra)); border-radius: 2px; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+
+    /* ── Discover button ─────────────────────────────── */
+    .discover-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; padding: 0.8rem 1rem;
+      background: linear-gradient(135deg, var(--paper-2), color-mix(in srgb, var(--saffron) 6%, var(--paper)));
+      border: 1px solid var(--line); border-radius: 14px;
+      font-family: var(--sans); font-size: 0.88rem; font-weight: 600;
+      color: var(--terra); cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.18s, border-color 0.15s;
+      box-shadow: 0 1px 2px rgba(80,50,20,0.04), 0 4px 12px rgba(80,50,20,0.03);
+      margin-bottom: 1.25rem;
+    }
+    .discover-btn:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(80,50,20,0.06), 0 8px 24px rgba(80,50,20,0.08); border-color: var(--gold); }
+    .discover-btn:active { transform: scale(0.98); }
+    .discover-icon { display: inline-block; transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); }
+    .discover-btn:active .discover-icon { transform: rotate(180deg); }
+
+    /* ── MQ flip animation ───────────────────────────── */
+    .mq-card { perspective: 800px; }
+    .mq-answer { transform-origin: top; }
+    .mq-answer.open { animation: flipReveal 0.5s ease forwards; }
+    @keyframes flipReveal {
+      0% { opacity: 0; transform: rotateX(-15deg) scale(0.97); }
+      60% { opacity: 1; transform: rotateX(3deg) scale(1.01); }
+      100% { opacity: 1; transform: rotateX(0) scale(1); }
+    }
+
+    /* ── MQ challenge score ──────────────────────────── */
+    .mq-score {
+      display: flex; align-items: center; gap: 0.6rem;
+      margin-top: 0.75rem; padding: 0.5rem 0.75rem;
+      background: color-mix(in srgb, var(--saffron) 6%, var(--paper));
+      border-radius: 8px; font-family: var(--mono); font-size: 0.7rem; color: var(--ink-soft);
+    }
+    .mq-score-ring { flex-shrink: 0; }
+    .mq-score-fill { stroke: var(--saffron); transition: stroke-dashoffset 0.8s ease; transform: rotate(-90deg); transform-origin: center; }
+
+    /* ── Social proof ────────────────────────────────── */
+    .social-proof {
+      text-align: center; font-family: var(--mono); font-size: 0.68rem;
+      color: var(--muted); letter-spacing: 0.04em; margin-bottom: 0.5rem;
+    }
+    .social-dot {
+      display: inline-block; width: 6px; height: 6px;
+      background: #2e8b57; border-radius: 50%;
+      margin-right: 4px; vertical-align: middle;
+      animation: socialPulse 2s ease infinite;
+    }
+    @keyframes socialPulse { 0%,100% { opacity: 0.6; } 50% { opacity: 1; } }
+
+    /* ── Answer slide-in ─────────────────────────────── */
+    #answer-section.visible .answer-card {
+      animation: answerSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes answerSlideIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ── Mood press animation refinement ─────────────── */
+    .mood-btn:active { transform: scale(0.93); transition-duration: 0.08s; }
+    .mood-btn.active .mood-dot {
+      animation: dotPulse 0.4s ease;
+    }
+    @keyframes dotPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.6); }
+      100% { transform: scale(1); }
+    }
+
+    /* ── Journal note on discourse modal ─────────────── */
+    .journal-section { margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+    .journal-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--terra); margin-bottom: 0.5rem; }
+    .journal-textarea {
+      width: 100%; min-height: 60px; padding: 0.6rem 0.8rem;
+      background: color-mix(in srgb, var(--saffron) 4%, var(--paper));
+      border: 1px solid var(--line); border-radius: 8px;
+      font-family: var(--serif); font-size: 0.85rem; color: var(--ink);
+      resize: vertical; outline: none;
+      transition: border-color 0.15s;
+      box-sizing: border-box;
+    }
+    .journal-textarea:focus { border-color: var(--saffron); }
+    .journal-saved { font-family: var(--mono); font-size: 0.6rem; color: var(--muted); margin-top: 4px; opacity: 0; transition: opacity 0.3s; }
+    .journal-saved.show { opacity: 1; }
+
+
+    /* ── Onboarding nudge ─────────────────────────────── */
+    .onboarding-tip {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 0.5rem; padding: 0.7rem 1rem;
+      background: color-mix(in srgb, var(--saffron) 8%, var(--paper));
+      border: 1px solid color-mix(in srgb, var(--saffron) 20%, transparent);
+      border-radius: 12px; margin-bottom: 1rem;
+      font-size: 0.8rem; color: var(--ink-soft); line-height: 1.4;
+      animation: fadeSlideIn 0.5s ease;
+    }
+    .onboarding-tip button {
+      background: none; border: none; font-size: 1.1rem;
+      color: var(--muted); cursor: pointer; padding: 0 4px; flex-shrink: 0;
+    }
+    @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── Hero parallax ───────────────────────────────── */
+    .hero { position: relative; overflow: hidden; }
+
+    /* ── #2: Touch targets — min 44px on mobile ─────── */
+    @media (max-width: 500px) {
+      .mood-btn { min-height: 44px; }
+      .chip { min-height: 36px; display: inline-flex; align-items: center; }
+      .section-btn { min-height: 44px; display: flex; align-items: center; }
+      .icon-btn { min-height: 36px; }
+      .lang-toggle button { min-height: 36px; }
+    }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+
+<!-- Ambient atmosphere layers -->
+<div id="ambient-bg" aria-hidden="true"></div>
+<div class="rain-layer" id="rain-layer" aria-hidden="true"></div>
+
+<!-- Header -->
+<header>
+  <div class="logo">ShriHari Vani</div>
+  <div class="header-right">
+    <button class="icon-btn" id="saved-btn" onclick="openSaved()" title="Saved teachings" aria-label="View saved teachings">
+      <span id="saved-label">Saved</span> <span class="saved-count" id="saved-count" style="display:none" aria-live="polite">0</span>
+    </button>
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button id="btn-en" class="active" onclick="setLang('en')" aria-label="English">EN</button>
+      <button id="btn-gu" onclick="setLang('gu')" aria-label="Gujarati">ગુ</button>
+      <button id="btn-hi" onclick="setLang('hi')" aria-label="Hindi">हि</button>
+    </div>
+  </div>
+</header>
+
+<!-- Main -->
+<main id="main-content">
+  <div class="hero">
+    <h1 id="hero-title">Explore the Vachanamrut</h1>
+    <p id="hero-sub">Ask any question about Bhagwan Swaminarayan's teachings</p>
+    <div class="hero-stat" id="hero-stat">272 discourses · 3 languages · AI-powered answers</div>
+    <div class="hero-divider"></div>
+  </div>
+
+  <!-- Daily verse skeleton (shown while loading) -->
+  <div class="paper-card daily daily-skeleton" id="daily-skeleton">
+    <div class="skeleton skeleton-eyebrow"></div>
+    <div class="skeleton skeleton-title"></div>
+    <div class="skeleton skeleton-line"></div>
+    <div class="skeleton skeleton-line"></div>
+    <div class="skeleton skeleton-line" style="width:45%"></div>
+    <div style="margin-top:0.9rem"><div class="skeleton skeleton-pill"></div></div>
+  </div>
+
+  <!-- Daily verse -->
+  <div class="paper-card daily" id="daily-card" style="display:none" onclick="openDaily()" role="article" aria-label="Verse of the day">
+    <div class="daily-head">
+      <div class="eyebrow" id="daily-eyebrow">Verse of the day</div>
+      <div style="display:flex;align-items:center;gap:0.5rem">
+        <span class="streak-badge" id="daily-streak" style="display:none"></span>
+        <div class="daily-date" id="daily-date"></div>
+      </div>
+    </div>
+    <div class="daily-title" id="daily-title"></div>
+    <div class="daily-excerpt" id="daily-excerpt"></div>
+    <div class="daily-foot">
+      <span class="ref-pill" id="daily-ref"></span>
+      <div style="display:flex;align-items:center;gap:0.6rem">
+        <button class="share-btn" id="daily-share" onclick="event.stopPropagation();shareDailyVerse()" title="Share as image">↗ Share</button>
+        <span class="daily-cta" id="daily-cta">Read full discourse →</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Onboarding nudge -->
+  <div class="onboarding-tip" id="onboarding-tip" style="display:none">
+    <span id="onboarding-text">Tap a mood, ask a question, or discover a random discourse to begin</span>
+    <button onclick="dismissOnboarding()" aria-label="Dismiss">&times;</button>
+  </div>
+
+  <!-- Reading progress -->
+  <div class="progress-section" id="progress-section">
+    <svg class="progress-ring" width="52" height="52" viewBox="0 0 52 52">
+      <circle class="progress-ring-bg" cx="26" cy="26" r="22" fill="none" stroke-width="4"/>
+      <circle class="progress-ring-fill" id="progress-ring-fill" cx="26" cy="26" r="22" fill="none" stroke-width="4" stroke-linecap="round" stroke-dasharray="138.2" stroke-dashoffset="138.2"/>
+      <text class="progress-ring-text" x="26" y="26" text-anchor="middle" dominant-baseline="central" id="progress-ring-pct">0%</text>
+    </svg>
+    <div class="progress-info">
+      <div class="progress-label" id="progress-label">0 of 272 explored</div>
+      <div class="progress-sub" id="progress-sub">Open discourses to track your journey</div>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <!-- Social proof -->
+  <div class="social-proof" id="social-proof">
+    <span class="social-dot"></span>
+    <span id="social-count">47 readers exploring today</span>
+  </div>
+
+  <!-- Discover -->
+  <button class="discover-btn" id="discover-btn" onclick="discoverRandom()">
+    <svg class="discover-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    <span id="discover-label">Discover a random discourse</span>
+  </button>
+
+  <!-- Mood selector -->
+  <div class="mood-section">
+    <div class="eyebrow" id="mood-heading">How are you feeling?</div>
+    <div class="mood-grid" id="mood-grid"></div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-section">
+    <div class="eyebrow" id="ask-heading">Ask a question</div>
+    <form class="search-wrap" role="search" onsubmit="event.preventDefault(); askQuestion()">
+      <div class="search-input-wrap">
+        <svg class="search-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.75" stroke="currentColor" stroke-width="1.8"/><line x1="12.9" y1="13" x2="17" y2="17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <input id="question" type="text" placeholder="Ask a question…" autocomplete="off" aria-label="Ask a question about the Vachanamrut" />
+      </div>
+      <button class="btn-ask" id="btn-ask" type="submit">Ask</button>
+    </form>
+    <div id="recent-questions" class="recent-questions" style="display:none">
+      <div class="recent-label" id="recent-label">Recent</div>
+      <div class="recent-chips" id="recent-chips"></div>
+    </div>
+    <div id="error-msg" role="alert" style="display:none"></div>
+  </div>
+
+  <!-- Example chips -->
+  <div class="chips collapsed" id="chips" role="list" aria-label="Example questions"></div>
+  <button class="chips-toggle" id="chips-toggle" onclick="toggleChips()" aria-label="Show more example questions">Show more</button>
+
+  <!-- Answer -->
+  <div id="answer-section" aria-live="polite">
+    <div class="paper-card answer-card">
+      <div class="answer-head">
+        <div class="answer-label" id="answer-label">Answer</div>
+        <div class="answer-tools" id="answer-tools" style="display:none">
+          <button class="tool-btn" id="answer-save" onclick="saveCurrentAnswer()" title="Save" aria-label="Save this answer">Save</button>
+        </div>
+      </div>
+      <div id="answer-text"></div>
+      <div class="citations" id="citations" style="display:none">
+        <div class="citation-label" id="citation-label">Sources</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Maharaj Asks -->
+  <div id="mq-section" style="display:none">
+    <div class="eyebrow" id="mq-heading">Maharaj Asks</div>
+    <div class="mq-card" id="mq-card">
+      <div class="mq-eyebrow" id="mq-eyebrow">From the Vachanamrut…</div>
+      <div class="mq-question" id="mq-question"></div>
+      <div class="mq-ref" id="mq-ref"></div>
+      <button class="mq-reveal-btn" id="mq-reveal-btn" onclick="mqRevealAnswer()">Reveal Maharaj's answer</button>
+      <div class="mq-answer" id="mq-answer">
+        <div class="mq-answer-label" id="mq-answer-label">Maharaj's answer</div>
+        <div id="mq-answer-text"></div>
+        <span class="mq-read-more" onclick="mqOpenDiscourse()">Read full discourse →</span>
+      </div>
+      <div class="mq-score" id="mq-score" style="display:none">
+        <svg class="mq-score-ring" width="28" height="28" viewBox="0 0 28 28">
+          <circle cx="14" cy="14" r="11" fill="none" stroke-width="3" stroke="var(--line)"/>
+          <circle class="mq-score-fill" id="mq-score-fill" cx="14" cy="14" r="11" fill="none" stroke-width="3" stroke-linecap="round" stroke-dasharray="69.1" stroke-dashoffset="69.1"/>
+        </svg>
+        <span id="mq-score-text">0/0 revealed</span>
+      </div>
+    </div>
+    <span class="mq-see-all" id="mq-see-all" onclick="openMqBrowser()">See all questions →</span>
+  </div>
+
+  <!-- Browse -->
+  <div class="browse-section">
+    <div class="browse-heading" id="browse-heading">Browse by Section</div>
+    <div class="section-grid" id="section-grid"></div>
+  </div>
+
+  <!-- Teachings About -->
+  <div class="teachings-section">
+    <div class="teachings-heading">Vachanamrut Teachings About…</div>
+    <div class="teachings-chips" id="teachings-chips"></div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="site-footer-brand">ShriHari Vani</div>
+  <div>An open-source Vachanamrut explorer · Built with devotion</div>
+</footer>
+
+<!-- Maharaj Questions Browser -->
+<div class="mqb-overlay" id="mqb-overlay" onclick="if(event.target===this)closeMqBrowser()">
+  <div class="mqb-panel">
+    <button class="mqb-close" onclick="closeMqBrowser()">✕</button>
+    <div class="mqb-title" id="mqb-title">Questions from the Vachanamrut</div>
+    <div class="mqb-subtitle" id="mqb-subtitle"></div>
+    <div class="mqb-list" id="mqb-list"></div>
+    <div class="mqb-pager" id="mqb-pager"></div>
+  </div>
+</div>
+
+<div id="share-toast"></div>
+
+<!-- Mood bottom sheet -->
+<div id="mood-backdrop" onclick="closeMoodSheet()"></div>
+<div id="mood-sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-label">
+  <div class="sheet-handle"></div>
+  <div class="sheet-topbar">
+    <span id="sheet-label" class="sheet-label"></span>
+    <button class="sheet-x" onclick="closeMoodSheet()" aria-label="Close">✕</button>
+  </div>
+  <div class="sheet-scroll" id="sheet-scroll"></div>
+</div>
+
+<!-- Discourse modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <button class="modal-close" onclick="closeModalBtn()">✕</button>
+
+    <!-- Scene hero (discourses only) -->
+    <div class="modal-hero" id="modal-hero">
+      <div class="modal-hero-art" id="modal-hero-art"></div>
+      <div class="modal-hero-grad"></div>
+      <div class="modal-hero-bar">
+        <div class="hero-actions">
+          <div class="hero-btn-aa-wrap">
+            <button class="hero-btn hero-btn-aa" onclick="toggleReaderPanel(event)" title="Reader settings">AA</button>
+            <div class="reader-panel" id="reader-panel">
+              <div class="reader-panel-label">Reader Settings</div>
+              <div class="reader-size-row">
+                <button class="reader-size-btn" id="rsize-0" onclick="setFontSize(0)" style="font-size:0.82rem">A</button>
+                <button class="reader-size-btn active" id="rsize-1" onclick="setFontSize(1)" style="font-size:1rem">A</button>
+                <button class="reader-size-btn" id="rsize-2" onclick="setFontSize(2)" style="font-size:1.2rem">A</button>
+              </div>
+              <div class="reader-font-row">
+                <button class="reader-font-btn active" id="rfont-serif" onclick="setFontFamily('serif')" style="font-family:var(--serif)">Serif</button>
+                <button class="reader-font-btn" id="rfont-sans" onclick="setFontFamily('sans')" style="font-family:var(--sans)">Sans</button>
+              </div>
+            </div>
+          </div>
+          <button class="hero-btn" id="modal-save" onclick="saveCurrentDiscourse()" title="Save">Save</button>
+          <button class="hero-btn" id="modal-share" onclick="shareDiscourse()" title="Share card">↗</button>
+        </div>
+      </div>
+      <div class="modal-hero-text">
+        <div class="modal-ref" id="modal-ref"></div>
+        <div class="modal-title" id="modal-title"></div>
+      </div>
+    </div>
+
+    <div class="modal-scroll" id="modal-scroll">
+      <div class="modal-sticky-ref" id="modal-sticky-ref"></div>
+      <div class="modal-plain-title" id="modal-plain-title" style="display:none"></div>
+      <div class="modal-summary" id="modal-summary" style="display:none">
+        <div class="modal-summary-label" id="modal-summary-label">✦ In simple words</div>
+        <div class="modal-summary-text" id="modal-summary-text"></div>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="journal-section" id="journal-section">
+        <div class="journal-label" id="journal-label">Your reflections</div>
+        <textarea class="journal-textarea" id="journal-textarea" placeholder="What did this verse mean to you?" oninput="saveJournal()"></textarea>
+        <div class="journal-saved" id="journal-saved">Saved</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="modal-back-top" id="modal-back-top" onclick="document.getElementById('modal-scroll').scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<!-- Saved modal -->
+<div class="modal-overlay" id="saved-overlay" onclick="closeSaved(event)">
+  <div class="modal" id="saved-modal">
+    <button class="modal-close" onclick="closeSavedBtn()">✕</button>
+    <div class="modal-scroll">
+      <div class="modal-ref" id="saved-modal-eyebrow">Saved teachings</div>
+      <div class="modal-plain-title" id="saved-modal-title" style="display:block">Your collection</div>
+      <div style="display:flex;gap:0.5rem;margin-bottom:1rem">
+        <button class="share-btn" onclick="exportSaves()" title="Download your saves as JSON">↓ Export</button>
+        <label class="share-btn" style="cursor:pointer" title="Restore saves from a JSON file">↑ Import<input type="file" accept=".json" style="display:none" onchange="importSaves(event)"></label>
+      </div>
+      <div id="saved-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── State ──────────────────────────────────────────────────────
+  let currentLang = 'en';
+  let selectedMood = null;
+  let currentAnswer = null;     // { question, answer, citations }
+  let currentDiscourse = null;  // { reference, friendlyRef, title, text }
+
+  const MOODS = [
+    { id: 'sad',       color: '#3f86c4', en: 'Sad',       gu: 'ઉદાસ',     hi: 'दुखी'     },
+    { id: 'anxious',   color: '#7a9a3a', en: 'Anxious',   gu: 'ચિંતિત',   hi: 'चिंतित'  },
+    { id: 'angry',     color: '#c0392b', en: 'Angry',     gu: 'ક્રોધ',    hi: 'क्रोध'   },
+    { id: 'lonely',    color: '#7e57c2', en: 'Lonely',    gu: 'એકલાપણું', hi: 'अकेला'   },
+    { id: 'fearful',   color: '#d2691e', en: 'Fearful',   gu: 'ભય',       hi: 'भय'      },
+    { id: 'confused',  color: '#607d8b', en: 'Confused',  gu: 'દ્વિધા',   hi: 'द्विधा'  },
+    { id: 'depressed', color: '#3267a8', en: 'Depressed', gu: 'હતાશ',     hi: 'निराश'   },
+    { id: 'peaceful',  color: '#2e8b57', en: 'Peaceful',  gu: 'શાંત',     hi: 'शांत'    },
+    { id: 'happy',     color: '#d4a017', en: 'Happy',     gu: 'ખુશ',      hi: 'खुश'     },
+    { id: 'lazy',      color: '#b8860b', en: 'Lazy',      gu: 'આળસ',      hi: 'आलસ'     },
+  ];
+
+  const SECTIONS = [
+    { code: 'GI',   label: { en: 'Gadhada I',    gu: 'ગઢડા પ્ર.', hi: 'गढड़ा प्र.' } },
+    { code: 'SAR',  label: { en: 'Sarangpur',     gu: 'સારંગપુર',  hi: 'सारंगपुर'  } },
+    { code: 'KAR',  label: { en: 'Kariyani',      gu: 'કારિયાણી',  hi: 'करियाणी'   } },
+    { code: 'LOY',  label: { en: 'Loya',          gu: 'લોયા',      hi: 'लोया'      } },
+    { code: 'PAN',  label: { en: 'Panchala',      gu: 'પંચાળા',    hi: 'पंचाळा'    } },
+    { code: 'GII',  label: { en: 'Gadhada II',    gu: 'ગઢડા મ.',  hi: 'गढड़ा म.'  } },
+    { code: 'VAR',  label: { en: 'Vartal',        gu: 'વરતાલ',     hi: 'वरताल'     } },
+    { code: 'AMD',  label: { en: 'Amdavad',       gu: 'અમદાવાદ',  hi: 'अमदावाद'   } },
+    { code: 'GIII', label: { en: 'Gadhada III',   gu: 'ગઢડા અં.', hi: 'गढड़ा अं.' } },
+    { code: 'JET',  label: { en: 'Jetalpur',      gu: 'જેતલપુર',   hi: 'जेतलपुर'   } },
+  ];
+
+  const SECTION_COUNTS = { GI:78, SAR:18, KAR:12, LOY:18, PAN:7, GII:67, VAR:20, AMD:8, GIII:39, JET:5 };
+
+  const EXAMPLE_QUESTIONS = {
+    en: [
+      'What is the nature of the soul (jiva)?',
+      'How should a devotee control the mind?',
+      'What is the importance of satsang?',
+      'How does one attain the state of gunatit?',
+      'What is true renunciation?',
+      'How to develop unwavering devotion to God?',
+      'How to overcome ego and pride?',
+      'What does Maharaj say about brahmacharya?',
+      'How to remain at peace during hardships?',
+      'What is maya and how does it bind the soul?',
+      'How should one treat others with humility?',
+      'What is the glory of the Akshar-Purushottam upasana?',
+    ],
+    gu: [
+      'જીવ ની ઓળખ કઈ છે?',
+      'ભક્ત મન ને કઈ રીતે વશ કરે?',
+      'સત્સંગ ની ઉત્કૃષ્ટ મહત્તા શું છે?',
+      'ગુણાતીત અવસ્થા કઈ રીતે પ્રાપ્ત થાય?',
+      'સાચો ત્યાગ કોને કહ્યો?',
+      'ભગવાન પ્રત્યે અટળ ભક્તિ કઈ રીતે વધે?',
+      'અહંકાર અને અભિમાન કઈ રીતે જાય?',
+      'બ્રહ્મચર્ય વિશે મહારાજ શું કહે છે?',
+      'મુસીબત માં શાંત કઈ રીતે રહેવાય?',
+      'માયા શું છે અને તે જીવ ને કઈ રીતે બાંધે છે?',
+    ],
+    hi: [
+      'जीव की पहचान क्या है?',
+      'भक्त मन को कैसे वश में करे?',
+      'सत्संग का क्या महत्व है?',
+      'गुणातीत अवस्था कैसे प्राप्त होती है?',
+      'सच्चा त्याग किसे कहते हैं?',
+      'भगवान के प्रति अटल भक्ति कैसे बढ़े?',
+      'अहंकार और अभिमान कैसे दूर होते हैं?',
+      'ब्रह्मचर्य के बारे में महाराज क्या कहते हैं?',
+      'मुसीबत में शांत कैसे रहें?',
+      'माया क्या है और यह जीव को कैसे बांधती है?',
+    ],
+  };
+
+  // ── Ambience: parse time/weather from discourse opening ────────
+  function parseAmbience(text) {
+    const t = text.slice(0, 600).toLowerCase();
+    // Time of day — order matters: most specific first
+    let time = 'afternoon';
+    if (/\bon the night\b|\bat night\b|\bnight of\b|after sunset|after dark|nightfall|hours after sunset/.test(t)) time = 'night';
+    else if (/brahma muh[uū]rta|before sunrise|predawn|pre-dawn/.test(t))                                          time = 'morning';
+    else if (/in the morning|early morning|at dawn|morning of|at sunrise/.test(t))                                 time = 'morning';
+    else if (/in the evening|at dusk|evening of|at sunset|time of evening prayers/.test(t))                        time = 'evening';
+    else if (/at noon|midday|afternoon/.test(t))                                                                   time = 'noon';
+    // Month → weather (Āshādh=Jun-Jul, Shrāvan=Jul-Aug, Bhādrapad=Aug-Sep = monsoon)
+    let weather = 'clear';
+    if (/āshādh|ashadh|shrāvan|shravan|shraavan|bhādrapad|bhadrapad/.test(t)) weather = 'monsoon';
+    else if (/māgsar|magsar|posh|māgh|magh/.test(t))  weather = 'winter';
+    else if (/vaisākh|vaishakh|jeth/.test(t))          weather = 'summer';
+    // Moon phase: sudi = bright half (waxing), vadi = dark half (waning)
+    let moonPhase = 'quarter';
+    const sudiM = t.match(/sudi\s*(\d+)/);
+    const vadiM = t.match(/vadi\s*(\d+)/);
+    if (sudiM) {
+      const d = parseInt(sudiM[1]);
+      moonPhase = d >= 13 ? 'full' : d <= 3 ? 'crescent' : 'quarter';
+    } else if (vadiM) {
+      const d = parseInt(vadiM[1]);
+      moonPhase = d >= 12 ? 'new' : 'quarter';
+    }
+    return { time, weather, moonPhase };
+  }
+
+  // ── Ambience: apply visual theme ───────────────────────────────
+  let currentAmbience = null;
+  const THEME_CLASSES = ['theme-morning','theme-noon','theme-afternoon','theme-evening','theme-night','theme-monsoon'];
+
+  function applyTheme(amb) {
+    currentAmbience = amb;
+    const body = document.body;
+    body.classList.remove(...THEME_CLASSES);
+    const map = { morning:'theme-morning', noon:'theme-noon', afternoon:'theme-afternoon',
+                  evening:'theme-evening', night:'theme-night' };
+    body.classList.add(map[amb.time] || 'theme-afternoon');
+    if (amb.weather === 'monsoon') body.classList.add('theme-monsoon');
+
+    // Night sky: stars + moon
+    const bg = document.getElementById('ambient-bg');
+    bg.innerHTML = '';
+    if (amb.time === 'night') renderNightSky(amb.moonPhase, bg);
+    else if (amb.time === 'morning') renderMorningSun(bg);
+
+    // Rain streaks
+    renderRain(amb.weather === 'monsoon');
+
+    // Scene hero banner art (watercolor image if available, else generated SVG)
+    document.getElementById('modal-hero-art').style.backgroundImage =
+      sceneBg(amb, currentDiscourse && currentDiscourse.reference);
+  }
+
+  function resetTheme() {
+    document.body.classList.remove(...THEME_CLASSES);
+    document.getElementById('ambient-bg').innerHTML = '';
+    renderRain(false);
+    currentAmbience = null;
+  }
+
+  // ── Scene hero art — a painted landscape for the discourse banner ──
+  function sceneArt(amb) {
+    const palettes = {
+      morning:   { sky1:'#ffe6a8', sky2:'#f8b878', hill:'#c97a45', sun:'#fff1c0' },
+      noon:      { sky1:'#bfe2f2', sky2:'#dfe8d8', hill:'#9fb98a', sun:'#fffbe8' },
+      afternoon: { sky1:'#f5d9a8', sky2:'#e8a868', hill:'#b06a3a', sun:'#ffe9b0' },
+      evening:   { sky1:'#f0995a', sky2:'#bd5170', hill:'#5e3470', sun:'#ffd28a' },
+      night:     { sky1:'#243a66', sky2:'#16203f', hill:'#0d1429', sun:'#fffce0' },
+    };
+    const p = palettes[amb.time] || palettes.afternoon;
+    let extras = '';
+
+    // Celestial body
+    if (amb.time === 'night') {
+      const r = { full:20, quarter:14, crescent:10, new:0 }[amb.moonPhase] ?? 14;
+      if (r > 0) {
+        extras += `<circle cx="495" cy="48" r="${r}" fill="${p.sun}" opacity="0.95"/>`;
+        if (amb.moonPhase === 'full') extras += `<circle cx="495" cy="48" r="${r+10}" fill="${p.sun}" opacity="0.18"/>`;
+        if (amb.moonPhase === 'crescent') extras += `<circle cx="${495-r*0.5}" cy="44" r="${r}" fill="${p.sky2}"/>`;
+      }
+      // stars
+      for (let i = 0; i < 40; i++) {
+        const x = Math.random()*600, y = Math.random()*120, rr = Math.random()*1.3+0.3;
+        extras += `<circle cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="${rr.toFixed(1)}" fill="#fff" opacity="${(0.3+Math.random()*0.6).toFixed(2)}"/>`;
+      }
+    } else if (amb.time === 'morning' || amb.time === 'afternoon') {
+      extras += `<circle cx="300" cy="${amb.time==='morning'?70:55}" r="34" fill="${p.sun}" opacity="0.9"/>`+
+                `<circle cx="300" cy="${amb.time==='morning'?70:55}" r="58" fill="${p.sun}" opacity="0.25"/>`;
+    } else if (amb.time === 'evening') {
+      extras += `<circle cx="300" cy="118" r="40" fill="${p.sun}" opacity="0.85"/>`+
+                `<circle cx="300" cy="118" r="70" fill="${p.sun}" opacity="0.22"/>`;
+    }
+
+    // Monsoon: grey clouds + rain hint
+    if (amb.weather === 'monsoon') {
+      extras += `<ellipse cx="160" cy="40" rx="120" ry="34" fill="#3a4660" opacity="0.55"/>`+
+                `<ellipse cx="420" cy="30" rx="140" ry="38" fill="#2e3a52" opacity="0.6"/>`;
+      for (let i = 0; i < 30; i++) {
+        const x = Math.random()*600, y = 60+Math.random()*120;
+        extras += `<line x1="${x.toFixed(0)}" y1="${y.toFixed(0)}" x2="${(x-6).toFixed(0)}" y2="${(y+16).toFixed(0)}" stroke="#bcd0e6" stroke-width="1" opacity="0.3"/>`;
+      }
+    }
+
+    const svg =
+      `<svg viewBox="0 0 600 215" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">`+
+        `<defs><linearGradient id="s" x1="0" y1="0" x2="0" y2="1">`+
+          `<stop offset="0%" stop-color="${p.sky1}"/><stop offset="100%" stop-color="${p.sky2}"/>`+
+        `</linearGradient></defs>`+
+        `<rect width="600" height="215" fill="url(#s)"/>`+
+        extras +
+        // layered hills
+        `<path d="M0,150 C120,120 220,165 340,140 C440,120 520,150 600,135 V215 H0Z" fill="${p.hill}" opacity="0.45"/>`+
+        `<path d="M0,175 C140,150 240,185 360,165 C470,148 540,172 600,160 V215 H0Z" fill="${p.hill}" opacity="0.7"/>`+
+        `<path d="M0,198 C130,182 250,205 380,190 C480,178 550,196 600,188 V215 H0Z" fill="${p.hill}"/>`+
+      `</svg>`;
+    return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+  }
+
+  function renderNightSky(moonPhase, bg) {
+    // Stars
+    for (let i = 0; i < 90; i++) {
+      const s = document.createElement('div');
+      const sz = 0.5 + Math.random() * 1.8;
+      s.style.cssText = `position:absolute;width:${sz}px;height:${sz}px;border-radius:50%;background:#fff;`+
+        `opacity:${0.2+Math.random()*0.65};top:${Math.random()*68}%;left:${Math.random()*100}%;`+
+        `animation:twinkle ${1.5+Math.random()*3}s ease-in-out infinite ${Math.random()*4}s alternate`;
+      bg.appendChild(s);
+    }
+    // Moon
+    const moonSizes = { full:42, quarter:28, crescent:20, new:0 };
+    const sz = moonSizes[moonPhase] || 24;
+    if (sz > 0) {
+      const moon = document.createElement('div');
+      const isFull = moonPhase === 'full';
+      moon.style.cssText = `position:absolute;width:${sz}px;height:${sz}px;border-radius:50%;`+
+        `background:${isFull?'#fffde0':'#f0e8d0'};top:5%;right:14%;`+
+        `box-shadow:0 0 ${isFull?40:16}px ${isFull?10:4}px rgba(255,253,200,${isFull?0.55:0.25})`;
+      bg.appendChild(moon);
+    }
+  }
+
+  function renderMorningSun(bg) {
+    const sun = document.createElement('div');
+    sun.style.cssText = `position:absolute;width:60px;height:60px;border-radius:50%;`+
+      `background:radial-gradient(circle, #fddb58 30%, #f9a82550 80%, transparent 100%);`+
+      `top:3%;left:50%;transform:translateX(-50%);`+
+      `box-shadow:0 0 80px 30px rgba(253,204,80,0.3);animation:golden-pulse 3s ease-in-out infinite`;
+    bg.appendChild(sun);
+  }
+
+  function renderRain(on) {
+    const layer = document.getElementById('rain-layer');
+    layer.innerHTML = '';
+    if (!on) return;
+    for (let i = 0; i < 55; i++) {
+      const drop = document.createElement('div');
+      const h = 14 + Math.random() * 22;
+      const dur = 0.55 + Math.random() * 0.45;
+      drop.className = 'rain-drop';
+      drop.style.cssText = `left:${Math.random()*105}%;top:-${h}px;height:${h}px;`+
+        `opacity:${0.2+Math.random()*0.35};animation-duration:${dur}s;animation-delay:${Math.random()*dur}s`;
+      layer.appendChild(drop);
+    }
+  }
+
+  // ── Ambient Audio Engine (Web Audio API, procedural) ───────────
+  class AmbientAudio {
+    constructor() { this.ctx=null; this.master=null; this.nodes=[]; this.timers=[]; this.on=false; }
+
+    start(amb) {
+      this.stop();
+      this.on = true;
+      try {
+        this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+
+        // Compressor prevents clipping when layers stack
+        this.comp = this.ctx.createDynamicsCompressor();
+        this.comp.threshold.value = -14;
+        this.comp.knee.value = 8;
+        this.comp.ratio.value = 4;
+        this.comp.attack.value = 0.01;
+        this.comp.release.value = 0.25;
+        this.comp.connect(this.ctx.destination);
+
+        // Reverb sends — synthetic IR (exponentially decaying noise)
+        this.reverb = this._createReverb(2.8);
+        const reverbGain = this.ctx.createGain();
+        reverbGain.gain.value = 0.32;
+        this.reverb.connect(reverbGain);
+        reverbGain.connect(this.comp);
+        this.nodes.push(reverbGain);
+
+        // Master bus (dry signal + reverb feed)
+        this.master = this.ctx.createGain();
+        const isMobile = /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
+        const targetGain = isMobile ? 1.8 : 1.2;
+        this.master.gain.setValueAtTime(0, this.ctx.currentTime);
+        this.master.gain.linearRampToValueAtTime(targetGain, this.ctx.currentTime + 3.5);
+        this.master.connect(this.comp);
+
+        // Reverb send from master
+        const reverbSend = this.ctx.createGain();
+        reverbSend.gain.value = 0.45;
+        this.master.connect(reverbSend);
+        reverbSend.connect(this.reverb);
+        this.nodes.push(reverbSend);
+
+        this._raga(amb);
+
+        if (amb.weather === 'monsoon') {
+          this._rain();
+          this._thunder();
+        }
+        if (amb.time === 'morning') {
+          this._birds();
+        } else if (amb.time === 'night') {
+          this._crickets(1.0);
+        } else if (amb.time === 'evening') {
+          this._crickets(0.5);
+        }
+      } catch(e) { this.on = false; }
+      this._refreshBtn();
+    }
+
+    _createReverb(durationSec) {
+      const sr = this.ctx.sampleRate;
+      const len = Math.floor(sr * durationSec);
+      const buf = this.ctx.createBuffer(2, len, sr);
+      for (let c = 0; c < 2; c++) {
+        const d = buf.getChannelData(c);
+        for (let i = 0; i < len; i++) {
+          // Exponential decay envelope × noise
+          d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, 2.2);
+        }
+      }
+      const conv = this.ctx.createConvolver();
+      conv.buffer = buf;
+      this.nodes.push(conv);
+      return conv;
+    }
+
+    stop() {
+      this.on = false;
+      this.timers.forEach(clearTimeout);
+      this.timers = [];
+      this.nodes.forEach(n => { try{ n.stop?.(); } catch{} try{ n.disconnect?.(); } catch{} });
+      this.nodes = [];
+      if (this.master) { try{ this.master.disconnect(); }catch{} this.master = null; }
+      if (this.reverb) { try{ this.reverb.disconnect(); }catch{} this.reverb = null; }
+      if (this.comp)   { try{ this.comp.disconnect(); }catch{} this.comp = null; }
+      if (this.ctx)    { try{ this.ctx.close(); }catch{} this.ctx = null; }
+      this._refreshBtn();
+    }
+
+    toggle(amb) {
+      if (this.on) this.stop();
+      else if (amb) this.start(amb);
+      return this.on;
+    }
+
+    _refreshBtn() {
+      const btn = document.getElementById('ambient-toggle');
+      if (!btn) return;
+      btn.classList.toggle('on', this.on);
+      btn.textContent = '♪';
+    }
+
+    _noise(duration=8) {
+      const sr = this.ctx.sampleRate;
+      const sz = Math.min(duration, 8) * sr;
+      const buf = this.ctx.createBuffer(1, sz, sr);
+      const d = buf.getChannelData(0);
+      for (let i=0; i<sz; i++) d[i] = Math.random()*2-1;
+      const src = this.ctx.createBufferSource();
+      src.buffer = buf; src.loop = true;
+      this.nodes.push(src); return src;
+    }
+
+    _rain() {
+      // Continuous rain wash
+      const n = this._noise();
+      const bp = this.ctx.createBiquadFilter();
+      bp.type = 'bandpass'; bp.frequency.value = 500; bp.Q.value = 0.35;
+      const g = this.ctx.createGain(); g.gain.value = 0.14;
+      n.connect(bp); bp.connect(g); g.connect(this.master);
+      n.start(); this.nodes.push(bp, g);
+
+      // Individual drop taps — short sharp noise bursts at varying intervals
+      const drop = () => {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const dg = this.ctx.createGain();
+        const t = this.ctx.currentTime;
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800 + Math.random()*400, t);
+        osc.frequency.exponentialRampToValueAtTime(200, t + 0.08);
+        dg.gain.setValueAtTime(0.09 + Math.random()*0.06, t);
+        dg.gain.exponentialRampToValueAtTime(0.001, t + 0.1);
+        osc.connect(dg); dg.connect(this.master);
+        osc.start(t); osc.stop(t + 0.12);
+        this.timers.push(setTimeout(drop, 60 + Math.random()*220));
+      };
+      drop();
+    }
+
+    _thunder() {
+      const roll = () => {
+        if (!this.ctx) return;
+        const sr = this.ctx.sampleRate;
+        const len = sr * 4;
+        const buf = this.ctx.createBuffer(1, len, sr);
+        const d = buf.getChannelData(0);
+        // Initial crack then long rumble
+        for (let i = 0; i < len; i++) {
+          const env = i < sr*0.1
+            ? i / (sr*0.1)                            // fast attack
+            : Math.pow(Math.max(0, 1 - (i-sr*0.1) / (len*0.85)), 1.4); // slow rumble decay
+          d[i] = (Math.random()*2-1) * env;
+        }
+        const src = this.ctx.createBufferSource(); src.buffer = buf;
+        const lp = this.ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 150;
+        const g = this.ctx.createGain(); g.gain.value = 1.2;
+        src.connect(lp); lp.connect(g); g.connect(this.master); src.start();
+        this.nodes.push(src, lp, g);
+        // Next thunder 10–35 seconds
+        this.timers.push(setTimeout(roll, 10000 + Math.random()*25000));
+      };
+      // First thunder after 5–10 seconds
+      this.timers.push(setTimeout(roll, 5000 + Math.random()*5000));
+    }
+
+    _crickets(vol = 1) {
+      // Soft, intermittent pulsed chirps — NOT a continuous tone (which stings the ears).
+      // Each voice fires a short burst of quiet pulses, then rests for a randomised gap.
+      const voices = [2350, 2520]; // lower & gentler than before; max 2 voices
+      voices.forEach((freq, i) => {
+        const schedule = () => {
+          if (!this.ctx) return;
+          const t = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          const lp = this.ctx.createBiquadFilter();
+          lp.type = 'lowpass'; lp.frequency.value = 2900; lp.Q.value = 0.6;
+          osc.type = 'sine';
+          osc.frequency.value = freq + Math.random() * 30;
+          // a chirp = 4–7 very short, quiet pulses
+          const pulses = 4 + Math.floor(Math.random() * 4);
+          let tt = t;
+          g.gain.setValueAtTime(0, t);
+          for (let p = 0; p < pulses; p++) {
+            g.gain.linearRampToValueAtTime(0.0075 * vol, tt + 0.004);
+            g.gain.linearRampToValueAtTime(0, tt + 0.018);
+            tt += 0.03;
+          }
+          osc.connect(lp); lp.connect(g); g.connect(this.master);
+          osc.start(t); osc.stop(tt + 0.05);
+          this.nodes.push(osc, lp, g);
+          // rest 0.6–2.2s before the next chirp
+          this.timers.push(setTimeout(schedule, 600 + Math.random() * 1600));
+        };
+        this.timers.push(setTimeout(schedule, i * 450 + Math.random() * 400));
+      });
+    }
+
+    _birds() {
+      // Multiple bird species with distinct tonal signatures
+      const species = [
+        { baseRange: [1800, 2600], dur: 0.2, sweepUp: 1.3 },   // high flute-like
+        { baseRange: [1200, 1800], dur: 0.3, sweepUp: 1.15 },   // mid warble
+        { baseRange: [2400, 3200], dur: 0.12, sweepUp: 1.5 },   // sharp trill
+      ];
+      const makeChirp = (sp) => () => {
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const g = this.ctx.createGain();
+        const base = sp.baseRange[0] + Math.random() * (sp.baseRange[1] - sp.baseRange[0]);
+        const t = this.ctx.currentTime;
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(base, t);
+        osc.frequency.exponentialRampToValueAtTime(base * sp.sweepUp, t + sp.dur * 0.5);
+        osc.frequency.exponentialRampToValueAtTime(base * 0.85, t + sp.dur);
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(0.065, t + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, t + sp.dur + 0.05);
+        osc.connect(g); g.connect(this.master);
+        osc.start(t); osc.stop(t + sp.dur + 0.1);
+        // Schedule next chirp for this species
+        const next = makeChirp(sp);
+        this.timers.push(setTimeout(next, 400 + Math.random() * 2800));
+      };
+      // Stagger species so they don't all chirp at once
+      species.forEach((sp, i) => {
+        this.timers.push(setTimeout(makeChirp(sp)(), 0)); // immediate first
+        if (i > 0) this.timers.push(setTimeout(makeChirp(sp), 300 + i * 600));
+      });
+    }
+
+    _wind(vol = 0.025) {
+      // Very soft ambient air — two layered noise bands
+      const n1 = this._noise();
+      const lp1 = this.ctx.createBiquadFilter(); lp1.type = 'lowpass'; lp1.frequency.value = 180;
+      const g1 = this.ctx.createGain(); g1.gain.value = vol;
+      n1.connect(lp1); lp1.connect(g1); g1.connect(this.master); n1.start();
+      this.nodes.push(lp1, g1);
+
+      const n2 = this._noise();
+      const lp2 = this.ctx.createBiquadFilter(); lp2.type = 'bandpass'; lp2.frequency.value = 320; lp2.Q.value = 1.2;
+      const g2 = this.ctx.createGain(); g2.gain.value = vol * 0.4;
+      n2.connect(lp2); lp2.connect(g2); g2.connect(this.master); n2.start();
+      this.nodes.push(lp2, g2);
+    }
+
+    // A warm, harmonically-rich tanpura/string timbre (additive PeriodicWave).
+    // Real tanpura has a strong fundamental plus a bright band of mid harmonics
+    // (the "jawari" shimmer) — far warmer and more natural than a pure sine.
+    _tanpuraWave() {
+      // Rebuilt per start() — a PeriodicWave is bound to its AudioContext, which
+      // is recreated each time, so it must not be cached across contexts.
+      const amps = [0, 1.0, 0.72, 0.55, 0.5, 0.55, 0.62, 0.58, 0.46, 0.36, 0.3, 0.25, 0.2, 0.16, 0.13, 0.1, 0.08, 0.06, 0.05, 0.04];
+      const N = amps.length;
+      const real = new Float32Array(N);
+      const imag = new Float32Array(N);
+      for (let i = 1; i < N; i++) imag[i] = amps[i];
+      return this.ctx.createPeriodicWave(real, imag, { disableNormalization: false });
+    }
+
+    // Indian classical tanpura bed — sustained drone + plucked-string cycle with
+    // a gentle jawari filter sweep. No synthetic melody (that whistly sine line
+    // was the artificial element); the tanpura alone is calm and authentic.
+    _raga(amb) {
+      const wave = this._tanpuraWave();
+      const Sa = 146.83; // D3
+      const freq = (semi) => Sa * Math.pow(2, semi / 12);
+
+      // 1) Soft sustained drone bed (Sa + Pa + low-Sa), lightly detuned for shimmer
+      [[0, 0.016], [7, 0.011], [-12, 0.012]].forEach(([semi, vol]) => {
+        [-4, 4].forEach(cents => {
+          const osc = this.ctx.createOscillator(); osc.setPeriodicWave(wave);
+          osc.frequency.value = freq(semi) * Math.pow(2, cents / 1200);
+          const lp = this.ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1500;
+          const g = this.ctx.createGain(); g.gain.value = vol;
+          osc.connect(lp); lp.connect(g); g.connect(this.master);
+          osc.start(); this.nodes.push(osc, lp, g);
+        });
+      });
+
+      // 2) Plucked tanpura cycle — Pa · Sa · Sa · low-Sa, each with a long
+      //    shimmering decay and a slow downward jawari sweep
+      const cycle = [7, 0, 0, -12];
+      let pi = 0;
+      const pluck = () => {
+        if (!this.ctx) return;
+        const semi = cycle[pi % cycle.length]; pi++;
+        const f = freq(semi);
+        const t = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator(); osc.setPeriodicWave(wave);
+        osc.frequency.value = f;
+        const lp = this.ctx.createBiquadFilter(); lp.type = 'lowpass';
+        lp.frequency.setValueAtTime(2600, t);
+        lp.frequency.exponentialRampToValueAtTime(850, t + 3.4);
+        const g = this.ctx.createGain();
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(0.075, t + 0.06);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 3.6);
+        osc.connect(lp); lp.connect(g); g.connect(this.master);
+        osc.start(t); osc.stop(t + 3.7);
+        this.nodes.push(osc, lp, g);
+        this.timers.push(setTimeout(pluck, 1150 + Math.random() * 250));
+      };
+      pluck();
+    }
+  }
+
+  const ambientAudio = { start(){}, stop(){}, toggle(){} };
+
+  // ── Init ───────────────────────────────────────────────────────
+  function init() {
+    renderMoods();
+    renderChips();
+    renderSections();
+    renderRecentQuestions();
+    loadDaily();
+    loadMaharajQuestion();
+    updateSavedCount();
+    applyFontSize();
+    initEntranceAnimations();
+    updateHeroStat();
+    updateProgress();
+    initSocialProof();
+    updateMqScore();
+    initParallax();
+    initOnboarding();
+  }
+
+  // ── Daily verse ────────────────────────────────────────────────
+  let dailyData = null;
+  async function loadDaily() {
+    try {
+      const res = await fetch(`/api/daily?lang=${currentLang}`);
+      dailyData = await res.json();
+      if (dailyData.error) return;
+      const now = new Date();
+      const locale = currentLang === 'gu' ? 'gu-IN' : currentLang === 'hi' ? 'hi-IN' : 'en-US';
+      const dateStr = now.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' });
+      document.getElementById('daily-eyebrow').textContent = t('Verse of the day', 'આજનું વચન', 'आज का वचन');
+      document.getElementById('daily-date').textContent = dateStr;
+      document.getElementById('daily-title').textContent = dailyData.title;
+      const excerpt = dailyData.excerpt.replace(/^[\u201c\u201d']+/, '').replace(/[\u201c\u201d']+$/, '');
+      document.getElementById('daily-excerpt').textContent = '\u201c' + excerpt + '\u2026\u201d';
+      document.getElementById('daily-ref').textContent = dailyData.friendlyRef;
+      document.getElementById('daily-cta').textContent = t('Read full discourse →', 'સંપૂર્ણ વચનામૃત વાંચો →', 'संपूर्ण वचनामृत पढ़ें →');
+      document.getElementById('daily-skeleton').style.display = 'none';
+      document.getElementById('daily-card').style.display = 'block';
+      _updateStreak();
+    } catch {
+      document.getElementById('daily-skeleton').style.display = 'none';
+    }
+  }
+  function openDaily() {
+    if (dailyData) showDiscourse(dailyData.reference);
+  }
+
+  let _mqRef = null;
+  let _mqAnswer = null;
+  async function loadMaharajQuestion() {
+    try {
+      const res = await fetch('/api/maharaj-question');
+      const data = await res.json();
+      if (!data || !data.question) return;
+      _mqRef = data.reference;
+      _mqAnswer = data.answer || null;
+      document.getElementById('mq-heading').textContent =
+        t('Maharaj Asks', 'મહારાજ પૂછે છે', 'महाराज पूछते हैं');
+      document.getElementById('mq-eyebrow').textContent =
+        t('From the Vachanamrut…', 'વચનામૃત માંથી…', 'वचनामृत से…');
+      const q = data.question.replace(/^[\u201c\u201d"]+/, '').replace(/\?$/, '').trim();
+      document.getElementById('mq-question').textContent = '\u201c' + q + '?\u201d';
+      document.getElementById('mq-ref').textContent = data.friendlyRef + ' \u00b7 ' + data.title.split(';')[0].trim();
+      document.getElementById('mq-reveal-btn').textContent =
+        t('Reveal the answer', 'ઉત્તર જુઓ', 'उत्तर देखें');
+      document.getElementById('mq-answer-label').textContent =
+        t("Maharaj's answer", 'મહારાજનો ઉત્તર', 'महाराज का उत्तर');
+      if (_mqAnswer) {
+        document.getElementById('mq-answer-text').textContent = _mqAnswer;
+      }
+      document.getElementById('mq-see-all').textContent =
+        t('See all questions →', 'બધા પ્રશ્નો જુઓ →', 'सभी प्रश्न देखें →');
+      document.getElementById('mq-section').style.display = 'block';
+    } catch { /* silent */ }
+  }
+  function mqRevealAnswer() {
+    const answerEl = document.getElementById('mq-answer');
+    const btnEl = document.getElementById('mq-reveal-btn');
+    if (answerEl.classList.contains('open')) {
+      answerEl.classList.remove('open');
+      btnEl.textContent = t('Reveal the answer', 'ઉત્તર જુઓ', 'उत्तर देखें');
+    } else {
+      answerEl.classList.add('open');
+      btnEl.textContent = t('Hide answer', 'ઉત્તર છુપાવો', 'उत्तर छुपाएं');
+      trackMqReveal();
+    }
+  }
+  function mqOpenDiscourse() { if (_mqRef) showDiscourse(_mqRef); }
+
+  let _mqbPage = 1;
+  function openMqBrowser() {
+    _mqbPage = 1;
+    loadMqbPage(1);
+    document.getElementById('mqb-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMqBrowser() {
+    document.getElementById('mqb-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  async function loadMqbPage(page) {
+    try {
+      const res = await fetch(`/api/maharaj-questions?page=${page}&limit=15`);
+      const data = await res.json();
+      _mqbPage = data.page;
+      document.getElementById('mqb-title').textContent =
+        t('Questions from the Vachanamrut', 'વચનામૃતમાંથી પ્રશ્નો', 'वचनामृत से प्रश्न');
+      document.getElementById('mqb-subtitle').textContent =
+        t(`${data.total} questions · Page ${data.page} of ${data.pages}`,
+          `${data.total} પ્રશ્નો · પૃષ્ઠ ${data.page} / ${data.pages}`,
+          `${data.total} प्रश्न · पृष्ठ ${data.page} / ${data.pages}`);
+      const list = document.getElementById('mqb-list');
+      list.innerHTML = '';
+      for (const item of data.items) {
+        const q = item.question.replace(/^["“”]+/, '').replace(/\?$/, '').trim();
+        const el = document.createElement('div');
+        el.className = 'mqb-item';
+        el.innerHTML =
+          `<div class="mqb-item-q">“${q}?”</div>` +
+          `<div class="mqb-item-ref">${item.friendlyRef} · ${item.title.split(';')[0].trim()}</div>` +
+          `<div class="mqb-item-answer"><div class="mqb-item-answer-label">${t("Maharaj's answer", "મહારાજનો ઉત્તર", "महાरાज का उत्तर")}</div>${item.answer}</div>`;
+        el.onclick = function() {
+          const ans = this.querySelector('.mqb-item-answer');
+          ans.classList.toggle('open');
+        };
+        list.appendChild(el);
+      }
+      const pager = document.getElementById('mqb-pager');
+      pager.innerHTML =
+        `<button onclick="loadMqbPage(${page - 1})" ${page <= 1 ? 'disabled' : ''}>← ${t('Prev', 'પાછળ', 'पिछला')}</button>` +
+        `<span>${page} / ${data.pages}</span>` +
+        `<button onclick="loadMqbPage(${page + 1})" ${page >= data.pages ? 'disabled' : ''}>${t('Next', 'આગળ', 'अगला')} →</button>`;
+      document.getElementById('mqb-overlay').scrollTop = 0;
+    } catch { /* silent */ }
+  }
+
+  function _updateStreak() {
+    const today = new Date().toDateString();
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    let s = JSON.parse(localStorage.getItem('shv_streak') || '{"date":"","count":0}');
+    if (s.date === today) {
+      // already counted today
+    } else if (s.date === yesterday) {
+      s.count += 1; s.date = today;
+      localStorage.setItem('shv_streak', JSON.stringify(s));
+    } else {
+      s = { date: today, count: 1 };
+      localStorage.setItem('shv_streak', JSON.stringify(s));
+    }
+    const badge = document.getElementById('daily-streak');
+    if (s.count >= 2) {
+      badge.textContent = `${s.count} ${t('day streak', 'દિવસ', 'दिन')}`;
+      badge.style.display = 'inline-flex';
+    } else {
+      badge.style.display = 'none';
+    }
+  }
+
+  // ── Mood ───────────────────────────────────────────────────────
+  function renderMoods() {
+    document.getElementById('mood-heading').textContent =
+      t('How are you feeling?', 'તમે કેવું અનુભવો છો?', 'आप कैसा अनुभव कर रहे हैं?');
+    const grid = document.getElementById('mood-grid');
+    grid.innerHTML = '';
+    MOODS.forEach((m, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'mood-btn' + (selectedMood === m.id ? ' active' : '');
+      btn.style.setProperty('--mood-color', m.color);
+      btn.style.animationDelay = `${i * 45}ms`;
+      btn.innerHTML = `<span class="mood-dot" style="background:${m.color}"></span>${t(m.en, m.gu, m.hi)}`;
+      btn.onclick = () => selectMood(m);
+      grid.appendChild(btn);
+    });
+  }
+
+  function closeMoodSheet() {
+    document.getElementById('mood-backdrop').classList.remove('open');
+    document.getElementById('mood-sheet').classList.remove('open');
+    document.body.style.overflow = '';
+    selectedMood = null;
+    renderMoods();
+  }
+
+  async function selectMood(mood) {
+    haptic();
+    dismissOnboarding();
+    if (selectedMood === mood.id) {
+      closeMoodSheet();
+      return;
+    }
+    selectedMood = mood.id;
+    const reqMood = mood.id;
+    renderMoods();
+    hideError();
+
+    // Open the bottom sheet immediately with a spinner
+    const label = document.getElementById('sheet-label');
+    label.textContent = t(`For feeling ${mood.en}`, mood.gu, mood.hi);
+    label.style.color = mood.color;
+    const body = document.getElementById('sheet-scroll');
+    body.innerHTML =
+      '<div class="mood-summary" id="mood-summary"><div class="spinner"></div></div>' +
+      `<div class="mood-cards-label">${t('Related discourses', 'સંબંધિત વચનામૃત', 'संबंधित वचनामृत')}</div>` +
+      '<div id="mood-cards"><div class="spinner"></div></div>';
+    document.getElementById('mood-backdrop').classList.add('open');
+    document.getElementById('mood-sheet').classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    // 1) Related discourse cards — fast, from pre-generated data
+    fetch(`/api/mood/${mood.id}?lang=${currentLang}`)
+      .then(r => r.json())
+      .then(cards => {
+        if (selectedMood !== reqMood) return;
+        const host = document.getElementById('mood-cards');
+        if (host && !cards.error) renderMoodCardsInto(host, cards, mood);
+      })
+      .catch(() => {});
+
+    // 2) AI teaching — loaded from pre-generated preset; Gemini only on cache miss
+    try {
+      const res = await fetch('/api/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: '', lang: currentLang, mood: mood.id }),
+      });
+      const data = await res.json();
+      if (selectedMood !== reqMood) return;
+      const sum = document.getElementById('mood-summary');
+      if (!sum) return;
+      if (data.error || !data.answer) {
+        sum.classList.add('mood-summary-soft');
+        sum.textContent = t(
+          'Reflect on the related discourses below — each speaks to this feeling.',
+          'નીચે આપેલાં વચનામૃતમાં આ ભાવ માટે ભગવાનનો ઉપદેશ વાંચો.',
+          'नीचे दिए गए वचनामृत में इस भाव के लिए भगवान का उपदेश पढ़ें।'
+        );
+        return;
+      }
+      sum.classList.add('rich-text');
+      sum.innerHTML = mdLite(data.answer);
+      currentAnswer = { question: moodLabel(mood), answer: data.answer, citations: data.citations || [] };
+    } catch {
+      if (selectedMood !== reqMood) return;
+      const sum = document.getElementById('mood-summary');
+      if (sum) {
+        sum.classList.add('mood-summary-soft');
+        sum.textContent = t(
+          'Reflect on the related discourses below — each speaks to this feeling.',
+          'નીચે આપેલાં વચનામૃતમાં આ ભાવ માટે ભગવાનનો ઉપદેશ વાંચો.',
+          'नीचे दिए गए वचनामृत में इस भाव के लिए भगवान का उपदेश पढ़ें।'
+        );
+      }
+    }
+  }
+
+  function moodLabel(mood) {
+    return t(
+      `Bhagwan's teachings for feeling ${mood.en}`,
+      `ભગવાન ${mood.gu} ની ભાવના માટે કહે છે`,
+      `भगवान ${mood.hi} की भावना के लिए कहते हैं`
+    );
+  }
+
+  // ── Watercolor scene images ────────────────────────────────────
+  // Drop image files in public/scenes/ and list the key -> filename here.
+  // Falls back to the generated SVG landscape when no image exists.
+  const SCENE_IMAGES = {
+    // Place-specific (take priority when place + time match)
+    'gadhada-night': 'gadhada-night.jpg',
+    'gadhada-morning': 'gadhada-morning.jpg',
+    'sarangpur-afternoon': 'sarangpur-afternoon.jpg',
+    'sarangpur-evening': 'sarangpur-evening.jpg',
+    'kariyani-afternoon-monsoon': 'kariyani-afternoon-monsoon.jpg',
+    'panchala-evening': 'panchala-evening.jpg',
+    'vadtal-morning': 'vadtal-morning.jpg',
+    'vadtal-evening': 'vadtal-evening.jpg',
+    'amdavad-afternoon': 'amdavad-afternoon.jpg',
+    'loya-night': 'loya-night.jpg',
+    'jetalpur-night': 'jetalpur-night.jpg',
+    // Generic time-of-day fallbacks
+    'night': 'gadhada-night-2.jpg',
+    'afternoon': 'amdavad-afternoon.jpg',
+    'noon': 'sarangpur-afternoon.jpg',
+    'evening': 'vadtal-evening.jpg',
+    'morning': 'gadhada-morning.jpg',
+    'monsoon': 'kariyani-afternoon-monsoon.jpg',
+  };
+  const PLACE_BY_SECTION = {
+    GI: 'gadhada', GII: 'gadhada', GIII: 'gadhada',
+    SAR: 'sarangpur', KAR: 'kariyani', LOY: 'loya', PAN: 'panchala',
+    VAR: 'vadtal', AMD: 'amdavad', JET: 'jetalpur',
+  };
+  function sceneImageKey(ref, amb) {
+    const sec = (ref || '').split('-')[0].toUpperCase();
+    const place = PLACE_BY_SECTION[sec];
+    const candidates = [];
+    if (place) {
+      if (amb.weather === 'monsoon') candidates.push(`${place}-${amb.time}-monsoon`, `${place}-monsoon`);
+      candidates.push(`${place}-${amb.time}`, place);
+    }
+    // generic fallbacks by weather/time so the few images cover all discourses
+    if (amb.weather === 'monsoon') candidates.push('monsoon');
+    candidates.push(amb.time);
+    if (amb.time === 'noon') candidates.push('afternoon');
+    return candidates.find(k => SCENE_IMAGES[k]) || null;
+  }
+  // Returns a real watercolor image if available, else the generated SVG scene
+  function sceneBg(amb, ref) {
+    const key = ref ? sceneImageKey(ref, amb) : null;
+    if (key) return `url("scenes/${SCENE_IMAGES[key]}")`;
+    return sceneArt(amb);
+  }
+
+  // ── Card art helpers ───────────────────────────────────────────
+  function hexToRgb(hex) {
+    const h = hex.replace('#','');
+    return { r: parseInt(h.slice(0,2),16), g: parseInt(h.slice(2,4),16), b: parseInt(h.slice(4,6),16) };
+  }
+
+  function cardArtSVG(color, idx) {
+    const {r,g,b} = hexToRgb(color);
+    // Sky tint: lighter version of mood color
+    const sr = Math.min(255, r+105), sg = Math.min(255, g+100), sb = Math.min(255, b+88);
+    const sky = `rgb(${sr},${sg},${sb})`;
+    const mid = `rgb(${Math.min(255,r+55)},${Math.min(255,g+50)},${Math.min(255,b+38)})`;
+    // Wave y-positions vary by card index
+    const variants = [
+      [105,128,148], [92,116,138], [110,132,152], [98,122,142], [88,112,135], [115,136,155]
+    ];
+    const [y1,y2,y3] = variants[idx % variants.length];
+    // Bezier control x-positions — vary horizontally per card
+    const ctrl = [[55,160,250],[45,150,260],[65,170,240],[50,155,255]][idx % 4];
+    const encoded = encodeURIComponent(
+      `<svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g${idx}" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="${sky}"/>
+            <stop offset="100%" stop-color="${mid}"/>
+          </linearGradient>
+        </defs>
+        <rect width="300" height="180" fill="url(#g${idx})"/>
+        <path d="M0,${y1} C${ctrl[0]},${y1-22} ${ctrl[1]},${y1+18} ${ctrl[2]},${y1-10} S288,${y1+8} 300,${y1} V180 H0Z" fill="${color}" opacity="0.30"/>
+        <path d="M0,${y2} C${ctrl[0]+8},${y2-16} ${ctrl[1]-8},${y2+14} ${ctrl[2]-8},${y2-7} S292,${y2+6} 300,${y2} V180 H0Z" fill="${color}" opacity="0.55"/>
+        <path d="M0,${y3} C${ctrl[0]+4},${y3-10} ${ctrl[1]+6},${y3+10} ${ctrl[2]+4},${y3-4} S296,${y3+4} 300,${y3} V180 H0Z" fill="${color}" opacity="0.90"/>
+      </svg>`
+    );
+    return `url("data:image/svg+xml,${encoded}")`;
+  }
+
+  function renderMoodCardsInto(host, cards, mood) {
+    host.innerHTML = '';
+    const grid = document.createElement('div');
+    grid.className = 'teaching-cards';
+    cards.forEach((c, idx) => {
+      const card = document.createElement('div');
+      card.className = 'teaching-card';
+      const art = document.createElement('div');
+      art.className = 'tc-art';
+      // Each card shows the actual scene of when Bhagwan spoke this discourse
+      art.style.backgroundImage = c.ambience ? sceneBg(c.ambience, c.reference) : cardArtSVG(mood.color, idx);
+      const overlay = document.createElement('div');
+      overlay.className = 'tc-overlay';
+      const content = document.createElement('div');
+      content.className = 'tc-content';
+      const readLabel = t('Read full discourse', 'સંપૂર્ણ વાંચો', 'संपूर्ण पढ़ें');
+      content.innerHTML =
+        `<div class="tc-ref">${c.friendlyRef}</div>` +
+        `<div class="tc-title">${escapeHtml(c.title)}</div>` +
+        `<div class="tc-excerpt">${escapeHtml(c.excerpt)}…</div>` +
+        `<div class="tc-action"><span>${readLabel}</span><span class="arrow">→</span></div>`;
+      card.appendChild(art);
+      card.appendChild(overlay);
+      card.appendChild(content);
+      card.onclick = () => showDiscourse(c.reference);
+      grid.appendChild(card);
+    });
+    host.appendChild(grid);
+  }
+
+  function renderCitations(citations) {
+    const citEl = document.getElementById('citations');
+    [...citEl.querySelectorAll('.citation-tag')].forEach(el => el.remove());
+    document.getElementById('citation-label').textContent = t('Sources', 'સ્ત્રોત', 'स्रोत');
+    if (citations && citations.length) {
+      citations.forEach(c => {
+        const tag = document.createElement('span');
+        tag.className = 'citation-tag';
+        tag.textContent = c.friendlyRef;
+        tag.title = c.title;
+        tag.onclick = () => showDiscourse(c.reference);
+        citEl.appendChild(tag);
+      });
+      citEl.style.display = 'flex';
+    } else {
+      citEl.style.display = 'none';
+    }
+  }
+
+  // ── Language ───────────────────────────────────────────────────
+  // t(en, gu, hi) — pick string for currentLang
+  const t = (en, gu, hi) => currentLang === 'hi' ? (hi || en) : currentLang === 'gu' ? (gu || en) : en;
+
+  function setLang(lang) {
+    currentLang = lang;
+    selectedMood = null;
+    document.getElementById('mood-backdrop').classList.remove('open');
+    document.getElementById('mood-sheet').classList.remove('open');
+    document.body.style.overflow = '';
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-gu').classList.toggle('active', lang === 'gu');
+    document.getElementById('btn-hi').classList.toggle('active', lang === 'hi');
+    document.body.classList.toggle('lang-hi', lang === 'hi');
+    document.body.classList.toggle('lang-gu', lang === 'gu');
+    document.getElementById('question').value = '';
+    document.getElementById('question').placeholder = t('Ask a question…', 'પ્રશ્ન પૂછો…', 'प्रश्न पूछें…');
+    document.getElementById('hero-title').textContent = t('Explore the Vachanamrut', 'વચનામૃત શોધ', 'वचनामृत खोज');
+    document.getElementById('hero-sub').textContent = t(
+      "Ask any question about Bhagwan Swaminarayan's teachings",
+      'ભગવાન સ્વામિનારાયણ ના ઉપદેશ વિશે પ્રશ્ન પૂછો',
+      'भगवान स्वामिनारायण के उपदेशों के बारे में प्रश्न पूछें'
+    );
+    document.getElementById('browse-heading').textContent = t('Browse by Section', 'વિભાગ પ્રમાણે જુઓ', 'विभाग के अनुसार देखें');
+    document.getElementById('saved-label').textContent = t('Saved', 'સંગ્રહ', 'संग्रह');
+    updateHeroStat();
+    updateProgress();
+    initSocialProof();
+    updateMqScore();
+    document.getElementById('discover-label').textContent =
+      t('Discover a random discourse', 'કોઈ વચનામૃત શોધો', 'कोई वचनामृत खोजें');
+    renderMoods();
+    renderChips();
+    renderSections();
+    renderRecentQuestions();
+    loadDaily();
+    document.getElementById('answer-section').classList.remove('visible');
+  }
+
+  // ── Chips ──────────────────────────────────────────────────────
+  function renderChips() {
+    const container = document.getElementById('chips');
+    container.innerHTML = '';
+    const qs = EXAMPLE_QUESTIONS[currentLang] || EXAMPLE_QUESTIONS.en;
+    qs.forEach(q => {
+      const btn = document.createElement('button');
+      btn.className = 'chip';
+      btn.setAttribute('role', 'listitem');
+      btn.textContent = q;
+      btn.onclick = () => { document.getElementById('question').value = q; askQuestion(); };
+      container.appendChild(btn);
+    });
+  }
+
+  // ── Section grid ───────────────────────────────────────────────
+  function renderSections() {
+    const grid = document.getElementById('section-grid');
+    grid.innerHTML = '';
+    SECTIONS.forEach(sec => {
+      const btn = document.createElement('button');
+      btn.className = 'section-btn';
+      const label = sec.label[currentLang] || sec.label.en;
+      const count = SECTION_COUNTS[sec.code] || '';
+      btn.innerHTML = `${label}<span class="section-count">${count}</span>`;
+      btn.onclick = () => browseSection(sec.code, label);
+      grid.appendChild(btn);
+    });
+
+    // Teachings About chips
+    const teachingsTopics = [
+      'Devotion (Bhakti)', 'The Mind', 'Maya', 'Satsang', 'Liberation (Mukti)',
+      'The Soul (Atma)', 'Renunciation', "God's Form", 'Service (Seva)',
+      'Meditation (Dhyan)', 'Virtues', 'Surrender', 'The Guru', 'Death & Afterlife',
+      'Dharma', 'Knowledge (Jnan)'
+    ];
+    const tchips = document.getElementById('teachings-chips');
+    if (tchips) {
+      tchips.innerHTML = '';
+      teachingsTopics.forEach(topic => {
+        const chip = document.createElement('button');
+        chip.className = 'teachings-chip';
+        chip.textContent = topic;
+        chip.onclick = () => {
+          const q = document.getElementById('question');
+          if (q) { q.value = 'What does the Vachanamrut say about ' + topic + '?'; }
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          setTimeout(askQuestion, 300);
+        };
+        tchips.appendChild(chip);
+      });
+    }
+  }
+
+  async function browseSection(code, label) {
+    hideError();
+    try {
+      const res = await fetch(`/api/section/${code}?lang=${currentLang}`);
+      const discourses = await res.json();
+      if (!discourses.length) { showError(t('No discourses found', 'કોઈ પ્રવચન મળ્યું નહિ', 'कोई प्रवचन नहीं मिला')); return; }
+      showSectionList(label, discourses);
+    } catch { showError('Could not load discourses.'); }
+  }
+
+  function showSectionList(label, discourses) {
+    const overlay = document.getElementById('modal-overlay');
+    // No scene hero for a section index — show a plain title instead
+    document.getElementById('modal-hero').classList.remove('visible');
+    document.getElementById('modal-summary').style.display = 'none';
+    const plain = document.getElementById('modal-plain-title');
+    plain.style.display = 'block';
+    plain.textContent = label;
+    document.querySelector('.modal-scroll').scrollTop = 0;
+    const bodyEl = document.getElementById('modal-body');
+    bodyEl.innerHTML = '';
+    const list = document.createElement('ul');
+    list.style.cssText = 'list-style:none;padding:0;margin:0;';
+    discourses.forEach(d => {
+      const li = document.createElement('li');
+      li.style.cssText = 'padding:0.65rem 0;border-bottom:1px solid var(--line);cursor:pointer;';
+      li.innerHTML = `<span style="font-family:var(--mono);color:var(--terra);font-size:0.74rem;margin-right:0.6rem;">${d.friendlyRef}</span><span>${escapeHtml(d.title)}</span>`;
+      li.onclick = () => showDiscourse(d.reference);
+      list.appendChild(li);
+    });
+    bodyEl.appendChild(list);
+    overlay.classList.add('open');
+  }
+
+  // ── Ask ────────────────────────────────────────────────────────
+  async function askQuestion() {
+    haptic();
+    dismissOnboarding();
+    const q = document.getElementById('question').value.trim();
+    if (!q) return;
+    selectedMood = null;
+    renderMoods();
+    addRecentQuestion(q);
+    showLoading();
+    hideError();
+
+    // Client cache — same question (this user) never re-charges after a refresh
+    const ck = currentLang + '|' + q.replace(/\s+/g, ' ').toLowerCase();
+    const cache = JSON.parse(localStorage.getItem('shv_answers') || '{}');
+    if (cache[ck]) { renderAnswer({ ...cache[ck], question: q }); return; }
+
+    try {
+      const res = await fetch('/api/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: q, lang: currentLang, mood: null }),
+      });
+      const data = await res.json();
+      if (data.error) { showError(data.error); return; }
+      data.question = q;
+      renderAnswer(data);
+      // Cache the answer (cap the store so it can't grow unbounded)
+      cache[ck] = { answer: data.answer, citations: data.citations || [] };
+      const keys = Object.keys(cache);
+      if (keys.length > 60) delete cache[keys[0]];
+      localStorage.setItem('shv_answers', JSON.stringify(cache));
+    } catch { showError('Connection error. Please try again.'); }
+  }
+
+  function showLoading() {
+    const sec = document.getElementById('answer-section');
+    document.getElementById('chips').insertAdjacentElement('afterend', sec);
+    sec.classList.add('visible');
+    document.getElementById('answer-label').textContent = t('Thinking…', 'વિચારી રહ્યું છે…', 'सोच रहा है…');
+    document.getElementById('answer-label').style.color = 'var(--muted)';
+    document.getElementById('answer-tools').style.display = 'none';
+    document.getElementById('answer-text').innerHTML =
+      '<div class="loading-dots"><span></span><span></span><span></span></div>' +
+      '<div class="loading-dots-label">' + t('Searching the Vachanamrut…', 'વચનામૃત શોધી રહ્યું છે…', 'वचनामृत खोज रहा है…') + '</div>';
+    document.getElementById('citations').style.display = 'none';
+    const btn = document.getElementById('btn-ask');
+    btn.disabled = true;
+    btn.classList.add('loading');
+  }
+
+  function renderAnswer({ question, answer, citations }) {
+    currentAnswer = { question, answer, citations };
+    const labelEl = document.getElementById('answer-label');
+    labelEl.textContent = t('Answer', 'ઉત્તર', 'उत्तर');
+    labelEl.style.color = 'var(--terra)';
+    document.getElementById('citation-label').textContent = t('Sources', 'સ્ત્રોત', 'स्रोत');
+    const atEl = document.getElementById('answer-text');
+    atEl.classList.add('rich-text');
+    atEl.innerHTML = mdLite(answer);
+
+    document.getElementById('answer-tools').style.display = 'flex';
+    refreshAnswerSaveBtn();
+    renderCitations(citations);
+    const btn = document.getElementById('btn-ask');
+    btn.disabled = false;
+    btn.classList.remove('loading');
+  }
+
+  // ── Plain-language summary (LLM, cached client + server) ───────
+  async function loadSummary(ref) {
+    const box = document.getElementById('modal-summary');
+    const txt = document.getElementById('modal-summary-text');
+    document.getElementById('modal-summary-label').textContent =
+      t('✦ In simple words', '✦ સરળ શબ્દોમાં', '✦ सरल शब्दों में');
+    box.style.display = 'block';
+
+    const ck = ref + '|' + currentLang;
+    const cache = JSON.parse(localStorage.getItem('shv_summaries') || '{}');
+    if (cache[ck]) { txt.innerHTML = mdLite(cache[ck]); txt.classList.add('rich-text'); return; }
+
+    txt.innerHTML = '<div class="spinner" style="margin:0.5rem 0"></div>';
+    const fail = () => {
+      txt.innerHTML = '';
+      const a = document.createElement('a');
+      a.href = 'javascript:void(0)';
+      a.style.cssText = 'color:var(--terra);cursor:pointer;font-style:italic';
+      a.textContent = t('Tap to retry summary', 'સારાંશ ફરી પ્રયાસ કરો', 'सारांश फिर से प्रयास करें');
+      a.onclick = () => loadSummary(ref);
+      txt.appendChild(a);
+    };
+    try {
+      const r = await fetch(`/api/summary/${ref}?lang=${currentLang}`);
+      const d = await r.json();
+      // user may have navigated away
+      if (!currentDiscourse || currentDiscourse.reference !== ref) return;
+      if (d.summary) {
+        txt.innerHTML = mdLite(d.summary);
+        txt.classList.add('rich-text');
+        cache[ck] = d.summary;
+        localStorage.setItem('shv_summaries', JSON.stringify(cache));
+      } else {
+        fail();
+      }
+    } catch {
+      fail();
+    }
+  }
+
+  // ── Discourse modal ────────────────────────────────────────────
+  async function showDiscourse(ref) {
+    // Close any open mood sheet first to prevent modal stacking
+    const moodSheet = document.getElementById('mood-sheet');
+    if (moodSheet && moodSheet.classList.contains('open')) {
+      document.getElementById('mood-backdrop').classList.remove('open');
+      moodSheet.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    try {
+      const res = await fetch(`/api/discourse/${ref}?lang=${currentLang}`);
+      const d = await res.json();
+      const field = d[currentLang] || d.en;
+      currentDiscourse = { reference: d.reference, friendlyRef: field.friendlyRef || d.reference, title: field.title, text: field.text };
+      document.getElementById('modal-hero').classList.add('visible');
+      document.getElementById('modal-plain-title').style.display = 'none';
+      document.getElementById('modal-ref').textContent = d.reference;
+      document.getElementById('modal-sticky-ref').textContent = `${d.reference} · ${field.title}`;
+      document.getElementById('modal-title').textContent = field.title;
+      renderDiscourseSections(document.getElementById('modal-body'), field.text, currentLang);
+      applyFontSize();
+      document.querySelector('.modal-scroll').scrollTop = 0;
+      refreshModalSaveBtn();
+      document.getElementById('modal-overlay').classList.add('open');
+      loadSummary(d.reference);
+      markRead(d.reference);
+      loadJournal(d.reference);
+      const amb = parseAmbience(d.en.text);
+      applyTheme(amb);
+      ambientAudio.start(amb);
+      // Push deep-link URL so sharing the tab URL opens this discourse
+      history.pushState({ ref: d.reference }, '', `?ref=${encodeURIComponent(d.reference)}`);
+    } catch { showError('Could not load discourse.'); }
+  }
+
+  function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModalBtn(); }
+  function closeModalBtn() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.getElementById('modal-back-top').classList.remove('visible');
+    document.getElementById('modal-sticky-ref').classList.remove('visible');
+    ambientAudio.stop();
+    resetTheme();
+    history.pushState({}, '', location.pathname);
+  }
+
+  // ── Reader settings (font size + family) ───────────────────────
+  const FONT_SIZES = [0.92, 1.1, 1.26];
+  const FONT_KEY = 'shv_fontsize';
+  const FONT_FAM_KEY = 'shv_fontfam';
+  let fontIdx = parseInt(localStorage.getItem(FONT_KEY) || '1', 10);
+  if (fontIdx < 0 || fontIdx >= FONT_SIZES.length) fontIdx = 1;
+  let fontFam = localStorage.getItem(FONT_FAM_KEY) || 'serif';
+  // Sticky mini-header + back-to-top in discourse modal
+  (function() {
+    const scroll = document.getElementById('modal-scroll');
+    const sticky = document.getElementById('modal-sticky-ref');
+    const backTop = document.getElementById('modal-back-top');
+    if (!scroll) return;
+    scroll.addEventListener('scroll', () => {
+      const y = scroll.scrollTop;
+      sticky.classList.toggle('visible', y > 380);
+      backTop.classList.toggle('visible', y > 600);
+    });
+  })();
+
+  function textToParas(text) {
+    const frag = document.createDocumentFragment();
+    const paras = text.split(/\n{2,}/).map(s => s.replace(/\n/g, ' ').trim()).filter(Boolean);
+    if (paras.length === 0) {
+      const p = document.createElement('p');
+      p.textContent = text.trim();
+      frag.appendChild(p);
+    } else {
+      paras.forEach(raw => {
+        const p = document.createElement('p');
+        p.textContent = raw;
+        frag.appendChild(p);
+      });
+    }
+    return frag;
+  }
+
+  function renderDiscourseSections(container, text, lang) {
+    container.innerHTML = '';
+    if (!text) return;
+
+    const settingLabel = t('Setting', 'પ્રસંગ', 'प्रसंग');
+    const speechLabel = t("Maharaj's Words", 'મહારાજના વચનો', 'महाराज के वचन');
+
+    const speechMarkers = lang === 'gu'
+      ? /(?:શ્રીજીમહારાજ બોલ્યા|શ્રીજીમહારાજે કહ્યું|ત્યારે શ્રીજીમહારાજ|પછી શ્રીજીમહારાજ)/
+      : lang === 'hi'
+        ? /(?:श्रीजीमहाराज ने कहा|श्रीजीमहाराज बोले|तब श्रीजीमहाराज|फिर श्रीजीमहाराज)/
+        : /(?:Shriji Mah(?:ã|a)r(?:ã|a)j (?:said|replied|then said|asked|began|continued|answered|stated|explained)|Thereupon Shriji|Then,? Shriji)/;
+
+    const idx = text.search(speechMarkers);
+
+    if (idx > 40) {
+      const settingText = text.slice(0, idx).trim();
+      const speechText = text.slice(idx).trim();
+
+      const settingDiv = document.createElement('div');
+      settingDiv.className = 'discourse-setting';
+      settingDiv.innerHTML = `<div class="discourse-section-label discourse-setting-label">${settingLabel}</div>`;
+      settingDiv.appendChild(textToParas(settingText));
+      container.appendChild(settingDiv);
+
+      const speechDiv = document.createElement('div');
+      speechDiv.className = 'discourse-speech';
+      speechDiv.innerHTML = `<div class="discourse-section-label discourse-speech-label">${speechLabel}</div>`;
+      speechDiv.appendChild(textToParas(speechText));
+      container.appendChild(speechDiv);
+    } else {
+      const plain = document.createElement('div');
+      plain.className = 'discourse-plain';
+      plain.appendChild(textToParas(text));
+      container.appendChild(plain);
+    }
+  }
+
+  function applyFontSize() {
+    const el = document.getElementById('modal-body');
+    if (!el) return;
+    el.style.fontSize = FONT_SIZES[fontIdx] + 'rem';
+    el.style.fontFamily = fontFam === 'sans' ? 'var(--sans)' : 'var(--serif)';
+    // sync panel buttons
+    for (let i = 0; i < FONT_SIZES.length; i++) {
+      const btn = document.getElementById('rsize-' + i);
+      if (btn) btn.classList.toggle('active', i === fontIdx);
+    }
+    const sBtn = document.getElementById('rfont-serif');
+    const nBtn = document.getElementById('rfont-sans');
+    if (sBtn) sBtn.classList.toggle('active', fontFam === 'serif');
+    if (nBtn) nBtn.classList.toggle('active', fontFam === 'sans');
+  }
+  function setFontSize(idx) {
+    fontIdx = idx;
+    localStorage.setItem(FONT_KEY, fontIdx);
+    applyFontSize();
+  }
+  function setFontFamily(fam) {
+    fontFam = fam;
+    localStorage.setItem(FONT_FAM_KEY, fam);
+    applyFontSize();
+  }
+  function toggleReaderPanel(e) {
+    e.stopPropagation();
+    document.getElementById('reader-panel').classList.toggle('open');
+  }
+  document.addEventListener('click', () => {
+    const p = document.getElementById('reader-panel');
+    if (p) p.classList.remove('open');
+  });
+
+  // ── Cache version — bump when deploying new summaries/answers ──
+  const CACHE_VER = '3';
+  (function bustStaleCache() {
+    if (localStorage.getItem('shv_ver') !== CACHE_VER) {
+      localStorage.removeItem('shv_answers');
+      localStorage.removeItem('shv_summaries');
+      localStorage.setItem('shv_ver', CACHE_VER);
+    }
+  })();
+
+  // ── Saved / journal (localStorage) ─────────────────────────────
+  const SAVE_KEY = 'shv_saved_v1';
+  function getSaved() { try { return JSON.parse(localStorage.getItem(SAVE_KEY)) || []; } catch { return []; } }
+  function setSaved(arr) { localStorage.setItem(SAVE_KEY, JSON.stringify(arr)); updateSavedCount(); }
+  function savedHas(id) { return getSaved().some(s => s.id === id); }
+  function updateSavedCount() {
+    const n = getSaved().length;
+    const el = document.getElementById('saved-count');
+    el.textContent = n;
+    el.style.display = n ? 'inline-block' : 'none';
+  }
+
+  function saveCurrentAnswer() {
+    if (!currentAnswer) return;
+    const id = 'q:' + currentAnswer.question;
+    let arr = getSaved();
+    if (arr.some(s => s.id === id)) { arr = arr.filter(s => s.id !== id); }
+    else {
+      arr.unshift({
+        id, kind: 'answer', lang: currentLang,
+        title: currentAnswer.question,
+        text: currentAnswer.answer,
+        citations: currentAnswer.citations || [],
+        savedAt: Date.now(),
+      });
+    }
+    setSaved(arr);
+    refreshAnswerSaveBtn();
+  }
+  function refreshAnswerSaveBtn() {
+    if (!currentAnswer) return;
+    const id = 'q:' + currentAnswer.question;
+    const btn = document.getElementById('answer-save');
+    const on = savedHas(id);
+    btn.classList.toggle('active', on);
+    btn.textContent = on ? '✓' : '🔖';
+    btn.title = on ? 'Saved' : 'Save';
+  }
+
+  function saveCurrentDiscourse() {
+    if (!currentDiscourse) return;
+    const id = 'd:' + currentDiscourse.reference;
+    let arr = getSaved();
+    if (arr.some(s => s.id === id)) { arr = arr.filter(s => s.id !== id); }
+    else {
+      arr.unshift({
+        id, kind: 'discourse', lang: currentLang,
+        reference: currentDiscourse.reference,
+        friendlyRef: currentDiscourse.friendlyRef,
+        title: currentDiscourse.title,
+        text: currentDiscourse.text.slice(0, 400),
+        savedAt: Date.now(),
+      });
+    }
+    setSaved(arr);
+    refreshModalSaveBtn();
+  }
+  function refreshModalSaveBtn() {
+    if (!currentDiscourse) return;
+    const id = 'd:' + currentDiscourse.reference;
+    const btn = document.getElementById('modal-save');
+    const on = savedHas(id);
+    btn.classList.toggle('active', on);
+    btn.textContent = on ? '✓' : '🔖';
+    btn.title = on ? 'Saved' : 'Save';
+  }
+
+  function exportSaves() {
+    const arr = getSaved();
+    if (!arr.length) { _showToast(t('Nothing saved yet', 'હજુ કંઈ સાચવ્યું નથી', 'अभी कुछ सहेजा नहीं')); return; }
+    const blob = new Blob([JSON.stringify({ shv_saves: arr, exportedAt: new Date().toISOString() }, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `shrihari-vani-saves-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    _showToast(t('Saves exported ✓', 'સંગ્રહ ડાઉનલોડ ✓', 'संग्रह डाउनलोड ✓'));
+  }
+
+  function importSaves(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        const incoming = data.shv_saves || (Array.isArray(data) ? data : []);
+        if (!incoming.length) { _showToast('No saves found in file'); return; }
+        const existing = getSaved();
+        const existingIds = new Set(existing.map(s => s.id));
+        const merged = [...existing, ...incoming.filter(s => !existingIds.has(s.id))];
+        setSaved(merged);
+        renderSavedList();
+        _showToast(t(`Imported ${incoming.length} saves ✓`, `${incoming.length} સાચવ્યા ✓`, `${incoming.length} आयात ✓`));
+      } catch { _showToast('Could not read file'); }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  }
+
+  function openSaved() {
+    renderSavedList();
+    document.getElementById('saved-modal-eyebrow').textContent = t('Saved teachings', 'સંગ્રહ', 'संग्रह');
+    document.getElementById('saved-modal-title').textContent = t('Your collection', 'તમારો સંગ્રહ', 'आपका संग्रह');
+    document.getElementById('saved-overlay').classList.add('open');
+  }
+  function closeSaved(e) { if (e.target === document.getElementById('saved-overlay')) closeSavedBtn(); }
+  function closeSavedBtn() { document.getElementById('saved-overlay').classList.remove('open'); }
+
+  function renderSavedList() {
+    const list = document.getElementById('saved-list');
+    const arr = getSaved();
+    list.innerHTML = '';
+    if (!arr.length) {
+      list.innerHTML = `<div class="saved-empty">${t('Nothing saved yet. Tap 🔖 on any teaching to keep it here.', 'હજુ કંઈ સાચવ્યું નથી. 🔖 દબાવી વચન સાચવો.', 'अभी तक कुछ सहेजा नहीं। किसी भी शिक्षा पर 🔖 दबाएं।')}</div>`;
+      return;
+    }
+    arr.forEach(s => {
+      const row = document.createElement('div');
+      row.className = 'saved-item';
+      const kindLabel = s.kind === 'answer'
+        ? t('Question', 'પ્રશ્ન', 'प्रश्न')
+        : (s.friendlyRef || t('Discourse', 'વચનામૃત', 'वचनामृत'));
+      row.innerHTML =
+        `<div class="saved-main">
+           <div class="saved-kind">${escapeHtml(kindLabel)}</div>
+           <div class="saved-title">${escapeHtml(s.title || '')}</div>
+           <div class="saved-sub">${escapeHtml((s.text || '').slice(0, 160))}</div>
+         </div>
+         <button class="saved-remove" title="Remove">✕</button>`;
+      row.querySelector('.saved-main').onclick = () => {
+        closeSavedBtn();
+        if (s.kind === 'discourse' && s.reference) showDiscourse(s.reference);
+        else reopenSavedAnswer(s);
+      };
+      row.querySelector('.saved-remove').onclick = (e) => {
+        e.stopPropagation();
+        setSaved(getSaved().filter(x => x.id !== s.id));
+        renderSavedList();
+        refreshAnswerSaveBtn();
+        refreshModalSaveBtn();
+      };
+      list.appendChild(row);
+    });
+  }
+
+  function reopenSavedAnswer(s) {
+    currentAnswer = { question: s.title, answer: s.text, citations: s.citations || [] };
+    const sec = document.getElementById('answer-section');
+    sec.classList.add('visible');
+    renderAnswer(currentAnswer);
+    sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // ── Helpers ────────────────────────────────────────────────────
+  function escapeHtml(str) {
+    return String(str || '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
+  }
+  // Lightweight markdown: **bold** and * / - bullet lists. Escapes HTML first.
+  function mdLite(str) {
+    const esc = escapeHtml(str).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    const lines = esc.split(/\n+/).map(l => l.trim()).filter(Boolean);
+    let out = '', inList = false;
+    for (const l of lines) {
+      const m = l.match(/^[*•\-]\s+(.*)/);
+      if (m) {
+        if (!inList) { out += '<ul>'; inList = true; }
+        out += `<li>${m[1]}</li>`;
+      } else {
+        if (inList) { out += '</ul>'; inList = false; }
+        out += `<p>${l}</p>`;
+      }
+    }
+    if (inList) out += '</ul>';
+    return out;
+  }
+  let _lastQuestion = '';
+  function showError(msg) {
+    _lastQuestion = document.getElementById('question').value.trim();
+    const el = document.getElementById('error-msg');
+    const friendly = msg === 'Connection error. Please try again.'
+      ? t('Could not reach our servers. Check your connection and try again.',
+          'સર્વર સુધી પહોંચી શક્યા નથી. કનેક્શન તપાસો.',
+          'सर्वर तक नहीं पहुंच सके. कनेक्शन जांचें.')
+      : msg.includes('unavailable') || msg.includes('503') || msg.includes('429')
+        ? t('Our AI is resting. Please try again in a moment.',
+            'AI હાલ વ્યસ્ત છે. થોડીવારમાં ફરી પ્રયાસ કરો.',
+            'AI अभी व्यस्त है. कुछ देर बाद पुनः प्रयास करें.')
+        : msg;
+    el.innerHTML =
+      '<div class="inline-error">' +
+        '<span class="inline-error-icon">⚠</span>' +
+        '<div class="inline-error-text">' + friendly +
+          '<br><button class="retry-btn" onclick="askQuestion()">↻ ' + t('Try again', 'ફરી પ્રયાસ', 'पुनः प्रयास') + '</button>' +
+        '</div>' +
+      '</div>';
+    el.style.display = 'block';
+    const btn = document.getElementById('btn-ask');
+    btn.disabled = false;
+    btn.classList.remove('loading');
+    document.getElementById('answer-section').classList.remove('visible');
+  }
+  function hideError() { document.getElementById('error-msg').style.display = 'none'; }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeModalBtn(); closeSavedBtn(); closeMqBrowser(); closeMoodSheet(); }
+  });
+
+  // ── Share card ─────────────────────────────────────────────────
+  function _loadImg(src) {
+    return new Promise((res, rej) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => res(img);
+      img.onerror = rej;
+      img.src = src;
+    });
+  }
+
+  function _wrapText(ctx, text, maxWidth) {
+    const words = text.split(' ');
+    const lines = [];
+    let line = '';
+    for (const w of words) {
+      const test = line ? line + ' ' + w : w;
+      if (ctx.measureText(test).width > maxWidth && line) {
+        lines.push(line); line = w;
+      } else { line = test; }
+    }
+    if (line) lines.push(line);
+    return lines;
+  }
+
+  // Convert reference code to local-language Vachanamrut label
+  function _friendlyRefInLang(reference, lang) {
+    if (!reference || lang === 'en') return null;
+    const m = reference.match(/^([A-Z]+)-?(\d+)$/i);
+    if (!m) return null;
+    const [, sec, num] = m;
+    const hiMap = { GI:'गढ़डा प्रथम', SAR:'सारंगपुर', KAR:'करियाणी', LOY:'लोया', PAN:'पंचाळा', GII:'गढ़डा द्वितीय', VAR:'वर्ताल', AMD:'अहमदाबाद', GIII:'गढ़डा तृतीय', JET:'जेतलपुर' };
+    const guMap = { GI:'ગઢડા પ્રથમ', SAR:'સારંગપુર', KAR:'કારિયાણી', LOY:'લોયા', PAN:'પંચાળા', GII:'ગઢડા મધ્ય', VAR:'વઢવાણ', AMD:'અમદાવાદ', GIII:'ગઢડા અંત્ય', JET:'જેતલપુર' };
+    const map = lang === 'hi' ? hiMap : guMap;
+    const sn = map[sec.toUpperCase()]; if (!sn) return null;
+    return lang === 'hi' ? `वचनामृत ${sn} ${num}` : `વચનામૃત ${sn} ${num}`;
+  }
+
+  async function generateShareCard({ title, friendlyRef, reference, sceneUrl, lang }) {
+    const W = 1080, H = 1080, PAD = 80;
+    const canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+
+    await document.fonts.ready;
+
+    // Language-aware font stacks
+    const indicFont = lang === 'hi' ? '”Noto Sans Devanagari”' : lang === 'gu' ? '”Noto Sans Gujarati”' : null;
+    const mainFont = indicFont ? `${indicFont}, sans-serif` : 'Fraunces, Georgia, serif';
+    const monoFont = '”JetBrains Mono”, monospace';
+
+    // 1. Full-bleed scene image (no blur — let it breathe)
+    try {
+      const img = await _loadImg(sceneUrl);
+      const scale = Math.max(W / img.naturalWidth, H / img.naturalHeight);
+      const dw = img.naturalWidth * scale, dh = img.naturalHeight * scale;
+      ctx.drawImage(img, (W - dw) / 2, (H - dh) / 2, dw, dh);
+    } catch {
+      const bg = ctx.createLinearGradient(0, 0, 0, H);
+      bg.addColorStop(0, '#0b0718'); bg.addColorStop(1, '#1a0e06');
+      ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+    }
+
+    // 2. Multi-stop overlay: dark top → reveal scene in middle → dark bottom for text
+    const ov = ctx.createLinearGradient(0, 0, 0, H);
+    ov.addColorStop(0,    'rgba(0,0,0,0.82)');
+    ov.addColorStop(0.22, 'rgba(0,0,0,0.42)');
+    ov.addColorStop(0.50, 'rgba(0,0,0,0.28)');
+    ov.addColorStop(0.70, 'rgba(0,0,0,0.55)');
+    ov.addColorStop(1,    'rgba(0,0,0,0.92)');
+    ctx.fillStyle = ov; ctx.fillRect(0, 0, W, H);
+
+    // 3. Radial warm vignette at edges
+    const vig = ctx.createRadialGradient(W/2, H/2, H*0.30, W/2, H/2, H*0.78);
+    vig.addColorStop(0, 'transparent');
+    vig.addColorStop(1, 'rgba(0,0,0,0.38)');
+    ctx.fillStyle = vig; ctx.fillRect(0, 0, W, H);
+
+    // 4. Header: “✦ VACHANAMRUT ✦”
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(255,205,90,0.72)';
+    ctx.font = `500 19px ${monoFont}`;
+    ctx.fillText('✶  VACHANAMRUT  ✶', W / 2, 54);
+
+    // Thin gold rule under header
+    ctx.strokeStyle = 'rgba(220,155,55,0.32)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(PAD, 72); ctx.lineTo(W - PAD, 72); ctx.stroke();
+
+    // 5. Large decorative open-quote mark (background, decorative only)
+    ctx.textAlign = 'left';
+    ctx.font = 'italic 200px Georgia, serif';
+    ctx.fillStyle = 'rgba(255,185,55,0.18)';
+    ctx.fillText('“', PAD - 18, 248);
+
+    // 6. Main quote — dynamic size, up to 5 lines
+    const cleanTitle = title.replace(/[*#_`]/g, '').replace(/\s+/g, ' ').trim();
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#ffffff';
+    ctx.shadowColor = 'rgba(0,0,0,0.92)';
+    ctx.shadowBlur = 22;
+    ctx.shadowOffsetY = 3;
+
+    const lineH_ratio = indicFont ? 1.58 : 1.32;
+    let fontSize = 90, lines;
+    const maxQW = W - PAD * 2 + 16;
+    while (fontSize >= 46) {
+      ctx.font = `700 ${fontSize}px ${mainFont}`;
+      lines = _wrapText(ctx, cleanTitle, maxQW);
+      if (lines.length <= 5) break;
+      fontSize -= 8;
+    }
+
+    // Vertically center quote block between y=155 and y=820
+    const lineH = fontSize * lineH_ratio;
+    const blockH = lines.length * lineH;
+    const quoteY = 155 + (820 - 155 - blockH) / 2 + lineH;
+    lines.forEach((ln, i) => ctx.fillText(ln, W / 2, quoteY + i * lineH));
+
+    ctx.shadowColor = 'transparent'; ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+
+    // 7. Narrow gold divider above attribution
+    const divY = H - 218;
+    ctx.strokeStyle = 'rgba(215,155,48,0.50)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(W/2 - 110, divY); ctx.lineTo(W/2 + 110, divY); ctx.stroke();
+
+    // 8. Attribution in current language
+    const ATTR = { en: '— Bhagwan Swaminarayan', hi: '— भगवान श्री स्वामिनारायण', gu: '— ભગવાન શ્રી સ્વામિનારાયણ' };
+    ctx.textAlign = 'center';
+    ctx.fillStyle = 'rgba(255,215,120,0.90)';
+    ctx.font = `400 29px ${mainFont}`;
+    ctx.fillText(ATTR[lang] || ATTR.en, W / 2, divY + 56);
+
+    // 9. Reference in local language
+    const localRef = _friendlyRefInLang(reference, lang) || friendlyRef;
+    ctx.fillStyle = 'rgba(255,255,255,0.50)';
+    ctx.font = `500 22px ${monoFont}`;
+    ctx.fillText(localRef, W / 2, divY + 98);
+
+    // 10. Bottom branding strip
+    ctx.fillStyle = 'rgba(255,255,255,0.26)';
+    ctx.font = `400 17px ${monoFont}`;
+    ctx.fillText('ShriHari Vani  ·  shri-hari-vani.vercel.app', W / 2, H - 36);
+
+    // 11. Thin gold inner border frame for premium feel
+    ctx.strokeStyle = 'rgba(215,155,48,0.22)';
+    ctx.lineWidth = 2;
+    const inset = 20;
+    ctx.strokeRect(inset, inset, W - inset*2, H - inset*2);
+
+    return canvas;
+  }
+
+  function _showToast(msg) {
+    const t = document.getElementById('share-toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  async function _doShare({ title, friendlyRef, reference, sceneUrl, lang }) {
+    try {
+      const canvas = await generateShareCard({ title, friendlyRef, reference, sceneUrl, lang });
+      const blob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.94));
+      const file = new File([blob], `vachanamrut-${friendlyRef.replace(/\s/g,'-')}.jpg`, { type: 'image/jpeg' });
+      const shareUrl = `${location.origin}${location.pathname}?ref=${encodeURIComponent(reference || friendlyRef)}`;
+      if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title,
+          text: `"${title}" — ${friendlyRef}\n\nExplore the Vachanamrut: ${shareUrl}`,
+        });
+      } else {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `vachanamrut-${friendlyRef.replace(/\s/g,'-')}.jpg`;
+        a.click();
+        _showToast('Card saved — share it anywhere ✓');
+      }
+    } catch (e) {
+      if (e.name !== 'AbortError') _showToast('Could not generate card');
+    }
+  }
+
+  async function shareDiscourse() {
+    if (!currentDiscourse) return;
+    const btn = document.getElementById('modal-share');
+    btn.textContent = '…'; btn.disabled = true;
+    const sceneUrl = document.getElementById('modal-hero-art').style.backgroundImage
+      .replace(/^url\(['"]?/, '').replace(/['"]?\)$/, '');
+    await _doShare({
+      title: currentDiscourse.title,
+      friendlyRef: currentDiscourse.friendlyRef,
+      reference: currentDiscourse.reference,
+      sceneUrl,
+      lang: currentLang,
+    });
+    btn.textContent = '↗'; btn.disabled = false;
+  }
+
+  async function shareDailyVerse() {
+    if (!dailyData) return;
+    const btn = document.getElementById('daily-share');
+    btn.textContent = '…'; btn.disabled = true;
+    let sceneUrl = '/scenes/homepage-backdrop.jpg';
+    try {
+      const d = await fetch(`/api/discourse/${dailyData.reference}`).then(r => r.json());
+      const amb = parseAmbience(d.en.text);
+      sceneUrl = _resolveSceneUrl(amb, dailyData.reference);
+    } catch { /* use fallback */ }
+    await _doShare({
+      title: dailyData.title,
+      friendlyRef: dailyData.friendlyRef,
+      reference: dailyData.reference,
+      sceneUrl,
+      lang: currentLang,
+    });
+    btn.textContent = '↗ Share'; btn.disabled = false;
+  }
+
+  function _resolveSceneUrl(amb, ref) {
+    // Mirror the sceneBg() logic but return a plain URL string
+    const sec = (ref || '').split('-')[0].toUpperCase();
+    const map = {
+      morning: { GI:'gadhada-morning', GII:'gadhada-morning', GIII:'gadhada-morning', SAR:'sarangpur-afternoon', KAR:'kariyani-afternoon-monsoon', LOY:'loya-night', PAN:'panchala-evening', VAR:'vadtal-morning', AMD:'amdavad-afternoon', JET:'jetalpur-night', default:'gadhada-morning' },
+      evening: { GI:'gadhada-night', GII:'gadhada-night', GIII:'gadhada-night', SAR:'sarangpur-evening', KAR:'kariyani-afternoon-monsoon', LOY:'loya-night', PAN:'panchala-evening', VAR:'vadtal-evening', AMD:'amdavad-afternoon', JET:'jetalpur-night', default:'sarangpur-evening' },
+      night:   { GI:'gadhada-night-2', GII:'gadhada-night-2', GIII:'gadhada-night-2', SAR:'sarangpur-evening', KAR:'kariyani-afternoon-monsoon', LOY:'loya-night', PAN:'panchala-evening', VAR:'vadtal-evening', AMD:'amdavad-afternoon', JET:'jetalpur-night', default:'gadhada-night-2' },
+      afternoon:{ GI:'gadhada-morning', GII:'gadhada-morning', GIII:'gadhada-morning', SAR:'sarangpur-afternoon', KAR:'kariyani-afternoon-monsoon', LOY:'loya-night', PAN:'panchala-evening', VAR:'vadtal-morning', AMD:'amdavad-afternoon', JET:'jetalpur-night', default:'sarangpur-afternoon' },
+    };
+    const timeMap = map[amb && amb.time] || map.afternoon;
+    const name = timeMap[sec] || timeMap.default;
+    return `/scenes/${name}.jpg`;
+  }
+
+  // ── Deep link: ?ref=GI-27 opens that discourse on load ─────────
+  function _checkDeepLink() {
+    const ref = new URLSearchParams(location.search).get('ref');
+    if (ref) setTimeout(() => showDiscourse(ref), 600);
+  }
+
+  // ── Recent questions (Atomberg-style recent searches) ────────────
+  const RECENT_KEY = 'shv_recent_qs';
+  function getRecentQuestions() {
+    try { return JSON.parse(localStorage.getItem(RECENT_KEY)) || []; } catch { return []; }
+  }
+  function addRecentQuestion(q) {
+    let arr = getRecentQuestions().filter(x => x !== q);
+    arr.unshift(q);
+    if (arr.length > 5) arr = arr.slice(0, 5);
+    localStorage.setItem(RECENT_KEY, JSON.stringify(arr));
+    renderRecentQuestions();
+  }
+  function renderRecentQuestions() {
+    const arr = getRecentQuestions();
+    const wrap = document.getElementById('recent-questions');
+    const host = document.getElementById('recent-chips');
+    if (!arr.length) { wrap.style.display = 'none'; return; }
+    wrap.style.display = 'block';
+    document.getElementById('recent-label').textContent = t('Recent', 'તાજેતરના', 'हाल के');
+    host.innerHTML = '';
+    arr.forEach(q => {
+      const chip = document.createElement('button');
+      chip.className = 'recent-chip';
+      chip.textContent = q;
+      chip.title = q;
+      chip.onclick = () => { document.getElementById('question').value = q; askQuestion(); };
+      host.appendChild(chip);
+    });
+  }
+
+  // ── Chips toggle ─────────────────────────────────────────────────
+  function toggleChips() {
+    const el = document.getElementById('chips');
+    const btn = document.getElementById('chips-toggle');
+    const collapsed = el.classList.toggle('collapsed');
+    btn.textContent = collapsed
+      ? t('Show more', 'વધુ જુઓ', 'और देखें')
+      : t('Show less', 'ઓછું જુઓ', 'कम दिखाएं');
+  }
+
+  // ── Hero stat line ──────────────────────────────────────────────
+  function updateHeroStat() {
+    document.getElementById('hero-stat').textContent = t(
+      '272 discourses · 3 languages · AI-powered answers',
+      '272 વચનામૃત · 3 ભાષા · AI ઉત્તર',
+      '272 वचनामृत · 3 भाषा · AI उत्तर'
+    );
+  }
+
+  // ── Reading progress tracker ─────────────────────────────────────
+  function getReadDiscourses() {
+    try { return JSON.parse(localStorage.getItem('shv_read') || '[]'); } catch { return []; }
+  }
+  function markRead(ref) {
+    const read = getReadDiscourses();
+    if (!read.includes(ref)) {
+      read.push(ref);
+      localStorage.setItem('shv_read', JSON.stringify(read));
+    }
+    updateProgress();
+  }
+  function updateProgress() {
+    const read = getReadDiscourses();
+    const total = 272;
+    const count = Math.min(read.length, total);
+    const pct = Math.round((count / total) * 100);
+    const circ = 2 * Math.PI * 22;
+    const offset = circ - (circ * pct / 100);
+    document.getElementById('progress-ring-fill').style.strokeDashoffset = offset;
+    document.getElementById('progress-ring-pct').textContent = pct + '%';
+    document.getElementById('progress-bar-fill').style.width = pct + '%';
+    document.getElementById('progress-label').textContent =
+      t(`${count} of ${total} explored`, `${count} / ${total} જોયા`, `${count} / ${total} पढ़े`);
+    const milestones = [10, 25, 50, 100, 150, 200, 272];
+    const next = milestones.find(m => m > count) || 272;
+    document.getElementById('progress-sub').textContent =
+      t(`${next - count} more to next milestone`, `આગળ ${next - count} બાકી`, `अगले पड़ाव तक ${next - count} बाकी`);
+  }
+
+  // ── Social proof counter ────────────────────────────────────────
+  function initSocialProof() {
+    const base = 30 + (new Date().getDay() * 7);
+    const jitter = Math.floor(Math.random() * 25);
+    const count = base + jitter;
+    document.getElementById('social-count').textContent =
+      t(`${count} readers exploring today`, `${count} વાચકો આજે`, `${count} पाठक आज पढ़ रहे हैं`);
+  }
+
+  // ── Discover random discourse ───────────────────────────────────
+  async function discoverRandom() {
+    haptic();
+    const btn = document.getElementById('discover-btn');
+    btn.style.pointerEvents = 'none';
+    btn.querySelector('.discover-icon').style.transform = 'rotate(360deg)';
+    try {
+      const res = await fetch('/api/random');
+      const data = await res.json();
+      if (data.reference) {
+        showDiscourse(data.reference);
+      }
+    } catch { }
+    setTimeout(() => {
+      btn.style.pointerEvents = '';
+      btn.querySelector('.discover-icon').style.transform = '';
+    }, 600);
+  }
+
+  // ── MQ challenge score ──────────────────────────────────────────
+  function getMqScore() {
+    try { return JSON.parse(localStorage.getItem('shv_mq_score') || '{"revealed":0,"total":0}'); } catch { return {revealed:0,total:0}; }
+  }
+  function trackMqReveal() {
+    const s = getMqScore();
+    s.revealed++; s.total++;
+    localStorage.setItem('shv_mq_score', JSON.stringify(s));
+    updateMqScore();
+  }
+  function trackMqSeen() {
+    const s = getMqScore();
+    s.total++;
+    localStorage.setItem('shv_mq_score', JSON.stringify(s));
+    updateMqScore();
+  }
+  function updateMqScore() {
+    const s = getMqScore();
+    if (s.total === 0) return;
+    const el = document.getElementById('mq-score');
+    el.style.display = 'flex';
+    const pct = Math.round((s.revealed / s.total) * 100);
+    const circ = 2 * Math.PI * 11;
+    document.getElementById('mq-score-fill').style.strokeDashoffset = circ - (circ * pct / 100);
+    document.getElementById('mq-score-text').textContent =
+      t(`${s.revealed}/${s.total} revealed · ${pct}%`, `${s.revealed}/${s.total} જાહેર · ${pct}%`, `${s.revealed}/${s.total} देखे · ${pct}%`);
+  }
+
+  // ── Journal (personal reflections per discourse) ────────────────
+  let _journalTimer = null;
+  let _currentModalRef = null;
+  function loadJournal(ref) {
+    _currentModalRef = ref;
+    const notes = JSON.parse(localStorage.getItem('shv_journal') || '{}');
+    const ta = document.getElementById('journal-textarea');
+    ta.value = notes[ref] || '';
+    document.getElementById('journal-label').textContent =
+      t('Your reflections', 'તમારા વિચાર', 'आपके विचार');
+    document.getElementById('journal-saved').classList.remove('show');
+  }
+  function saveJournal() {
+    clearTimeout(_journalTimer);
+    _journalTimer = setTimeout(() => {
+      if (!_currentModalRef) return;
+      const notes = JSON.parse(localStorage.getItem('shv_journal') || '{}');
+      const val = document.getElementById('journal-textarea').value.trim();
+      if (val) notes[_currentModalRef] = val;
+      else delete notes[_currentModalRef];
+      localStorage.setItem('shv_journal', JSON.stringify(notes));
+      const saved = document.getElementById('journal-saved');
+      saved.textContent = t('Saved', 'સાચવ્યું', 'सहेजा गया');
+      saved.classList.add('show');
+      setTimeout(() => saved.classList.remove('show'), 2000);
+    }, 600);
+  }
+
+  // ── Haptic feedback ──────────────────────────────────────────
+  function haptic(ms = 12) { try { navigator.vibrate?.(ms); } catch(e) {} }
+
+  // ── Onboarding nudge ─────────────────────────────────────────
+  function initOnboarding() {
+    if (localStorage.getItem('shv_onboarded')) return;
+    const el = document.getElementById('onboarding-tip');
+    el.style.display = 'flex';
+    document.getElementById('onboarding-text').textContent =
+      t('Tap a mood, ask a question, or discover a random discourse to begin',
+        'મૂડ પસંદ કરો, પ્રશ્ન પૂછો, અથવા વચનામૃત શોધો',
+        'मूड चुनें, प्रश्न पूछें, या कोई वचनामृत खोजें');
+  }
+  function dismissOnboarding() {
+    localStorage.setItem('shv_onboarded', '1');
+    document.getElementById('onboarding-tip').style.display = 'none';
+  }
+
+  // ── Hero parallax ──────────────────────────────────────────────
+  function initParallax() {
+    const hero = document.querySelector('.hero');
+    const ambBg = document.getElementById('ambient-bg');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          if (scrollY < 600 && ambBg) {
+            ambBg.style.transform = `translateY(${scrollY * 0.3}px)`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  }
+
+  // ── Entrance animations ─────────────────────────────────────────
+  function initEntranceAnimations() {
+    const sections = document.querySelectorAll('.progress-section, .discover-btn, .mood-section, .search-wrap, .chips, .browse-section, #mq-section');
+    sections.forEach(el => el.classList.add('section-enter'));
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.15 });
+    sections.forEach(el => observer.observe(el));
+  }
+
+  init();
+  _checkDeepLink();
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
+</script>
+</body>
+</html>
