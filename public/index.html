@@ -16,7 +16,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+Gujarati:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+Gujarati:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     /* ── Variables ────────────────────────────────────── */
     :root {
@@ -34,7 +34,7 @@
       --wash-1:   #f4b48d;
       --wash-2:   #f7d0b3;
       --display:  'Fraunces', 'Georgia', serif;
-      --serif:    'Newsreader', 'Georgia', 'Palatino Linotype', serif;
+      --serif:    'Source Serif 4', 'Georgia', 'Palatino Linotype', serif;
       --mono:     'JetBrains Mono', ui-monospace, 'SF Mono', 'Menlo', monospace;
       --sans:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
@@ -155,44 +155,55 @@
     /* Font size control */
     /* ── Teachings About section ─────────────────────────── */
     .teachings-section {
-      margin: 2.5rem -1.25rem 0;
-      padding: 2.5rem 1.5rem 2.75rem;
-      background: linear-gradient(160deg, #1a1008 0%, #120c04 60%, #0e0d18 100%);
+      margin: 3rem 0 0;
+      padding: 2.75rem 1.5rem 3rem;
+      background: var(--paper-2);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
       text-align: center;
     }
+    .teachings-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--terra);
+      margin-bottom: 0.6rem;
+    }
     .teachings-heading {
-      font-family: var(--serif);
-      font-size: 1.35rem;
+      font-family: var(--display);
+      font-size: 1.6rem;
       font-weight: 500;
-      color: #f0e6d0;
-      margin-bottom: 1.5rem;
-      letter-spacing: 0.01em;
+      color: var(--ink);
+      margin-bottom: 1.75rem;
+      letter-spacing: -0.01em;
     }
     .teachings-chips {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.6rem;
-      max-width: 680px;
+      gap: 0.55rem;
+      max-width: 700px;
       margin: 0 auto;
     }
     .teachings-chip {
       display: inline-block;
-      border: 1.5px solid rgba(240,222,180,0.25);
+      border: 1.5px solid var(--line);
       border-radius: 999px;
-      padding: 0.45rem 1.05rem;
+      padding: 0.45rem 1.1rem;
       font-family: var(--sans);
-      font-size: 0.83rem;
-      font-weight: 600;
-      color: #f0e6d0;
-      background: transparent;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+      background: var(--paper);
       cursor: pointer;
-      transition: border-color 0.18s, background 0.18s, color 0.18s;
+      transition: border-color 0.18s, background 0.18s, color 0.18s, box-shadow 0.18s;
     }
     .teachings-chip:hover {
-      border-color: var(--saffron);
-      background: rgba(232,146,46,0.12);
-      color: #ffe5b0;
+      border-color: var(--terra);
+      color: var(--terra);
+      background: var(--paper-2);
+      box-shadow: 0 2px 8px rgba(216,70,29,0.08);
     }
 
     /* ── Reader settings panel (AA button) ───────────────── */
@@ -1017,16 +1028,18 @@
       border-radius: 12px;
       color: var(--ink);
       cursor: pointer;
-      font-size: 0.85rem;
-      padding: 0.75rem 0.95rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      padding: 0.85rem 1rem;
       text-align: left;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; gap: 0.5rem;
       transition: border-color 0.15s, color 0.15s, transform 0.1s, box-shadow 0.15s;
       box-shadow: 0 1px 2px rgba(80,50,20,0.04), 0 4px 12px rgba(80,50,20,0.03);
     }
+    .section-btn-name { flex: 1; }
     .section-btn:hover { border-color: var(--gold); color: var(--terra); transform: translateY(-2px); box-shadow: 0 2px 4px rgba(80,50,20,0.06), 0 8px 24px rgba(80,50,20,0.08); }
-    .section-btn::after { content: '›'; color: var(--muted); font-size: 1.1rem; font-weight: 300; margin-left: 0.3rem; }
-    .section-count { color: var(--muted); font-size: 0.72rem; margin-left: 0.3rem; font-family: var(--mono); }
+    .section-btn::after { content: '›'; color: var(--muted); font-size: 1.1rem; font-weight: 300; flex-shrink: 0; }
+    .section-count { color: var(--muted); font-size: 0.72rem; font-family: var(--mono); flex-shrink: 0; }
 
     .error-msg { color: var(--terra-dk); font-size: 0.88rem; margin-top: 0.5rem; }
 
@@ -1657,7 +1670,8 @@
 
   <!-- Teachings About -->
   <div class="teachings-section">
-    <div class="teachings-heading">Vachanamrut Teachings About…</div>
+    <div class="teachings-eyebrow">Explore by Topic</div>
+    <div class="teachings-heading">Teachings About…</div>
     <div class="teachings-chips" id="teachings-chips"></div>
   </div>
 </main>
@@ -2778,7 +2792,7 @@
       btn.className = 'section-btn';
       const label = sec.label[currentLang] || sec.label.en;
       const count = SECTION_COUNTS[sec.code] || '';
-      btn.innerHTML = `${label}<span class="section-count">${count}</span>`;
+      btn.innerHTML = `<span class="section-btn-name">${label}</span><span class="section-count">${count}</span>`;
       btn.onclick = () => browseSection(sec.code, label);
       grid.appendChild(btn);
     });
