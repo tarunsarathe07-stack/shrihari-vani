@@ -16,7 +16,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;1,8..60,400;1,8..60,500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+Gujarati:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400;1,8..60,500&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Sans+Gujarati:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     /* ── Variables ────────────────────────────────────── */
     :root {
@@ -33,10 +33,10 @@
       --line:     #e6dbc6;
       --wash-1:   #f4b48d;
       --wash-2:   #f7d0b3;
-      --display:  'Fraunces', 'Georgia', serif;
-      --serif:    'Source Serif 4', 'Georgia', 'Palatino Linotype', serif;
-      --mono:     'JetBrains Mono', ui-monospace, 'SF Mono', 'Menlo', monospace;
-      --sans:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --display:  'Source Serif 4', Georgia, serif;
+      --serif:    'Source Serif 4', Georgia, serif;
+      --mono:     'Source Serif 4', Georgia, serif;
+      --sans:     'Source Serif 4', Georgia, serif;
     }
 
     /* ── Reset ───────────────────────────────────────── */
@@ -1704,13 +1704,13 @@
       flex: 1;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       gap: 3px;
-      padding: 0.6rem 0.25rem;
+      padding: 0.55rem 0.2rem;
       background: none; border: none; cursor: pointer;
       color: var(--muted);
-      font-family: var(--mono);
-      font-size: 0.6rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      font-family: var(--serif);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
       transition: color 0.15s;
       -webkit-tap-highlight-color: transparent;
     }
@@ -1959,13 +1959,13 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
     <span id="nav-label-explore">Explore</span>
   </button>
-  <button class="nav-tab" data-tab="browse" onclick="switchTab('browse')" aria-label="Browse">
+  <button class="nav-tab" data-tab="browse" onclick="switchTab('browse')" aria-label="Vachanamrut">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-    <span id="nav-label-browse">Browse</span>
+    <span id="nav-label-browse">Vachanamrut</span>
   </button>
-  <button class="nav-tab" data-tab="life" onclick="switchTab('life')" aria-label="Life of Maharaj">
+  <button class="nav-tab" data-tab="life" onclick="switchTab('life')" aria-label="Charitra">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/><path d="M12 1 v1.5 M8.5 2.5 l1 1 M15.5 2.5 l-1 1"/></svg>
-    <span id="nav-label-life">Life</span>
+    <span id="nav-label-life">Charitra</span>
   </button>
   <button class="nav-tab" data-tab="saved" onclick="switchTab('saved')" aria-label="Saved">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
@@ -3262,9 +3262,9 @@
     renderCharitraGrid();
     document.getElementById('saved-label').textContent = t('Saved', 'સંગ્રહ', 'संग्रह');
     document.getElementById('saved-tab-title').textContent = t('Your Collection', 'તમારો સંગ્રહ', 'आपका संग्रह');
-    document.getElementById('nav-label-explore').textContent = t('Explore', 'શોધ', 'खोज');
-    document.getElementById('nav-label-browse').textContent = t('Browse', 'વિભાગ', 'विभाग');
-    document.getElementById('nav-label-life').textContent = t('Life', 'ચરિત્ર', 'चरित्र');
+    document.getElementById('nav-label-explore').textContent = t('Explore', 'અન્વેષ', 'अन्वेष');
+    document.getElementById('nav-label-browse').textContent = t('Vachanamrut', 'વચનામૃત', 'वचनामृत');
+    document.getElementById('nav-label-life').textContent = t('Charitra', 'ચરિત્ર', 'चरित्र');
     document.getElementById('nav-label-saved').textContent = t('Saved', 'સંગ્રહ', 'संग्रह');
     if (_activeTab === 'saved') renderSavedTabList();
     updateHeroStat();
@@ -3312,32 +3312,33 @@
 
     // Teachings About chips
     const TOPIC_KEYS = [
-      { key: 'devotion',      label: 'Devotion (Bhakti)' },
-      { key: 'the-mind',     label: 'The Mind' },
-      { key: 'maya',         label: 'Maya' },
-      { key: 'satsang',      label: 'Satsang' },
-      { key: 'liberation',   label: 'Liberation (Mukti)' },
-      { key: 'the-soul',     label: 'The Soul (Atma)' },
-      { key: 'renunciation', label: 'Renunciation' },
-      { key: 'gods-form',    label: "God's Form" },
-      { key: 'service',      label: 'Service (Seva)' },
-      { key: 'meditation',   label: 'Meditation (Dhyan)' },
-      { key: 'virtues',      label: 'Virtues' },
-      { key: 'surrender',    label: 'Surrender' },
-      { key: 'the-guru',     label: 'The Guru' },
-      { key: 'death',        label: 'Death & Afterlife' },
-      { key: 'dharma',       label: 'Dharma' },
-      { key: 'knowledge',    label: 'Knowledge (Jnan)' },
+      { key: 'devotion',      en: 'Devotion (Bhakti)',    gu: 'ભક્તિ',          hi: 'भक्ति' },
+      { key: 'the-mind',      en: 'The Mind',             gu: 'મન',              hi: 'मन' },
+      { key: 'maya',          en: 'Maya',                 gu: 'માયા',            hi: 'माया' },
+      { key: 'satsang',       en: 'Satsang',              gu: 'સત્સંગ',          hi: 'सत्संग' },
+      { key: 'liberation',    en: 'Liberation (Mukti)',   gu: 'મુક્તિ',          hi: 'मुक्ति' },
+      { key: 'the-soul',      en: 'The Soul (Atma)',      gu: 'આત્મા',           hi: 'आत्मा' },
+      { key: 'renunciation',  en: 'Renunciation',         gu: 'વૈરાગ્ય',         hi: 'वैराग्य' },
+      { key: 'gods-form',     en: "God's Form",           gu: 'ભગવાનનું સ્વરૂપ', hi: 'भगवान का स्वरूप' },
+      { key: 'service',       en: 'Service (Seva)',       gu: 'સેવા',            hi: 'सेवा' },
+      { key: 'meditation',    en: 'Meditation (Dhyan)',   gu: 'ધ્યાન',           hi: 'ध्यान' },
+      { key: 'virtues',       en: 'Virtues',              gu: 'સદ્ગુણ',          hi: 'सद्गुण' },
+      { key: 'surrender',     en: 'Surrender',            gu: 'શરણ',             hi: 'शरण' },
+      { key: 'the-guru',      en: 'The Guru',             gu: 'ગુરુ',            hi: 'गुरु' },
+      { key: 'death',         en: 'Death & Afterlife',    gu: 'મૃત્યુ',          hi: 'मृत्यु' },
+      { key: 'dharma',        en: 'Dharma',               gu: 'ધર્મ',            hi: 'धर्म' },
+      { key: 'knowledge',     en: 'Knowledge (Jnan)',     gu: 'જ્ઞાન',           hi: 'ज्ञान' },
     ];
     const tchips = document.getElementById('teachings-chips');
     if (tchips) {
       tchips.innerHTML = '';
-      TOPIC_KEYS.forEach(({ key, label }) => {
+      TOPIC_KEYS.forEach(topic => {
+        const label = topic[currentLang] || topic.en;
         const chip = document.createElement('button');
         chip.className = 'teachings-chip';
         chip.textContent = label;
-        chip.dataset.topicKey = key;
-        chip.onclick = () => openTopicSheet(key, label);
+        chip.dataset.topicKey = topic.key;
+        chip.onclick = () => openTopicSheet(topic.key, label);
         tchips.appendChild(chip);
       });
     }
