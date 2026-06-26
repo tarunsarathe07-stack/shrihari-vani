@@ -1681,6 +1681,66 @@
       .icon-btn { min-height: 36px; }
       .lang-toggle button { min-height: 36px; }
     }
+
+    /* ── Tab panels ──────────────────────────────────── */
+    .tab-panel { display: block; }
+    .tab-panel[hidden] { display: none; }
+    main { padding-bottom: 5.5rem; }
+
+    /* ── Glass bottom nav ────────────────────────────── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex;
+      background: rgba(244, 238, 226, 0.82);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-top: 1px solid rgba(180, 148, 100, 0.18);
+      box-shadow: 0 -4px 32px rgba(80, 50, 20, 0.07);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    .nav-tab {
+      flex: 1;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 3px;
+      padding: 0.6rem 0.25rem;
+      background: none; border: none; cursor: pointer;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.15s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav-tab svg { width: 22px; height: 22px; transition: transform 0.15s; }
+    .nav-tab.active { color: var(--terra); }
+    .nav-tab.active svg { transform: scale(1.1); }
+    .nav-tab:not(.active):active { color: var(--ink-soft); }
+
+    /* ── Section grid (Browse tab) — readable single col on mobile */
+    @media (max-width: 600px) {
+      .section-grid { grid-template-columns: 1fr; }
+    }
+    .section-btn {
+      font-size: 0.92rem;
+      padding: 0.9rem 1rem;
+    }
+    .section-btn-name { font-weight: 600; }
+
+    /* ── Saved tab ───────────────────────────────────── */
+    .saved-tab-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.1rem;
+    }
+    .saved-tab-title {
+      font-family: var(--display);
+      font-size: 1.55rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .saved-tab-tools { display: flex; gap: 0.5rem; }
   </style>
 </head>
 <body>
@@ -1707,6 +1767,9 @@
 
 <!-- Main -->
 <main id="main-content">
+
+<!-- ── Tab: Explore ─────────────────────────────── -->
+<div id="tab-explore" class="tab-panel">
   <div class="hero">
     <h1 id="hero-title">Explore the Vachanamrut</h1>
     <p id="hero-sub">Ask any question about Bhagwan Swaminarayan's teachings</p>
@@ -1842,7 +1905,10 @@
     </div>
     <span class="mq-see-all" id="mq-see-all" onclick="openMqBrowser()">See all questions →</span>
   </div>
+</div><!-- /tab-explore -->
 
+<!-- ── Tab: Browse ────────────────────────────── -->
+<div id="tab-browse" class="tab-panel" hidden>
   <!-- Browse -->
   <div class="browse-section">
     <div class="browse-heading" id="browse-heading">Browse by Section</div>
@@ -1855,14 +1921,30 @@
     <div class="teachings-heading" id="teachings-heading">Teachings About…</div>
     <div class="teachings-chips" id="teachings-chips"></div>
   </div>
+</div><!-- /tab-browse -->
 
-  <!-- Life of Maharaj -->
+<!-- ── Tab: Life of Maharaj ───────────────────── -->
+<div id="tab-life" class="tab-panel" hidden>
   <div class="charitra-section">
     <div class="charitra-eyebrow" id="charitra-eyebrow">Biography</div>
     <div class="charitra-heading" id="charitra-heading">Life of Maharaj</div>
     <div class="charitra-subhead" id="charitra-subhead">Sahajanand Charitra · 29 years · 1801–1830 CE</div>
     <div class="charitra-grid" id="charitra-grid"></div>
   </div>
+</div><!-- /tab-life -->
+
+<!-- ── Tab: Saved ─────────────────────────────── -->
+<div id="tab-saved" class="tab-panel" hidden>
+  <div class="saved-tab-head">
+    <div class="saved-tab-title" id="saved-tab-title">Your Collection</div>
+    <div class="saved-tab-tools">
+      <button class="share-btn" onclick="exportSaves()" title="Download your saves as JSON">↓ Export</button>
+      <label class="share-btn" style="cursor:pointer" title="Restore saves from a JSON file">↑ Import<input type="file" accept=".json" style="display:none" onchange="importSaves(event)"></label>
+    </div>
+  </div>
+  <div id="saved-tab-list"></div>
+</div><!-- /tab-saved -->
+
 </main>
 
 <!-- Footer -->
@@ -1870,6 +1952,26 @@
   <div class="site-footer-brand">ShriHari Vani</div>
   <div>An open-source Vachanamrut explorer · Built with devotion</div>
 </footer>
+
+<!-- Glass bottom nav -->
+<nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+  <button class="nav-tab active" data-tab="explore" onclick="switchTab('explore')" aria-label="Explore">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    <span id="nav-label-explore">Explore</span>
+  </button>
+  <button class="nav-tab" data-tab="browse" onclick="switchTab('browse')" aria-label="Browse">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    <span id="nav-label-browse">Browse</span>
+  </button>
+  <button class="nav-tab" data-tab="life" onclick="switchTab('life')" aria-label="Life of Maharaj">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21v-1a8 8 0 0 1 16 0v1"/><path d="M12 1 v1.5 M8.5 2.5 l1 1 M15.5 2.5 l-1 1"/></svg>
+    <span id="nav-label-life">Life</span>
+  </button>
+  <button class="nav-tab" data-tab="saved" onclick="switchTab('saved')" aria-label="Saved">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+    <span id="nav-label-saved">Saved</span>
+  </button>
+</nav>
 
 <!-- Maharaj Questions Browser -->
 <div class="mqb-overlay" id="mqb-overlay" onclick="if(event.target===this)closeMqBrowser()">
@@ -1997,6 +2099,7 @@
   let selectedMood = null;
   let currentAnswer = null;     // { question, answer, citations }
   let currentDiscourse = null;  // { reference, friendlyRef, title, text }
+  let _activeTab = 'explore';
 
   const MOODS = [
     { id: 'sad',       color: '#3f86c4', en: 'Sad',       gu: 'ઉદાસ',     hi: 'दुखी'     },
@@ -3084,6 +3187,53 @@
   // t(en, gu, hi) — pick string for currentLang
   const t = (en, gu, hi) => currentLang === 'hi' ? (hi || en) : currentLang === 'gu' ? (gu || en) : en;
 
+  // ── Tab navigation ─────────────────────────────────────────────
+  function switchTab(name) {
+    _activeTab = name;
+    document.querySelectorAll('.tab-panel').forEach(p => { p.hidden = p.id !== 'tab-' + name; });
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+    if (name === 'saved') renderSavedTabList();
+    window.scrollTo(0, 0);
+  }
+
+  function renderSavedTabList() {
+    const list = document.getElementById('saved-tab-list');
+    if (!list) return;
+    const arr = getSaved();
+    list.innerHTML = '';
+    if (!arr.length) {
+      list.innerHTML = `<div class="saved-empty">${t('Nothing saved yet. Tap Save on any teaching to keep it here.', 'હજુ કંઈ સાચવ્યું નથી. Save દબાવી વચન સાચવો.', 'अभी तक कुछ सहेजा नहीं। किसी भी शिक्षा पर Save दबाएं।')}</div>`;
+      return;
+    }
+    arr.forEach(s => {
+      const row = document.createElement('div');
+      row.className = 'saved-item';
+      const kindLabel = s.kind === 'answer'
+        ? t('Question', 'પ્રશ્ન', 'प्रश्न')
+        : (s.friendlyRef || t('Discourse', 'વચનામૃત', 'वचनामृत'));
+      row.innerHTML =
+        `<div class="saved-main">
+           <div class="saved-kind">${escapeHtml(kindLabel)}</div>
+           <div class="saved-title">${escapeHtml(s.title || '')}</div>
+           <div class="saved-sub">${escapeHtml((s.text || '').slice(0, 160))}</div>
+         </div>
+         <button class="saved-remove" title="Remove">✕</button>`;
+      row.querySelector('.saved-main').onclick = () => {
+        if (s.kind === 'discourse' && s.reference) showDiscourse(s.reference);
+        else { switchTab('explore'); reopenSavedAnswer(s); }
+      };
+      row.querySelector('.saved-remove').onclick = (e) => {
+        e.stopPropagation();
+        setSaved(getSaved().filter(x => x.id !== s.id));
+        renderSavedTabList();
+        renderSavedList();
+        refreshAnswerSaveBtn();
+        refreshModalSaveBtn();
+      };
+      list.appendChild(row);
+    });
+  }
+
   function setLang(lang) {
     currentLang = lang;
     selectedMood = null;
@@ -3111,6 +3261,12 @@
     document.getElementById('charitra-subhead').textContent = t('Sahajanand Charitra · 29 years · 1801–1830 CE', 'સહજાનંદ ચરિત્ર · ૨૯ વર્ષ · ૧૮૦૧–૧૮૩૦ CE', 'सहजानंद चरित्र · 29 वर्ष · 1801–1830 CE');
     renderCharitraGrid();
     document.getElementById('saved-label').textContent = t('Saved', 'સંગ્રહ', 'संग्रह');
+    document.getElementById('saved-tab-title').textContent = t('Your Collection', 'તમારો સંગ્રહ', 'आपका संग्रह');
+    document.getElementById('nav-label-explore').textContent = t('Explore', 'શોધ', 'खोज');
+    document.getElementById('nav-label-browse').textContent = t('Browse', 'વિભાગ', 'विभाग');
+    document.getElementById('nav-label-life').textContent = t('Life', 'ચરિત્ર', 'चरित्र');
+    document.getElementById('nav-label-saved').textContent = t('Saved', 'સંગ્રહ', 'संग्रह');
+    if (_activeTab === 'saved') renderSavedTabList();
     updateHeroStat();
     updateProgress();
     initSocialProof();
@@ -3644,6 +3800,7 @@
         e.stopPropagation();
         setSaved(getSaved().filter(x => x.id !== s.id));
         renderSavedList();
+        renderSavedTabList();
         refreshAnswerSaveBtn();
         refreshModalSaveBtn();
       };
