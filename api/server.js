@@ -58,8 +58,12 @@ try { presetAnswers = require('../preset_answers.json'); } catch { presetAnswers
 let topicAnswers = {};
 try { topicAnswers = require('../topic_answers.json'); } catch { topicAnswers = {}; }
 
-let charitraCorpus = [];
-try { charitraCorpus = require('../charitra_corpus.json'); } catch { charitraCorpus = []; }
+let charitraCorpus   = [];
+let charitraCorpusHi = [];
+let charitraCorpusGu = [];
+try { charitraCorpus   = require('../charitra_corpus.json');    } catch { charitraCorpus   = []; }
+try { charitraCorpusHi = require('../charitra_corpus_hi.json'); } catch { charitraCorpusHi = []; }
+try { charitraCorpusGu = require('../charitra_corpus_gu.json'); } catch { charitraCorpusGu = []; }
 const normQ = (q) => String(q || '').trim().replace(/\s+/g, ' ').toLowerCase();
 
 // Build a reference → discourse map for O(1) lookup
@@ -548,8 +552,11 @@ app.get('/api/topic-answers', (req, res) => {
   res.json(topicAnswers);
 });
 
-// Sahajanand Charitra biography corpus
+// Sahajanand Charitra biography corpus — trilingual
 app.get('/api/charitra', (req, res) => {
+  const lang = req.query.lang || 'en';
+  if (lang === 'hi' && charitraCorpusHi.length) return res.json(charitraCorpusHi);
+  if (lang === 'gu' && charitraCorpusGu.length) return res.json(charitraCorpusGu);
   res.json(charitraCorpus);
 });
 

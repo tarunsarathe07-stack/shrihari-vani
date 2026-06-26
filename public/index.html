@@ -2783,13 +2783,16 @@
 
   // ── Sahajanand Charitra ────────────────────────────────
   let _charitraData = null;
+  let _charitraDataLang = null;
   let _charitraCurrentCh = null;
 
   async function _loadCharitra() {
-    if (_charitraData) return _charitraData;
+    // Re-fetch if language changed
+    if (_charitraData && _charitraDataLang === currentLang) return _charitraData;
     try {
-      const r = await fetch('/api/charitra');
+      const r = await fetch(`/api/charitra?lang=${currentLang}`);
       _charitraData = await r.json();
+      _charitraDataLang = currentLang;
     } catch { _charitraData = []; }
     return _charitraData;
   }
