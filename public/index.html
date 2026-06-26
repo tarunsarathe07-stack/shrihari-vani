@@ -1851,16 +1851,16 @@
 
   <!-- Teachings About -->
   <div class="teachings-section">
-    <div class="teachings-eyebrow">Explore by Topic</div>
-    <div class="teachings-heading">Teachings About…</div>
+    <div class="teachings-eyebrow" id="teachings-eyebrow">Explore by Topic</div>
+    <div class="teachings-heading" id="teachings-heading">Teachings About…</div>
     <div class="teachings-chips" id="teachings-chips"></div>
   </div>
 
   <!-- Life of Maharaj -->
   <div class="charitra-section">
-    <div class="charitra-eyebrow">Biography</div>
-    <div class="charitra-heading">Life of Maharaj</div>
-    <div class="charitra-subhead">Sahajanand Charitra · 29 years · 1801–1830 CE</div>
+    <div class="charitra-eyebrow" id="charitra-eyebrow">Biography</div>
+    <div class="charitra-heading" id="charitra-heading">Life of Maharaj</div>
+    <div class="charitra-subhead" id="charitra-subhead">Sahajanand Charitra · 29 years · 1801–1830 CE</div>
     <div class="charitra-grid" id="charitra-grid"></div>
   </div>
 </main>
@@ -2798,11 +2798,14 @@
     const data = await _loadCharitra();
     const grid = document.getElementById('charitra-grid');
     if (!grid) return;
+    const yearLbl = t('Year', 'વર્ષ', 'वर्ष');
+    const incLbl  = t('incident', 'પ્રસંગ', 'प्रसंग');
+    const incsLbl = t('incidents', 'પ્રસંગ', 'प्रसंग');
     grid.innerHTML = data.map(ch => `
       <div class="charitra-card" onclick="openCharitraSheet(${ch.chapter})">
         <div class="charitra-card-year">${ch.ce_label}</div>
-        <div class="charitra-card-ch">Year ${ch.chapter}</div>
-        <div class="charitra-card-count">${ch.incidents.length} incident${ch.incidents.length !== 1 ? 's' : ''}</div>
+        <div class="charitra-card-ch">${yearLbl} ${ch.chapter}</div>
+        <div class="charitra-card-count">${ch.incidents.length} ${ch.incidents.length !== 1 ? incsLbl : incLbl}</div>
       </div>`).join('');
   }
 
@@ -2813,7 +2816,7 @@
     if (!ch) return;
     _charitraCurrentCh = ch;
 
-    document.getElementById('charitra-sheet-label').textContent = `Samvat ${ch.samvat} · ${ch.ce_label}`;
+    document.getElementById('charitra-sheet-label').textContent = `${t('Samvat','સંવત','संवत')} ${ch.samvat} · ${ch.ce_label}`;
     _renderCharitraIncidentList(ch);
 
     document.getElementById('charitra-sheet-scroll').scrollTop = 0;
@@ -2840,12 +2843,12 @@
     if (!inc) return;
 
     const label = document.getElementById('charitra-sheet-label');
-    label.textContent = `Samvat ${ch.samvat} · ${ch.ce_label}`;
+    label.textContent = `${t('Samvat','સંવત','संवत')} ${ch.samvat} · ${ch.ce_label}`;
 
     const scroll = document.getElementById('charitra-sheet-scroll');
     scroll.innerHTML = `<div class="charitra-reading">
-      <button class="charitra-reading-back" onclick="_renderCharitraIncidentList(_charitraCurrentCh); document.getElementById('charitra-sheet-scroll').scrollTop=0;">‹ Back</button>
-      <div class="charitra-sheet-meta">Chapter ${ch.chapter} · Incident ${inc.num}</div>
+      <button class="charitra-reading-back" onclick="_renderCharitraIncidentList(_charitraCurrentCh); document.getElementById('charitra-sheet-scroll').scrollTop=0;">${t('‹ Back','‹ પાછળ','‹ वापस')}</button>
+      <div class="charitra-sheet-meta">${t('Chapter','અધ્યાય','अध्याय')} ${ch.chapter} · ${t('Incident','પ્રસંગ','प्रसंग')} ${inc.num}</div>
       <div class="charitra-reading-title">${inc.title}</div>
       <div class="charitra-reading-body">${textToParasHTML(inc.text)}</div>
     </div>`;
@@ -3098,6 +3101,12 @@
       'भगवान स्वामिनारायण के उपदेशों के बारे में प्रश्न पूछें'
     );
     document.getElementById('browse-heading').textContent = t('Browse by Section', 'વિભાગ પ્રમાણે જુઓ', 'विभाग के अनुसार देखें');
+    document.getElementById('teachings-eyebrow').textContent = t('Explore by Topic', 'વિષય પ્રમાણે', 'विषय के अनुसार');
+    document.getElementById('teachings-heading').textContent = t('Teachings About…', 'ઉપદેશ…', 'शिक्षाएँ…');
+    document.getElementById('charitra-eyebrow').textContent = t('Biography', 'જીવન ચરિત્ર', 'जीवन चरित्र');
+    document.getElementById('charitra-heading').textContent = t('Life of Maharaj', 'મહારાજનું જીવન', 'महाराज का जीवन');
+    document.getElementById('charitra-subhead').textContent = t('Sahajanand Charitra · 29 years · 1801–1830 CE', 'સહજાનંદ ચરિત્ર · ૨૯ વર્ષ · ૧૮૦૧–૧૮૩૦ CE', 'सहजानंद चरित्र · 29 वर्ष · 1801–1830 CE');
+    renderCharitraGrid();
     document.getElementById('saved-label').textContent = t('Saved', 'સંગ્રહ', 'संग्रह');
     updateHeroStat();
     updateProgress();
