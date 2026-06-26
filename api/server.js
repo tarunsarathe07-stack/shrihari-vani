@@ -57,6 +57,9 @@ try { presetAnswers = require('../preset_answers.json'); } catch { presetAnswers
 
 let topicAnswers = {};
 try { topicAnswers = require('../topic_answers.json'); } catch { topicAnswers = {}; }
+
+let charitraCorpus = [];
+try { charitraCorpus = require('../charitra_corpus.json'); } catch { charitraCorpus = []; }
 const normQ = (q) => String(q || '').trim().replace(/\s+/g, ' ').toLowerCase();
 
 // Build a reference → discourse map for O(1) lookup
@@ -543,6 +546,11 @@ app.get('/api/search', (req, res) => {
 // Topic answers (pre-generated, zero runtime tokens)
 app.get('/api/topic-answers', (req, res) => {
   res.json(topicAnswers);
+});
+
+// Sahajanand Charitra biography corpus
+app.get('/api/charitra', (req, res) => {
+  res.json(charitraCorpus);
 });
 
 // Mood → search keywords mapping

@@ -206,6 +206,151 @@
       box-shadow: 0 2px 8px rgba(216,70,29,0.08);
     }
 
+    /* ── Life of Maharaj / Charitra section ──────────────── */
+    .charitra-section {
+      margin: 0;
+      padding: 2.75rem 1.5rem 3rem;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      text-align: center;
+    }
+    .charitra-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--saffron);
+      margin-bottom: 0.6rem;
+    }
+    .charitra-heading {
+      font-family: var(--display);
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+    .charitra-subhead {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 1.75rem;
+    }
+    .charitra-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+      gap: 0.55rem;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .charitra-card {
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      border-radius: 10px;
+      padding: 0.7rem 0.5rem 0.6rem;
+      cursor: pointer;
+      transition: border-color 0.18s, background 0.18s, box-shadow 0.18s;
+      text-align: center;
+    }
+    .charitra-card:hover {
+      border-color: var(--saffron);
+      background: var(--paper-2);
+      box-shadow: 0 2px 8px rgba(216,130,29,0.10);
+    }
+    .charitra-card-year {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--saffron);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+    }
+    .charitra-card-ch {
+      font-family: var(--display);
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .charitra-card-count {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+    /* Charitra bottom sheet */
+    #charitra-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(15,10,5,0.48);
+      z-index: 200; opacity: 0; pointer-events: none;
+      transition: opacity 0.28s ease;
+    }
+    #charitra-backdrop.open { opacity: 1; pointer-events: auto; }
+    #charitra-sheet {
+      position: fixed; left: 0; right: 0; bottom: 0;
+      z-index: 201;
+      background: var(--paper);
+      border-radius: 20px 20px 0 0;
+      max-height: 88vh;
+      display: flex; flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.36s cubic-bezier(0.32,0.72,0,1);
+    }
+    #charitra-sheet.open { transform: translateY(0); }
+    @media (min-width: 600px) {
+      #charitra-sheet { left: 50%; right: auto; width: 100%; max-width: 580px; transform: translateX(-50%) translateY(100%); }
+      #charitra-sheet.open { transform: translateX(-50%) translateY(0); }
+    }
+    .charitra-sheet-meta {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--saffron);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+    .charitra-incident-list { padding: 0 1.25rem 1.5rem; }
+    .charitra-incident-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--line);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .charitra-incident-item:last-child { border-bottom: none; }
+    .charitra-incident-item:hover { background: var(--paper-2); border-radius: 8px; padding-left: 0.5rem; padding-right: 0.5rem; margin: 0 -0.5rem; }
+    .charitra-incident-num {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      min-width: 1.5rem;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .charitra-incident-title {
+      font-family: var(--serif);
+      font-size: 0.97rem;
+      color: var(--ink);
+      flex: 1;
+      line-height: 1.35;
+    }
+    .charitra-incident-arrow { color: var(--muted); font-size: 1rem; flex-shrink: 0; }
+    /* Charitra reading view (second level inside sheet) */
+    .charitra-reading { padding: 0 1.25rem 2rem; }
+    .charitra-reading-back {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      font-family: var(--sans); font-size: 0.8rem; color: var(--terra);
+      cursor: pointer; margin-bottom: 1rem;
+      background: none; border: none; padding: 0;
+    }
+    .charitra-reading-title {
+      font-family: var(--display); font-size: 1.25rem; font-weight: 500;
+      color: var(--ink); margin-bottom: 1.25rem; line-height: 1.3;
+    }
+    .charitra-reading-body {
+      font-family: var(--serif); font-size: 1.05rem; line-height: 1.9; color: var(--ink);
+    }
+    .charitra-reading-body p { margin: 0 0 1em; }
+    .charitra-reading-body p:last-child { margin-bottom: 0; }
+
     /* ── Reader settings panel (AA button) ───────────────── */
     .reader-panel {
       display: none;
@@ -1710,6 +1855,14 @@
     <div class="teachings-heading">Teachings About…</div>
     <div class="teachings-chips" id="teachings-chips"></div>
   </div>
+
+  <!-- Life of Maharaj -->
+  <div class="charitra-section">
+    <div class="charitra-eyebrow">Biography</div>
+    <div class="charitra-heading">Life of Maharaj</div>
+    <div class="charitra-subhead">Sahajanand Charitra · 29 years · 1801–1830 CE</div>
+    <div class="charitra-grid" id="charitra-grid"></div>
+  </div>
 </main>
 
 <!-- Footer -->
@@ -1754,6 +1907,17 @@
     <div class="topic-sheet-body" id="topic-sheet-body"></div>
     <div class="topic-citations" id="topic-citations"></div>
   </div>
+</div>
+
+<!-- Charitra bottom sheet -->
+<div id="charitra-backdrop" onclick="closeCharitraSheet()"></div>
+<div id="charitra-sheet" role="dialog" aria-modal="true" aria-labelledby="charitra-sheet-label">
+  <div class="sheet-handle"></div>
+  <div class="sheet-topbar">
+    <span id="charitra-sheet-label" class="sheet-label"></span>
+    <button class="sheet-x" onclick="closeCharitraSheet()" aria-label="Close">✕</button>
+  </div>
+  <div class="sheet-scroll" id="charitra-sheet-scroll"></div>
 </div>
 
 <!-- Discourse modal -->
@@ -2398,6 +2562,7 @@
     updateMqScore();
     initParallax();
     initOnboarding();
+    renderCharitraGrid();
   }
 
   // ── Daily verse ────────────────────────────────────────────────
@@ -2615,6 +2780,84 @@
     document.getElementById('topic-sheet').classList.remove('open');
     document.body.style.overflow = '';
   }
+
+  // ── Sahajanand Charitra ────────────────────────────────
+  let _charitraData = null;
+  let _charitraCurrentCh = null;
+
+  async function _loadCharitra() {
+    if (_charitraData) return _charitraData;
+    try {
+      const r = await fetch('/api/charitra');
+      _charitraData = await r.json();
+    } catch { _charitraData = []; }
+    return _charitraData;
+  }
+
+  async function renderCharitraGrid() {
+    const data = await _loadCharitra();
+    const grid = document.getElementById('charitra-grid');
+    if (!grid) return;
+    grid.innerHTML = data.map(ch => `
+      <div class="charitra-card" onclick="openCharitraSheet(${ch.chapter})">
+        <div class="charitra-card-year">${ch.ce_label}</div>
+        <div class="charitra-card-ch">Year ${ch.chapter}</div>
+        <div class="charitra-card-count">${ch.incidents.length} incident${ch.incidents.length !== 1 ? 's' : ''}</div>
+      </div>`).join('');
+  }
+
+  async function openCharitraSheet(chNum) {
+    haptic && haptic();
+    const data = await _loadCharitra();
+    const ch = data.find(c => c.chapter === chNum);
+    if (!ch) return;
+    _charitraCurrentCh = ch;
+
+    document.getElementById('charitra-sheet-label').textContent = `Samvat ${ch.samvat} · ${ch.ce_label}`;
+    _renderCharitraIncidentList(ch);
+
+    document.getElementById('charitra-sheet-scroll').scrollTop = 0;
+    document.getElementById('charitra-backdrop').classList.add('open');
+    document.getElementById('charitra-sheet').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function _renderCharitraIncidentList(ch) {
+    const scroll = document.getElementById('charitra-sheet-scroll');
+    scroll.innerHTML = `<div class="charitra-incident-list">` +
+      ch.incidents.map(inc => `
+        <div class="charitra-incident-item" onclick="openCharitraIncident(${ch.chapter}, ${inc.num})">
+          <span class="charitra-incident-num">${inc.num}</span>
+          <span class="charitra-incident-title">${inc.title}</span>
+          <span class="charitra-incident-arrow">›</span>
+        </div>`).join('') +
+      `</div>`;
+  }
+
+  function openCharitraIncident(chNum, incNum) {
+    const ch = _charitraCurrentCh;
+    const inc = ch && ch.incidents.find(i => i.num === incNum);
+    if (!inc) return;
+
+    const label = document.getElementById('charitra-sheet-label');
+    label.textContent = `Samvat ${ch.samvat} · ${ch.ce_label}`;
+
+    const scroll = document.getElementById('charitra-sheet-scroll');
+    scroll.innerHTML = `<div class="charitra-reading">
+      <button class="charitra-reading-back" onclick="_renderCharitraIncidentList(_charitraCurrentCh); document.getElementById('charitra-sheet-scroll').scrollTop=0;">‹ Back</button>
+      <div class="charitra-sheet-meta">Chapter ${ch.chapter} · Incident ${inc.num}</div>
+      <div class="charitra-reading-title">${inc.title}</div>
+      <div class="charitra-reading-body">${textToParasHTML(inc.text)}</div>
+    </div>`;
+    scroll.scrollTop = 0;
+  }
+
+  function closeCharitraSheet() {
+    document.getElementById('charitra-backdrop').classList.remove('open');
+    document.getElementById('charitra-sheet').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // ────────────────────────────────────────────────────────
 
   async function selectMood(mood) {
     haptic();
@@ -3156,6 +3399,18 @@
     }
     return frag;
   }
+  function textToParasHTML(text) {
+    const paras = text.split(/\n{2,}/).map(s => s.replace(/\n/g, ' ').trim()).filter(Boolean);
+    const src = paras.length ? paras : [text.trim()];
+    return src.map(p => `<p>${p.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>`).join('');
+  }
+  function toTitleCase(str) {
+    return str.replace(/\w\S*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+              .replace(/(\w)'S(\s|$)/g, (_, a, b) => `${a}'s${b}`);
+  }
+  // ---- original textToParas return was here, moved above ----
+  function _textToParas_unused() { // keep linter happy — real fn above
+  }
 
   function renderDiscourseSections(container, text, lang) {
     container.innerHTML = '';
@@ -3443,7 +3698,7 @@
   function hideError() { document.getElementById('error-msg').style.display = 'none'; }
 
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeModalBtn(); closeSavedBtn(); closeMqBrowser(); closeMoodSheet(); closeTopicSheet(); }
+    if (e.key === 'Escape') { closeModalBtn(); closeSavedBtn(); closeMqBrowser(); closeMoodSheet(); closeTopicSheet(); closeCharitraSheet(); }
   });
 
   // ── Share card ─────────────────────────────────────────────────
