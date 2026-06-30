@@ -547,9 +547,18 @@ app.get('/api/search', (req, res) => {
   }));
 });
 
-// Topic answers (pre-generated, zero runtime tokens)
+// Topic answers — serve per language (gu/hi/en)
 app.get('/api/topic-answers', (req, res) => {
-  res.json(topicAnswers);
+  const lang = req.query.lang || 'en';
+  if (lang === 'en') return res.json(topicAnswers);
+  const out = {};
+  for (const [key, entry] of Object.entries(topicAnswers)) {
+    const langEntry = entry[lang];
+    out[key] = langEntry
+      ? { label: langEntry.label, answer: langEntry.answer, citations: entry.citations || [] }
+      : { label: entry.label, answer: entry.answer, citations: entry.citations || [] };
+  }
+  res.json(out);
 });
 
 // Sahajanand Charitra biography corpus — trilingual

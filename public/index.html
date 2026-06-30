@@ -2834,11 +2834,13 @@
 
   // ── Topic sheet (Teachings About — pre-generated, zero tokens) ──
   let _topicAnswers = null;
+  let _topicAnswersLang = null;
   async function _loadTopicAnswers() {
-    if (_topicAnswers) return _topicAnswers;
+    if (_topicAnswers && _topicAnswersLang === currentLang) return _topicAnswers;
     try {
-      const r = await fetch('/api/topic-answers');
+      const r = await fetch(`/api/topic-answers?lang=${currentLang}`);
       _topicAnswers = await r.json();
+      _topicAnswersLang = currentLang;
     } catch { _topicAnswers = {}; }
     return _topicAnswers;
   }
@@ -3273,6 +3275,12 @@
     updateMqScore();
     document.getElementById('discover-label').textContent =
       t('Discover a random discourse', 'કોઈ વચનામૃત શોધો', 'कोई वचनामृत खोजें');
+    document.getElementById('ask-heading').textContent =
+      t('Ask a question', 'પ્રશ્ન પૂછો', 'प्रश्न पूछें');
+    document.getElementById('btn-ask').textContent =
+      t('Ask', 'પૂછો', 'पूछें');
+    document.getElementById('chips-toggle').textContent =
+      t('Show more', 'વધુ જુઓ', 'और देखें');
     renderMoods();
     renderChips();
     renderSections();
